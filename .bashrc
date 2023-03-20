@@ -29,8 +29,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-export HOME=/local/home/hqkhan
-# source ~/.git-prompt.sh
 # if [ "$color_prompt" = yes ]; then
 #     PS1='\[\e[0;1;38;5;113m\]-> \[\033[01;34m\]\w\[\033[00m\]\[\e[0;1;38;5;156m\]$(__git_ps1 " (%s)")\[\e[0;38;5;197m\] $\[\e[0m\] '
 # else
@@ -71,20 +69,13 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
 # User specific aliases and functions
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export COLORTERM="truecolor"
 alias ss="source ~/.bashrc"
-alias auth="kinit -f && mwinit -o -s"
-alias breakglass="mwinit -o --breakglass"
-alias bb="brazil-build"
 alias lg="git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s' --graph --date=short --date-order"
-alias get-creds="/apollo/env/AmazonAwsCli/bin/isengard get $ACCOUNT_NUMBER $ROLE_NAME"
 
 export INPUTRC="$HOME/.inputrc"
 
@@ -129,17 +120,21 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p --paging always'"
 # yadm / dotfiles
 # need to add -C $HOME or `dot ls-files|grep` fails inside a git repo
 # TODO: messes up the autocomplete, removed for now
-# alias yadm='$HOME/bin/yadm --yadm-repo $HOME/dots/yadm-repo'
-alias dot='$HOME/bin/yadm --yadm-repo $HOME/dots/yadm-repo'
+# yadm dotfile repo
+export YADM_REPO="$HOME/dots/yadm-repo"
+alias yadm='$HOME/bin/yadm --yadm-repo $HOME/dots/yadm-repo'
+alias dot='$HOME/bin/yadm --yadm-repo $YADM_REPO'
 
 # Source all custom functions
 source $HOME/.bash_func
 
 . "$HOME/.cargo/env"
 
-# yadm dotfile repo
-export YADM_REPO="$HOME/dots/yadm-repo"
 
 # Useful aliases
 alias mv="mv -v"
 alias cp="cp -v"
+
+# Source private stuff
+. $HOME/.config/bash/.bash_priv
+
