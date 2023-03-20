@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 FZF_MISC_CMD_OPTS="--layout=reverse --height=50%"
 # fkill - kill processes - list only the ones you can kill.

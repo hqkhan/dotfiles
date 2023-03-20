@@ -1,0 +1,41 @@
+#!/bin/sh
+
+alias \
+  mkdir="mkdir -pv" \
+  ll="ls -l" \
+  la="ls -la" \
+  df="df -h" \
+  du="du -ch"
+
+# Colorize commands when possible (OSX)
+ls -GFHh > /dev/null 2>&1 && alias \
+  ls="ls -GFHh" \
+  grep="grep --color=auto"
+
+# Colorize commands when possible (Linux/BSD).
+ls -hN --color=auto > /dev/null 2>&1 && alias \
+  ls="ls -hN --color=auto --group-directories-first" \
+  grep="grep --color=auto" \
+  diff="diff --color=auto"
+
+# Use exa instead of ls when possible
+exa > /dev/null 2>&1 && alias \
+  ls="exa --time-style=long-iso -g --group-directories-first" \
+  tree="exa --tree"
+
+# Use bat instead of cat if possible
+bat --version > /dev/null 2>&1 && alias \
+  cat="bat --pager=never --style=plain"
+
+# custom programs
+alias what-term="ps -p$PPID"
+alias what-shell="ps -p $$"
+
+# line count current directory
+alias lc='rg --files  | xargs -d "\n" wc -l | perl -lne "\$s += \$1 if /(\d+) total/; END{print \$s}"'
+
+alias yadm='$HOME/bin/yadm --yadm-repo $HOME/dots/yadm-repo'
+alias dot='$HOME/bin/yadm --yadm-repo $YADM_REPO'
+
+alias ss="source $XDG_CONFIG_HOME/zsh/.zshrc"
+alias lg="git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s' --graph --date=short --date-order"

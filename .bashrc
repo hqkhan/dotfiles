@@ -62,8 +62,6 @@ if [ -z "$SSH_AUTH_SOCK" ] ; then
   ssh-add `find ~/.ssh -not -name "*.pub" -name "id_*"`
 fi
 
-#export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -138,6 +136,6 @@ alias cp="cp -v"
 # Source private stuff
 . $HOME/.config/bash/.bash_priv
 
-export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-
 source $HOME/.config/zsh/lf-icons.sh
+PATH=$PATH:$HOME/workspace/ElmoUtils/src/ElmoUtils/
+PATH=$PATH:/apollo/env/envImprovement/bin/
