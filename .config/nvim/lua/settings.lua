@@ -27,7 +27,7 @@ vim.cmd[[set path=.,,,$PWD/**]]
 
 o.showmode          = false      -- show current mode (insert, etc) under the cmdline
 o.showcmd           = true      -- show current command under the cmd line
-o.cmdheight         = 2         -- cmdline height
+o.cmdheight         = 0         -- cmdline height
 o.cmdwinheight      = math.floor(vim.o.lines/2) -- 'q:' window height
 -- o.laststatus        = vim.fn.has('nvim-0.7')==1 and 3 or 2  -- global statusline
 o.laststatus        = 2         -- 2 = always show status line (filename, etc)

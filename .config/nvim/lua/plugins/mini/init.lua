@@ -9,6 +9,7 @@ function M.config()
   require("plugins.mini.surround")
   require("plugins.mini.indentscope")
   require("mini.ai").setup()
+  require("mini.align").setup()
 end
 
 return M
