@@ -1,1 +1,30 @@
-/home/hqkhan/config/git_prompt/.gitconfig
+[user]
+	email = hqkhan@amazon.com
+	name = Hassaan Khan
+[color]
+	ui = auto
+[core]
+	; pager = less -FMRiX
+	pager = delta
+[push]
+	default = simple
+[alias]
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+[delta]
+    dark = true
+    file-style = "#d4bfff" bold "#100E23"
+    hunk-header-style = omit
+    line-numbers = true
+    line-numbers-left-format = "{nm:>3}┊"
+    line-numbers-left-style = "#ff5370" 
+    line-numbers-minus-style = "#ff5370" italic "#100E23"
+    line-numbers-plus-style = "#A1EFD3" italic "#100E23"
+    line-numbers-right-format = "{np:>3}┊"
+    line-numbers-right-style = "#A1EFD3"
+    line-numbers-zero-style = "#999999" italic
+    minus-emph-style = "#ff5370" bold "#100E23"
+    minus-style = "#ff5370"
+    plus-emph-style = "#A1EFD3" bold "#100E23"
+    plus-style = "#A1EFD3"
+    whitespace-error-style = "#280050" reverse
+    zero-style = "#656A7c"
