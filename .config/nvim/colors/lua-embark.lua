@@ -34,7 +34,10 @@ local colors = {
   space4              = { gui = '#585273', cterm = 236,  cterm16 = 8 },
   comment_grey_temp   = { gui = '#8A889D', cterm = 252,  cterm16 = 15 },
   magenta             = { gui = '#d16d9e', cterm = 252,  cterm16 = 15 },
-  darkblue_tmux =       { gui = '#081633', cterm = 252,  cterm16 = 15 }
+  darkblue_tmux       = { gui = '#081633', cterm = 252,  cterm16 = 15 },
+  diff_del            = { gui = "#411E35", cterm = 203, cterm16 = 9 },
+  diff_add            = { gui = "#133246", cterm = 119, cterm16 = 10 },
+  diff_change         = { gui = "#22244C", cterm = 215, cterm16 = 11 },
 }
 
 if not vim.g.lua_embark_transparent then
@@ -45,7 +48,7 @@ hl.common = {
   Normal =            { fg = colors.fg, bg = colors.bg },
   -- NormalNC =          { fg = colors.fg, bg = colors.black },
   NormalFloat =       { fg = colors.fg, bg = colors.bg },
-  Conceal =           { },
+  Conceal =           { fg = colors.fg },
   Cursor =            { fg = colors.special_grey, bg = colors.blue },
   CursorIM =          { },
   CursorLine =        { bg = colors.cursor_grey },
@@ -155,65 +158,26 @@ hl.syntax = {
 
 -- TS highlights
 hl.treesitter = {
-  TSAnnotation      = { fg = colors.fg },
-  TSAttribute       = { fg = colors.cyan },
-  TSBoolean         = { fg = colors.dark_yellow },
-  TSCharacter       = { fg = colors.yellow },
-  TSComment         = { fg = colors.comment_grey, italic = true },
-  TSConditional     = { fg = colors.red },
-  TSConstant        = { fg = colors.yellow },
-  TSConstBuiltin    = { fg = colors.green },
-  TSConstMacro      = { fg = colors.green },
-  TSConstructor     = { fg = colors.dark_blue },
-  TSError           = { fg = colors.red },
-  TSException       = { fg = colors.purple },
-  TSField           = { fg = colors.purple },
-  TSFloat           = { fg = colors.dark_yellow },
-  TSFunction        = { fg = colors.red },
-  TSFuncBuiltin     = { fg = colors.cyan },
-  TSFuncMacro       = { fg = colors.green },
-  TSInclude         = { fg = colors.green },
-  TSKeyword         = { fg = colors.red },
-  TSKeywordFunction = { fg = colors.red },
-  TSKeywordOperator = { fg = colors.dark_cyan },
-  TSLabel           = { fg = colors.blue },
-  TSMethod          = { fg = colors.red },
-  TSNamespace       = { fg = colors.fg },
-  TSNone            = { fg = colors.fg },
-  TSNumber          = { fg = colors.dark_yellow },
-  TSOperator        = { fg = colors.dark_cyan },
-  TSParameter       = { fg = colors.purple },
-  TSParameterReference = { fg = colors.purple },
-  TSProperty        = { fg = colors.purple },
-  TSPunctDelimiter  = { fg = colors.dark_cyan },
-  TSPunctBracket    = { fg = colors.cyan },
-  TSPunctSpecial    = { fg = colors.cyan },
-  TSRepeat          = { fg = colors.dark_cyan },
-  TSString          = { fg = colors.yellow },
-  TSStringRegex     = { fg = colors.cyan },
-  TSStringEscape    = { fg = colors.cyan },
-  TSSymbol          = { fg = colors.cyan },
-  TSTag             = { fg = colors.dark_blue },
-  TSTagDelimiter    = { fg = colors.comment_grey },
-  TSText            = { fg = colors.fg },
-  TSStrong          = { fg = colors.fg },
-  TSEmphasis        = { fg = colors.fg },
-  TSUnderline       = { fg = colors.fg },
-  TSStrike          = { fg = colors.fg },
-  TSTitle           = { fg = colors.fg },
-  TSLiteral         = { fg = colors.green },
-  TSURI             = { fg = colors.yellow },
-  TSMath            = { fg = colors.fg },
-  TSTextReference   = { fg = colors.fg },
-  TSEnviroment      = { fg = colors.fg },
-  TSEnviromentName  = { fg = colors.fg },
-  TSNote            = { fg = colors.fg },
-  TSWarning         = { fg = colors.fg },
-  TSDanger          = { fg = colors.fg },
-  TSType            = { fg = colors.blue },
-  TSTypeBuiltin     = { fg = colors.dark_blue },
-  TSVariable        = { fg = colors.fg },
-  TSVariableBuiltin = { fg = colors.cyan }
+  ["@punctuation.bracket"]  = { fg = colors.fg },
+  ["@string.special"]       = { fg = colors.dark_blue },
+  ["@string.escape"]        = { fg = colors.cyan },
+  ["@function"]             = { fg = colors.red },
+  ["@function.call"]        = { fg = colors.blue },
+  ["@constructor"]          = { fg = colors.purple },
+  ["@keyword.operator"]     = { fg = colors.cyan },
+  ["@constant.builtin"]     = { fg = colors.cyan },
+  ["@variable.builtin"]     = { fg = colors.cyan },
+  ["@symbol"]               = { fg = colors.yellow },
+  ["@text.literal"]         = { fg = colors.cyan },
+  ["@text.uri"]             = { fg = colors.blue },
+  ["@text.reference"]       = { fg = colors.purple },
+  ["@text.strong"]          = { bold = true },
+  ["@text.emphasis"]        = { italic = true },
+  ["@text.todo.unchecked"]  = { fg = colors.dark_cyan, bold = true },
+  ["@text.todo.checked"]    = { fg = colors.comment_grey },
+  ["@tag"]                  = { fg = colors.green },
+  ["@tag.delimiter"]        = { fg = colors.cyan },
+  ["@tag.attribute"]        = { fg = colors.purple },
 }
 
 -- LSP colors
@@ -786,11 +750,6 @@ do
   vim.g.terminal_color_15 = colors.comment_grey.gui
   vim.g.terminal_color_background = vim.g.terminal_color_0
   vim.g.terminal_color_foreground = vim.g.terminal_color_7
-
-  -- treesitter hls are already linked to syntax hls by default
-  -- TODO: this causes an with switching color schemes, the TSxxx
-  -- highlight groups don't get relinked resulting in no highlights
-  hl.treesitter = nil
 
   for _, hlgroup in pairs(hl) do
     for hlname, style in pairs(hlgroup) do
