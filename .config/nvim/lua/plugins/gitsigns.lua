@@ -6,7 +6,6 @@ local M = {
 
 M.config = function()
   require("gitsigns").setup {
-    debug_mode = true,
     signs          = {
       add          = { text = "┃" },
       change       = { text = "┃" },
@@ -21,7 +20,7 @@ M.config = function()
     word_diff      = false, -- Toggle with `:Gitsigns toggle_word_diff`
     sign_priority  = 4, -- Lower priorirty means diag signs supercede
     preview_config = { border = "rounded" },
-    yadm           = { enable = true, },
+    yadm           = { enable = true },
     on_attach      = function(bufnr)
       local gs = package.loaded.gitsigns
 

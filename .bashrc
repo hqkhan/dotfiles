@@ -29,6 +29,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+export HOME=/local/home/hqkhan
 # source ~/.git-prompt.sh
 # if [ "$color_prompt" = yes ]; then
 #     PS1='\[\e[0;1;38;5;113m\]-> \[\033[01;34m\]\w\[\033[00m\]\[\e[0;1;38;5;156m\]$(__git_ps1 " (%s)")\[\e[0;38;5;197m\] $\[\e[0m\] '
@@ -40,7 +41,6 @@ fi
 # Starship
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init bash)"
-
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
