@@ -189,7 +189,7 @@ local function setup()
 
         local components = {
           -- Left
-          { c.mode { modes = modes, fmt = " %s %s ", icon = "", hl_icon_only = false } },
+          -- { c.mode { modes = modes, fmt = " %s %s ", icon = "", hl_icon_only = false } },
           -- Git
           { c.git_branch { fmt = " %s %s ", icon = "", hl = highlights.git_branch_fg } },
           { sections.highlight(highlights.git_branch_bg, ("%s"):format(signs.right_sepr)) },
@@ -239,14 +239,8 @@ local function setup()
               hl_delete = get_darkblue_hl("red"),
             }
           },
-
           { sections.highlight(get_darkblue_hl("yellow"), "]") },
 
-          { sections.highlight(get_darkblue_hl("yellow"), "[") },
-          { sections.highlight(get_darkblue_hl("yellow"),  builtin.line_with_width(3)) },
-          { sections.highlight(get_darkblue_hl("yellow"), ":") },
-          { sections.highlight(get_darkblue_hl("yellow"),  builtin.column_with_width(2)) },
-          { sections.highlight(get_darkblue_hl("yellow"), "]") },
           {
             sections.collapse_builtin {
               "[",
@@ -255,10 +249,6 @@ local function setup()
               "]",
             },
           },
-          { sections.highlight(highlights.percentage_rhs, "[") },
-          { sections.highlight(highlights.percentage_rhs, builtin.percentage_through_window) },
-          { sections.highlight(highlights.percentage_rhs, "]") },
-          { sections.highlight(highlights.filetype, builtin.filetype) },
         }
 
         local add_item = function(result, item)
