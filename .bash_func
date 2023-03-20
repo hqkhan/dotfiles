@@ -140,6 +140,7 @@ get(){
     pkg="ElastiCacheSearch"
   elif [[ $1 == "redis" ]] ; then
     pkg="ElastiCacheRedis"
+    branch="mainline-devel"
   elif [[ $1 == "json" ]] ; then
     pkg="ElastiCacheRedisJSONModule"
   else
@@ -148,6 +149,7 @@ get(){
 
   echo "brazil ws use --package $pkg --branch $branch"
   brazil ws use --package $pkg --branch $branch
+  cd src/$pkg
 }
 
 _ev(){

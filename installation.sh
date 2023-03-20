@@ -61,8 +61,6 @@ install_cargo_tools() {
   cargo install ripgrep
   echo "INSTALLING bat"
   cargo install --locked bat
-  echo "INSTALLING exa"
-  cargo install exa
 }
 
 install_cmake() {

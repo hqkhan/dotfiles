@@ -52,7 +52,7 @@ local NONE = 'NONE'
   bg_lightest: '#E8E8EA',
 } ]]
 
-// bg2 + 5 light
+-- // bg2 + 5 light
 --[[ const bg_bright = {
   bgb_darkest: '#090911',
   bgb_darker: '#111322',
@@ -171,10 +171,6 @@ local colors = {
   magenta             = { gui = '#d16d9e', cterm = 252,  cterm16 = 15 },
   darkblue_tmux =       { gui = '#081633', cterm = 252,  cterm16 = 15 }
 }
-
-if not vim.g.lua_embark_transparent then
-  colors.bg = colors.space1
-end
 
 hl.common = {
   Normal =            { fg = colors.fg, bg = colors.bg },
@@ -885,7 +881,7 @@ do
   end
 
   vim.o.background = 'dark'
-  vim.g.colors_name = 'lua-embark'
+  vim.g.colors_name = 'rogue'
 
   -- 256-color terminal colors
   vim.g.terminal_ansi_colors = {

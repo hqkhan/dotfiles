@@ -23,12 +23,8 @@ lazy.setup("plugins", {
   defaults = { lazy = true },
   dev = {
     path = "~/Sources/nvim",
-    -- this is a blanket dev for all matching plugins since it
-    -- doesn't check for the existence of the directory we now
-    -- use the 'dev' property individually instead
-    -- patterns = { "ibhagwan" },
   },
-  install = { colorscheme = { "lua-embark" } },
+  install = { colorscheme = { "lua-embark", "rogue" } },
   checker = { enabled = false },
   ui = {
     border = "rounded",

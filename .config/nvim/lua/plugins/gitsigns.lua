@@ -6,6 +6,7 @@ local M = {
 
 M.config = function()
   require("gitsigns").setup {
+    debug_mode = true,
     signs          = {
       add          = { text = "┃" },
       change       = { text = "┃" },

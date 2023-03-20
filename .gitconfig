@@ -10,7 +10,15 @@
 [push]
 	default = simple
 [alias]
-	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+  a     = add
+  ai    = add --interactive
+  ap    = add --patch
+  b     = branch 
+  br    = branch
+  ba    = branch --all
+  bd    = branch --delete
+  c     = commit
+  s     = status
 [delta]
     dark = true
     file-style = "#d4bfff" bold "#100E23"

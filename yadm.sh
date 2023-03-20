@@ -18,11 +18,9 @@ if [ ! -e ${SSH_KEY} ]; then
     exit 1
 fi
 
-# clone the yadm project source (submodule)
-# git -C ${BASEDIR} submodule update --init --recursive
 # clone the yadm project source (clone)
 git clone https://github.com/TheLocehiliosan/yadm.git ${YADM_PROJ}
-ln -s ${YADM_BIN} $HOME/bin/yadm
+# ln -s ${YADM_BIN} $HOME/bin/yadm
 
 # clone the yadm-repo (the actual dotfiles)
 if [ ! -e ${YADM_REPO} ]; then
@@ -36,11 +34,11 @@ else
 fi
 
 # reset to local HEAD
-echo "Resetting local files"
+echo "[1;32mResetting to HEAD...[0m"
 ${YADM_CMD} reset --hard HEAD
 
 # update submodules
-echo "Updating submodules"
+echo "[1;32mUpdating submodules...[0m"
 ${YADM_CMD} submodule update --init --recursive
 
-echo "DONE."
+echo "[1;32mDONE.[0m"

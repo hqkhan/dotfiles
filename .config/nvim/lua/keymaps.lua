@@ -11,6 +11,9 @@ vim.api.nvim_create_user_command("NvimRestart",
 map('', '<leader>R', "<Esc>:NvimRestart<CR>",
   { silent = true, desc = "reload nvim configuration" })
 
+map('', '<leader>C', "<Esc>:ColorizerAttachToBuffer<CR>",
+  { silent = true, desc = "Attach colorizer to buffer" })
+
 -- Fix common typos
 vim.cmd([[
     cnoreabbrev W! w!
@@ -61,6 +64,7 @@ end
 
 -- Save
 map({ 'n', 'v', 'i'}, '<leader>w', '<Esc>:w!<CR>', { silent = true, desc = "Save" })
+map({ 'n', 'v', 'i'}, '<leader>x', '<Esc>:x<CR>',  { silent = true, desc = "Save" })
 -- Quit
 map('n', '<leader>q', '<Esc>:q!<CR>', { silent = true, desc = "Quit" })
 

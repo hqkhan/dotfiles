@@ -22,4 +22,8 @@ end
 -- vim.g.embark_transparent = true
 -- vim.g.embark_terminal_italics = true
 vim.g.lua_embark_transparent = true
-pcall(vim.cmd, [[colorscheme lua-embark]])
+if utils.is_root() then
+  pcall(vim.cmd, [[colorscheme rogue]])
+else
+  pcall(vim.cmd, [[colorscheme lua-embark]])
+end
