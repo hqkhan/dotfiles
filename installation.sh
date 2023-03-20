@@ -61,6 +61,8 @@ install_cargo_tools() {
   cargo install ripgrep
   echo "INSTALLING bat"
   cargo install --locked bat
+  echo "INSTALLING starship"
+  cargo install starship --locked
 }
 
 install_cmake() {
@@ -76,9 +78,9 @@ install_packages() {
     install_tmux
     #install_nvim
     #install_fzf
-    #install_z
     #install_cargo_tools
     # install_font
+    # install_z
 }
 
 install_packages
