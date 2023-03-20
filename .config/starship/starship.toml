@@ -27,8 +27,11 @@ disabled = true
 symbol = ' '
 style = "green bold"
 
-[git_commit]
+[cmd_duration]
 disabled = true
+
+# [git_commit]
+# disabled = true
 
 [git_state]
 disabled = true
