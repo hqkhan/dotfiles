@@ -20,7 +20,7 @@ M.config = function()
     current_line_blame_opts = { delay = 1000, virt_text_pos = 'eol' },
     preview_config = { border = 'rounded' },
     diff_opts = { internal = true, },
-    yadm = { enable = false, },
+    yadm = { enable = true, },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
 
