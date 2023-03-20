@@ -103,7 +103,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Setting fd as the default source for fzf
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
+export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix --type f --type l $FD_OPTS"
 
 FZF_OPTS="--info=inline --border --keep-right --preview-window=down --bind alt-a:select-all,alt-d:deselect-all"
 export FZF_DEFAULT_OPTS="$FZF_OPTS --color=bg+:#100E23,gutter:#323F4E,pointer:#F48FB1,info:#ffe6b3,hl:#F48FB1,hl+:#F48FB1"
