@@ -140,3 +140,4 @@ alias cp="cp -v"
 
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
+source $HOME/.config/zsh/lf-icons.sh
