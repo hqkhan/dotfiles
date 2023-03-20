@@ -14,7 +14,7 @@ colors:
   selection:
     text: "0xe0def4"
     background: "0x403d52"
-  bright:
+  normal:
     black: "#100E23"
     red: "#F48FB1"
     green: "#A1EFD3"
@@ -23,7 +23,7 @@ colors:
     magenta: "#d4bfff"
     cyan: "#87DFEB"
     white: "#E4E4E4"
-  normal:
+  bright:
     black: "#100E23"
     red: "#F02E6E"
     green: "#62d196"
