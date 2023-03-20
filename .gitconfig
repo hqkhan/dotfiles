@@ -6,6 +6,7 @@
 [core]
 	; pager = less -FMRiX
 	pager = delta
+	editor = nvim
 [push]
 	default = simple
 [alias]

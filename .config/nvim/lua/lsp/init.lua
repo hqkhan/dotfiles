@@ -19,7 +19,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-__settings['sumneko_lua'] = {
+__settings['lua_ls'] = {
   -- enables sumneko_lua formatting, see:
   -- https://github.com/sumneko/lua-language-server/issues/960
   -- https://github.com/sumneko/lua-language-server/wiki/Code-Formatter
@@ -82,26 +82,26 @@ __settings['sumneko_lua'] = {
 -- use nightly rustfmt if exists
 -- https://github.com/rust-lang/rust-analyzer/issues/3627
 -- https://github.com/rust-lang/rust-analyzer/blob/master/docs/user/generated_config.adoc
-local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "stable", "rust-analyzer" }
-local has_rt, rt = pcall(require, "rust-tools")
-if has_rt then
-  rt.setup {
-    server = {
-      cmd = rust_analyzer_cmd,
-      capabilities = require('cmp_nvim_lsp').default_capabilities(),
-      on_attach = require('lsp.on_attach').on_attach,
-    },
-    tools = {
-      inlay_hints = {
-        auto = false,
-      },
-    },
-  }
-else
-  rust_analyzer = {
-    cmd = rust_analyzer_cmd,
-  }
-end
+-- local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "stable", "rust-analyzer" }
+-- local has_rt, rt = pcall(require, "rust-tools")
+-- if has_rt then
+--   rt.setup {
+--     server = {
+--       cmd = rust_analyzer_cmd,
+--       capabilities = require('cmp_nvim_lsp').default_capabilities(),
+--       on_attach = require('lsp.on_attach').on_attach,
+--     },
+--     tools = {
+--       inlay_hints = {
+--         auto = false,
+--       },
+--     },
+--   }
+-- else
+--   rust_analyzer = {
+--     cmd = rust_analyzer_cmd,
+--   }
+-- end
 
 __settings['rust_analyzer'] = {
   settings = {
@@ -140,8 +140,8 @@ local function make_config()
 end
 
 local servers = {
-  'sumneko_lua',
-  -- 'rust_analyzer',
+  'lua_ls',
+  'rust_analyzer',
   'gopls',
   'pyright',
   'clangd',
