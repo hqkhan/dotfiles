@@ -23,7 +23,9 @@ colors:
     magenta: "#d4bfff"
     cyan: "#87DFEB"
     white: "#E4E4E4"
+    gray: "#56687E"
   bright:
+    gray: "#56687E"
     black: "#100E23"
     red: "#F02E6E"
     green: "#62d196"

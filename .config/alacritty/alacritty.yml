@@ -26,6 +26,62 @@ window:
 # \x1b = escape (useful for vim-related keybindings)
 # \x02 = control-b (the default tmux prefix)
 
+# Hints
+#
+# Terminal hints can be used to find text or hyperlink in the visible part of
+# the terminal and pipe it to other applications.
+hints:
+  # Keys used for the hint labels.
+  #alphabet: "jfkdls;ahgurieowpq"
+
+  # List with all available hints
+  #
+  # Each hint must have any of `regex` or `hyperlinks` field and either an
+  # `action` or a `command` field. The fields `mouse`, `binding` and
+  # `post_processing` are optional.
+  #
+  # The `hyperlinks` option will cause OSC 8 escape sequence hyperlinks to be
+  # highlighted.
+  #
+  # The fields `command`, `binding.key`, `binding.mods`, `binding.mode` and
+  # `mouse.mods` accept the same values as they do in the `key_bindings` section.
+  #
+  # The `mouse.enabled` field controls if the hint should be underlined while
+  # the mouse with all `mouse.mods` keys held or the vi mode cursor is above it.
+  #
+  # If the `post_processing` field is set to `true`, heuristics will be used to
+  # shorten the match if there are characters likely not to be part of the hint
+  # (e.g. a trailing `.`). This is most useful for URIs and applies only to
+  # `regex` matches.
+  #
+  # Values for `action`:
+  #   - Copy
+  #       Copy the hint's text to the clipboard.
+  #   - Paste
+  #       Paste the hint's text to the terminal or search.
+  #   - Select
+  #       Select the hint's text.
+  #   - MoveViModeCursor
+  #       Move the vi mode cursor to the beginning of the hint.
+  enabled:
+  - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
+            [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+    hyperlinks: true
+    command: open
+    post_processing: true
+    mouse:
+      enabled: true
+      mods: None
+    binding:
+      key: U
+      mods: Command
+
+colors:
+  hints:
+    start:
+     foreground: '#1d1f21'
+     background: '#e9ff5e'
+
 shell:
   program: /bin/bash
   args:
@@ -47,7 +103,7 @@ key_bindings:
 #   - { key: E, mods: Command, chars: "\x02\"" } # split tmux window vertically
 #   - { key: E, mods: Command|Shift, chars: "\x02%" } # split tmux window horizontally
 #   - { key: F, mods: Command|Shift, chars: "\x02\x5b\x2f" } # start tmux search mode
-#   - { key: F, mods: Command, chars: "lfcd\n" } # open file manager 'gokcehan/lf'
+  - { key: F, mods: Command, chars: "lfcd\n" } # open file manager 'gokcehan/lf'
   - { key: G, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
   - { key: Y, mods: Command, chars: "\x02y" } # open git manager for yadm-repo 'jesseduffield/lazygit'
 #   - { key: J, mods: Command, chars: "\x02\x54" } # open t - tmux smart session manager
@@ -69,3 +125,33 @@ key_bindings:
 
 import:
   - ~/.config/alacritty/embark.yaml
+
+# debug:
+  # Display the time it takes to redraw each frame.
+  # render_timer: true
+
+  # Keep the log file after quitting Alacritty.
+  #persistent_logging: false
+
+  # Log level
+  #
+  # Values for `log_level`:
+  #   - Off
+  #   - Error
+  #   - Warn
+  #   - Info
+  #   - Debug
+  #   - Trace
+  #log_level: Warn
+
+  # Renderer override.
+  #   - glsl3
+  #   - gles2
+  #   - gles2_pure
+  #renderer: None
+
+  # Print all received window events.
+  # print_events: true
+
+  # Highlight window damage information.
+  # highlight_damage: false
