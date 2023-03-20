@@ -138,3 +138,5 @@ alias cp="cp -v"
 # Source private stuff
 . $HOME/.config/bash/.bash_priv
 
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+
