@@ -11,12 +11,12 @@ gui:
   theme:
     lightTheme: false # For terminals with a light background
     activeBorderColor:
-      - magenta
+      - red
       - bold
     inactiveBorderColor:
-      - black
+      - white
     optionsTextColor:
-      - black
+      - white
     selectedLineBgColor:
       - black
     selectedRangeBgColor:
@@ -32,19 +32,19 @@ gui:
   mouseEvents: true
   skipUnstageLineWarning: false
   skipStashWarning: true
-  showFileTree: true # for rendering changes files in a tree format
+  showFileTree: false # for rendering changes files in a tree format
   showListFooter: false # for seeing the '5 of 20' message in list panels
   showRandomTip: true
   showCommandLog: false
   showBottomLine: false
   commandLogSize: 8
-  authorColors: # in case you're not happy with the randomly assigned colour
-    'joshmedeski': '#ff0000'
+  # authorColors: # in case you're not happy with the randomly assigned colour
+  #   'joshmedeski': '#ff0000'
 git:
   paging:
-    colorArg: always
     useConfig: false
-    # pager: delta --dark --color-only --side-by-side
+    colorArg: always
+    pager: delta --dark --paging=never
   merging:
     # only applicable to unix users
     manualCommit: false
@@ -67,9 +67,9 @@ git:
     # this determines whether the git graph is rendered in the commits panel
     showGraph: 'always'
     # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
-    showWholeGraph: true
+    showWholeGraph: false
 os:
-  editCommand: '' # see 'Configuring File Editing' section
+  editCommand: 'nvim' # see 'Configuring File Editing' section
   editCommandTemplate: '{{editor}} {{filename}}'
   openCommand: ''
 refresher:
@@ -83,7 +83,8 @@ confirmOnQuit: false
 # determines whether hitting 'esc' will quit the application when there is nothing to cancel/close
 quitOnTopLevelReturn: true
 disableStartupPopups: false
-notARepository: 'prompt' # one of: 'prompt' | 'create' | 'skip'
+  # to exit immediately if run outside of the Git repository
+notARepository: 'quit' # one of: 'prompt' | 'create' | 'skip'
 promptToReturnFromSubprocess: false # display confirmation when subprocess terminates
 # customCommands:
 #   - key: "z"
