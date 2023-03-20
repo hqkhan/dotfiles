@@ -11,6 +11,10 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
 
+# Bash-like navigation
+autoload -U select-word-style
+select-word-style bash
+
 # tmux messes up LS colors, reset to default
 [[ ! -z $TMUX ]] && unset LS_COLORS
 
