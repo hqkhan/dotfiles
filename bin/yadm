@@ -1,0 +1,3 @@
+#!/bin/sh
+# $HOME/dots/yadm-project/yadm --yadm-repo ${YADM_REPO} "$@"
+$HOME/dots/yadm-project/yadm --yadm-repo $HOME/dots/yadm-repo "$@"
