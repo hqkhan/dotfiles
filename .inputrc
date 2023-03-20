@@ -1,0 +1,7 @@
+"\C-n": unix-filename-rubout
+"\C-h": backward-char
+"\C-l": forward-char
+"\C-k": previous-history
+"\C-j": next-history
+"\C-f": backward-word
+"\C-p": forward-word
