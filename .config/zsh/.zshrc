@@ -24,9 +24,6 @@ HISTFILE=~/.cache/zsh/history
 # add yadm completions to path, must be done before compinit
 [ -d "$HOME/dots/yadm" ] && fpath=($HOME/dots/yadm/completion/zsh $fpath)
 
-# Use zcalc
-autoload -U zcalc
-
 # Basic auto/tab complete:
 autoload -U +X compinit
 # zstyle ':completion:*' menu select
@@ -46,7 +43,7 @@ bindkey -e
 # zoxide - smarter cd
 # https://github.com/ajeetdsouza/zoxide
 if command -v zoxide > /dev/null 2>&1; then
-    eval "$(zoxide init zsh)"
+    eval "$(zoxide init zsh --cmd j)"
 fi
 
 # fzf (https://github.com/junegunn/fzf)
