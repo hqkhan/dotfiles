@@ -1,5 +1,6 @@
-PATH=$HOME/bin:/home/hqkhan/.fzf/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/local/bin:$HOME/.local/bin:$HOME/.cargo/bin:/home/linuxbrew/.linuxbrew/bin
-PATH=$PATH:$HOME/.toolbox/bin
+PATH=$HOME/bin:/home/hqkhan/.fzf/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/local/bin:$HOME/.local/bin:$HOME/.cargo/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.toolbox/bin
+# ~/.config/tmux/plugins
+PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
 MANPATH=/usr/share/man:/usr/local/share/man:/opt/homebrew/share/man
 export PATH MANPATH HOME TERM
 
