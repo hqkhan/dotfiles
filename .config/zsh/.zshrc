@@ -25,6 +25,8 @@ select-word-style bash
 [ -f "$HOME/.config/aliases/public" ] && source "$HOME/.config/aliases/public"
 [ -f "$HOME/.config/aliases/private" ] && source "$HOME/.config/aliases/private"
 
+alias ss="source $XDG_CONFIG_HOME/zsh/.zshrc"
+
 # add yadm completions to path, must be done before compinit
 [ -d "$HOME/dots/yadm" ] && fpath=($HOME/dots/yadm/completion/zsh $fpath)
 

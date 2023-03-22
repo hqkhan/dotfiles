@@ -14,6 +14,7 @@
   "fzf-lua": { "branch": "main", "commit": "7d5795e2dcc9289151c83c32177be8ca615cd4eb" },
   "gitsigns.nvim": { "branch": "main", "commit": "f388995990aba04cfdc7c3ab870c33e280601109" },
   "lazy.nvim": { "branch": "main", "commit": "7339145a223dab7e7ddccf0986ffbf9d2cb804e8" },
+  "lf.nvim": { "branch": "master", "commit": "70c9b1dd99e28deb342174e2a2be9e4a46b9a2ab" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "93e58e100f37ef4fb0f897deeed20599dae9d128" },
   "mason.nvim": { "branch": "main", "commit": "f3d90e3b7580a2d1b47a1f9b905808e22a7fac87" },
   "mini.nvim": { "branch": "main", "commit": "369f16f29559cb15931d3d5acfcf253969f74066" },
@@ -29,5 +30,6 @@
   "playground": { "branch": "master", "commit": "4044b53c4d4fcd7a78eae20b8627f78ce7dc6f56" },
   "plenary.nvim": { "branch": "master", "commit": "9a0d3bf7b832818c042aaf30f692b081ddd58bd9" },
   "smartyank.nvim": { "branch": "master", "commit": "cd191d9629d620ccc608e6b4e60f3541264d0323" },
+  "toggleterm.nvim": { "branch": "main", "commit": "9a595ba699837c4333c4296634feed320f084df2" },
   "vim-startuptime": { "branch": "master", "commit": "6580cf539c33a212f4f5542068a3b4dd2b3ad834" }
 }

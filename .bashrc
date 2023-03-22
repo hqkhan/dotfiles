@@ -73,7 +73,6 @@ fi
 
 export COLORTERM="truecolor"
 alias ss="source ~/.bashrc"
-alias lg="git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s' --graph --date=short --date-order"
 
 export INPUTRC="$HOME/.inputrc"
 
@@ -83,49 +82,31 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Setting fd as the default source for fzf
-FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
-export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix --type f --type l $FD_OPTS"
+# Load aliases and if exists.
+[ -f "$HOME/.config/aliases/public" ] && source "$HOME/.config/aliases/public"
+[ -f "$HOME/.config/aliases/private" ] && source "$HOME/.config/aliases/private"
 
-FZF_OPTS="--info=inline --border --keep-right --preview-window=down --bind alt-a:select-all,alt-d:deselect-all"
-export FZF_DEFAULT_OPTS="$FZF_OPTS --color=bg+:#100E23,gutter:#323F4E,pointer:#F48FB1,info:#ffe6b3,hl:#F48FB1,hl+:#F48FB1"
+# Fzf
+source $ZDOTDIR/fzf_defaults.sh
 
-# To apply the command to CTRL-T as well
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--layout=reverse"
-export FZF_CTRL_R_OPTS="--height=50%"
+# Public funcs
+[ -f $HOME/.bash_func ] && source $HOME/.bash_func
+# Private conf
+[ -f $HOME/.config/bash/.bash_priv ] && source $HOME/.config/bash/.bash_priv
+# Private funcs
+[ -f $HOME/.config/bash/.bash_priv_func ] && source $HOME/.config/bash/.bash_priv_func
 
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-LS_COLORS='rs=0:di=1;35:ln=4;94;1:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:';
-export LS_COLORS
-EXA_COLORS="di=1;35"
-export EXA_COLORS
-export EDITOR=/usr/bin/nvim
-
-# Get the colors in the opened man page itself
-export MANPAGER="sh -c 'col -bx | bat -l man -p --paging always'"
-
-# yadm / dotfiles
-# need to add -C $HOME or `dot ls-files|grep` fails inside a git repo
-# TODO: messes up the autocomplete, removed for now
-# yadm dotfile repo
-export YADM_REPO="$HOME/dots/yadm-repo"
-alias yadm='$HOME/bin/yadm --yadm-repo $HOME/dots/yadm-repo'
-alias dot='$HOME/bin/yadm --yadm-repo $YADM_REPO'
-
-# Source all custom functions
-source $HOME/.bash_func
+# LF file manager icons
+[ -f $HOME/.config/zsh/lf-icons.sh ] && source $HOME/.config/zsh/lf-icons.sh
 
 . "$HOME/.cargo/env"
-
 
 # Useful aliases
 alias mv="mv -v"
 alias cp="cp -v"
 
-# Source private stuff
-. $HOME/.config/bash/.bash_priv
+LS_COLORS='rs=0:di=1;35:ln=4;94;1:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:';
+export LS_COLORS
 
-source $HOME/.config/zsh/lf-icons.sh
 PATH=$PATH:$HOME/workspace/ElmoUtils/src/ElmoUtils/
 PATH=$PATH:/apollo/env/envImprovement/bin/
