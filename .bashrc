@@ -107,3 +107,4 @@ LS_COLORS='rs=0:di=1;35:ln=4;94;1:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:c
 export LS_COLORS
 
 export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin

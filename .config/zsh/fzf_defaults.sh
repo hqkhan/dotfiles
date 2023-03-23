@@ -10,7 +10,7 @@ FZF_OPTS_COLORS="bg+:#100E23,gutter:#323F4E,pointer:#F48FB1,info:#ffe6b3,hl:#F48
 
 # Use fzf inside tmux popup if possible
 if [ -n $TMUX ]; then
-  export FZF_TMUX_OPTS="-p80%,60% --color=border:yellow -- --margin=0,0"
+  # export FZF_TMUX_OPTS="-p80%,60% --color=border:yellow -- --margin=0,0"
   export FZF_CTRL_T_OPTS="${FZF_CTRL_T_OPTS} --preview-window=hidden"
   export FZF_CTRL_R_OPTS=$FZF_CTRL_R_OPTS
 fi
