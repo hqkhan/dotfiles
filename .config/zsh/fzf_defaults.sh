@@ -42,8 +42,8 @@ fi
 # https://github.com/sharkdp/fd
 if command -v fd > /dev/null 2>&1; then
   FD_OPTS="--hidden --follow --exclude .git --exclude node_modules"
-  export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix --type f --type l $FD_OPTS"
-  export FZF_CTRL_T_COMMAND="fd --strip-cwd-prefix $FD_OPTS"
+  # export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix --type f --type l $FD_OPTS"
+  export FZF_DEFAULT_COMMAND="fd --type file --type symlink --strip-cwd-prefix $FD_OPTS"
+  export FZF_CTRL_T_COMMAND="fd --strip-cwd-prefix -I $FD_OPTS"
   export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS"
-  # export FZF_ALT_C_COMMAND="fd --type d $FD_OPTS . ~"
 fi
