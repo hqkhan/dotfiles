@@ -107,6 +107,7 @@ map_fzf('n', '<leader>fo', "oldfiles", function()
 end)
 
 -- LSP
+map_fzf("n", "<leader>lf", "lsp_finder",              { desc = "location finder [LSP]" })
 map_fzf('n', "<leader>lS", "lsp_workspace_symbols",   { desc = "Workspace symbols" })
 map_fzf('n', "<leader>ls", "lsp_document_symbols",    { desc = "Document symbols" })
 map_fzf('n', "<leader>lr", "lsp_references",          { desc = "LSP references" })

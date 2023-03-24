@@ -5,7 +5,6 @@ local M = {
   event = "BufReadPost"
 }
 
-
 local function setup()
   local statusline = require "el"
   local builtin = require "el.builtin"
@@ -23,7 +22,6 @@ local function setup()
           for _, ft in ipairs({
             "fzf",
             "packer",
-            "NvimTree",
             "fugitive",
             "fugitiveblame",
           }) do
