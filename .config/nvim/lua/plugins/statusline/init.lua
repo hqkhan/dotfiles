@@ -38,25 +38,28 @@ local function setup()
         local hl_yellow = "WarningMsg"
         local hl_magenta = "WarningMsg"
         local hl_statusline = "StatusLine"
+        local hl_bg = "Normal"
         local hl_sl_magenta = "StatusLineFileName"
         local hl_darkblue = "Darkblue_tmux_bg"
         if vim.g.colors_name == "nightfly" then
           hl_green = "NightflyTurquoise"
           hl_yellow = "NightflyYellow"
           hl_magenta = "NightflyViolet"
-          -- hl_statusline = 'DiffText'
-          -- vim.cmd("hi clear StatusLine")
-          -- vim.cmd("hi! link StatusLine " .. hl_statusline)
         end
 
         local highlights = {
+          bg_fg = c.extract_hl({
+            bg = { [hl_bg] = "bg" },
+            fg = { [hl_bg] = "fg" },
+            bold = true,
+          }),
           red_fg = c.extract_hl({
-            bg = { ["Darkblue_tmux_bg"] = "bg" },
+            bg = { [hl_bg] = "bg" },
             fg = { [hl_red] = "fg" },
             bold = true,
           }),
           green_tmux_fg = c.extract_hl({
-            bg = { ["Darkblue_tmux_bg"] = "bg" },
+            bg = { [hl_bg] = "bg" },
             fg = { [hl_green] = "fg" },
             bold = true,
           }),
@@ -66,7 +69,7 @@ local function setup()
             bold = true,
           }),
           yellow_fg = c.extract_hl({
-            bg = { ["Darkblue_tmux_bg"] = "bg" },
+            bg = { [hl_bg] = "bg" },
             fg = { [hl_yellow] = "fg" },
             bold = true,
           }),
@@ -147,7 +150,7 @@ local function setup()
             hl_select = hl_green
           end
           return c.extract_hl({
-            bg = { [hl_darkblue] = "bg" },
+            bg = { [hl_statusline] = "bg" },
             fg = { [hl_select] = "fg" },
             bold = true,
           })
@@ -191,8 +194,34 @@ local function setup()
           -- Left
           -- { c.mode { modes = modes, fmt = " %s %s ", icon = "", hl_icon_only = false } },
           -- Git
-          { c.git_branch { fmt = " %s %s ", icon = "", hl = highlights.git_branch_fg } },
-          { sections.highlight(highlights.git_branch_bg, ("%s"):format(signs.right_sepr)) },
+          -- { c.git_branch { fmt = " %s %s ", icon = "", hl = highlights.git_branch_fg } },
+          -- { sections.highlight(highlights.git_branch_bg, ("%s"):format(signs.right_sepr)) },
+
+          -- Buffer change counts
+          {
+            c.git_changes_buf {
+              fmt = "%s",
+              icon_insert = " ",
+              icon_change = " ",
+              icon_delete = " ",
+              hl_insert = get_darkblue_hl("green"),
+              hl_change = get_darkblue_hl("yellow"),
+              hl_delete = get_darkblue_hl("red"),
+            }
+          },
+
+          -- LSP Diagnostics
+          {
+            c.diagnostics {
+              fmt = "%s", lsp = false,
+              hl_lsp_srv = highlights.lsp_srv,
+              hl_err = highlights.red_fg,
+              hl_warn = highlights.yellow_fg,
+              hl_info = highlights.green_tmux_fg,
+              hl_hint = highlights.magenta_fg,
+              icon_err = ' ', icon_warn = ' ', icon_info = '', icon_hint = ''
+            }
+          },
           { sections.split, required = true },
 
           -- Middle
@@ -210,36 +239,6 @@ local function setup()
           { sections.split, required = true },
 
           -- Right
-          -- LSP Diagnostics
-          { sections.highlight(highlights.darkblue_tmux_fg, ("%s"):format(signs.left_sepr))},
-          {
-            c.diagnostics {
-              fmt = "%s", lsp = true,
-              hl_lsp_srv = highlights.lsp_srv,
-              hl_err = highlights.red_fg,
-              hl_warn = highlights.yellow_fg,
-              hl_info = highlights.green_tmux_fg,
-              hl_hint = highlights.magenta_fg,
-              icon_err = ' ', icon_warn = ' ', icon_info = '', icon_hint = ''
-            }
-          },
-          { sections.highlight(get_darkblue_hl("yellow"), signs.left_sepr) },
-          -- { sections.highlight(get_darkblue_hl("yellow"), "]") },
-
-          -- Buffer change counts
-          { sections.highlight(get_darkblue_hl("yellow"), "[") },
-          {
-            c.git_changes_buf {
-              fmt = "%s",
-              icon_insert = "+",
-              icon_change = "~",
-              icon_delete = "-",
-              hl_insert = get_darkblue_hl("green"),
-              hl_change = get_darkblue_hl("yellow"),
-              hl_delete = get_darkblue_hl("red"),
-            }
-          },
-          { sections.highlight(get_darkblue_hl("yellow"), "]") },
 
           {
             sections.collapse_builtin {

@@ -195,7 +195,7 @@ local git_changes_formatter = function(opts)
         count = s[k]
       end
       if count and count > 0 then
-        table.insert(result, set_hl(v.hl, ("%s%d, "):format(v.icon, count)))
+        table.insert(result, set_hl(v.hl, ("%s%d "):format(v.icon, count)))
       end
     end
     return table.concat(result)
@@ -268,23 +268,21 @@ M.git_changes_all = function(opts)
     end))
 end
 
-local function lsp_srvname()
-  local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-  local clients = vim.lsp.get_active_clients()
-  if next(clients) == nil then
+local function lsp_srvname(bufnr)
+  local buf_clients = vim.lsp.buf_get_clients(bufnr)
+  if not buf_clients or #buf_clients == 0 then
     return nil
   end
-  for _, client in ipairs(clients) do
-    local filetypes = client.config.filetypes
-    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-      return client.name
-    end
+  local names = ""
+  for i, c in ipairs(buf_clients) do
+    if i > 1 then names = names .. ", " end
+    names = names .. c.name
   end
-  return nil
+  return names
 end
 
 local function diag_formatter(opts)
-  return function(_, _, counts)
+  return function(_, buffer, counts)
     local items = {}
     local icons = {
       ["errors"]   = { opts.icon_err or "E", opts.hl_err },
@@ -295,20 +293,20 @@ local function diag_formatter(opts)
     for _, k in ipairs({ "errors", "warnings", "infos", "hints" }) do
       if counts[k] > 0 then
         table.insert(items,
-          set_hl(icons[k][2], ("%s:%s "):format(icons[k][1], counts[k])))
+          set_hl(icons[k][2], ("%s:%s"):format(icons[k][1], counts[k])))
       end
     end
     local fmt = opts.fmt or "%s"
-    local lsp_name = opts.lsp and lsp_srvname()
-    if opts.hl_lsp_srv then
-      lsp_name = set_hl(opts.hl_lsp_srv, ("%s "):format(lsp_name))
+    local lsp_name = ""
+    if opts.lsp then
+      lsp_name = lsp_srvname(buffer.bufnr)
     end
     if not lsp_name and vim.tbl_isempty(items) then
       return ""
     else
       local contents = lsp_name
       if not vim.tbl_isempty(items) then
-        contents = ("%s%s"):format(lsp_name, table.concat(items, ""))
+        contents = ("%s %s"):format(lsp_name, table.concat(items, " "))
       end
       return fmt:format(contents)
     end
