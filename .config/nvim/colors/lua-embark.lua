@@ -503,14 +503,14 @@ hl.typescript = {
 
 
 hl.gitsigns = {
-  GitSignsAdd = { fg = colors.dark_green },
+  GitSignsAdd = { fg = colors.green },
   GitSignsAddLn = { fg = colors.green },
-  GitSignsChange = { fg = colors.dark_yellow },
+  GitSignsChange = { fg = colors.yellow },
   GitSignsChangeDelete = { fg = colors.yellow },
   GitSignsChangeLn = { fg = colors.yellow },
   GitSignsChangeNr = { fg = colors.dark_yellow },
   GitSignsDelete = { fg = colors.red },
-  GitSignsDeleteLn = { fg = colors.dark_red },
+  GitSignsDeleteLn = { fg = colors.red },
   GitSignsAddInline = { fg = colors.black, bg = colors.green },
   GitSignsChangeInline = { fg = colors.black, bg = colors.yellow },
   GitSignsDeleteInline = { fg = colors.black, bg = colors.red },
