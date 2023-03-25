@@ -39,3 +39,14 @@ alias dot='$HOME/bin/yadm --yadm-repo $YADM_REPO'
 
 # Git log
 alias lg="git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s' --graph --date=short --date-order"
+
+alias htop="btm"
+alias top="btm"
+alias find="fd"
+
+alias ls="exa --classify"
+alias la="exa --all --all --sort=modified --classify"
+alias ll='exa --all --long --header --sort=modified --classify'
+alias lla='exa --all -all --long --header --group --sort=modified --classify'
+alias lt='exa --tree --level=15 --classify'
+alias llt='exa --tree --all --long --level=15 --classify'

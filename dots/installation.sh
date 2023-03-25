@@ -63,6 +63,8 @@ install_cargo_tools() {
   cargo install zoxide --locked
   echo "INSTALLING bottom"
   cargo install bottom --locked
+  echo "INSTALLING exa"
+  cargo install exa
 }
 
 install_cmake() {
