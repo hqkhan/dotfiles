@@ -32,10 +32,6 @@ install_fzf() {
     yes | ~/.fzf/install
 }
 
-install_z() {
-    git clone git@github.com:rupa/z.git $HOME/z/
-}
-
 install_cargo() {
     curl https://sh.rustup.rs -sSf | sh
     source "$HOME/.cargo/env"
@@ -63,6 +59,10 @@ install_cargo_tools() {
   cargo install --locked bat
   echo "INSTALLING starship"
   cargo install starship --locked
+  echo "INSTALLING zoxide"
+  cargo install zoxide --locked
+  echo "INSTALLING bottom"
+  cargo install bottom --locked
 }
 
 install_cmake() {
@@ -80,7 +80,6 @@ install_packages() {
     #install_fzf
     #install_cargo_tools
     # install_font
-    # install_z
 }
 
 install_packages
