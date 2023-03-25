@@ -37,4 +37,5 @@ alias lc='rg --files  | xargs -d "\n" wc -l | perl -lne "\$s += \$1 if /(\d+) to
 alias yadm='$HOME/bin/yadm --yadm-repo $YADM_REPO'
 alias dot='$HOME/bin/yadm --yadm-repo $YADM_REPO'
 
+# Git log
 alias lg="git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s' --graph --date=short --date-order"

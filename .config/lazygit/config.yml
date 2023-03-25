@@ -38,8 +38,9 @@ gui:
   showCommandLog: false
   showBottomLine: false
   commandLogSize: 8
-  # authorColors: # in case you're not happy with the randomly assigned colour
-  #   'joshmedeski': '#ff0000'
+  authorColors: # in case you're not happy with the randomly assigned colour
+    'Hassaan Khan': '#ff0000'
+    'hqkhan': '#ff0000'
 git:
   paging:
     useConfig: false
@@ -53,7 +54,7 @@ git:
   skipHookPrefix: WIP
   autoFetch: true
   autoRefresh: true
-  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
+  branchLogCmd: "git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s' --graph --date=short --date-order {{branchName}}"
   allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium'
   overrideGpg: false # prevents lazygit from spawning a separate process when using GPG
   disableForcePushing: true
