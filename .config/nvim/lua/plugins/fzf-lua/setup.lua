@@ -60,7 +60,7 @@ return {
         },
         previewers = {
           bat = {
-            theme           = 'Coldark-Dark', -- bat preview theme (bat --list-themes)
+            theme           = '1337', -- bat preview theme (bat --list-themes)
           },
         },
         keymap = {

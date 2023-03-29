@@ -140,7 +140,7 @@ local function make_config()
 end
 
 local servers = {
-  'lua_ls',
+  -- 'lua_ls',
   'rust_analyzer',
   'gopls',
   'pyright',

@@ -16,7 +16,7 @@ set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
 
-map <enter> shell
+map : shell
 
 # execute current file (must be executable)
 map x $$f

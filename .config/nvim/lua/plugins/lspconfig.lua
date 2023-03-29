@@ -10,7 +10,7 @@ return {
     config = function()
       require("fidget").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer" },
+        ensure_installed = { "rust_analyzer" },
       })
       -- lazy load null-ls
       require("null-ls")
