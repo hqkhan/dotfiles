@@ -88,13 +88,6 @@ map_fzf('n', "<leader>fq", "quickfix", { desc = "Quickfix",
 
 map_fzf('n', "<leader>tm", "tmux_buffers",           { desc = "tmux buffers" })
 
--- Config files
--- map_fzf('n', "<leader>yf", "files",
---     { desc = "Grep current word",
---       cwd = '~/config',
---       winopts = small_top_big_bottom,
---     })
-
 map_fzf("n", "<leader>fO", "oldfiles", { desc = "file history (all)", cwd = "~" })
 map_fzf('n', '<leader>fo', "oldfiles", function()
   return {

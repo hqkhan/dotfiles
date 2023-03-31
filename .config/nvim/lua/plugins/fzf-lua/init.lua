@@ -5,10 +5,10 @@ local M = {
 
 function M.init()
   require("plugins.fzf-lua.mappings")
+  require("plugins.fzf-lua.cmds")
 end
 
 function M.config()
-  require("plugins.fzf-lua.cmds")
   require("plugins.fzf-lua.setup").setup()
 
   -- register fzf-lua as vim.ui.select interface
