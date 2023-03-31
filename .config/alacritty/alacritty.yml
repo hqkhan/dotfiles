@@ -102,24 +102,21 @@ key_bindings:
   - { key: U, mods: Alt|Shift, chars: "\xc2\xa8" } 
 #   - { key: E, mods: Command, chars: "\x02\"" } # split tmux window vertically
 #   - { key: E, mods: Command|Shift, chars: "\x02%" } # split tmux window horizontally
-#   - { key: F, mods: Command|Shift, chars: "\x02\x5b\x2f" } # start tmux search mode
-  - { key: F, mods: Command, chars: "lfcd\n" } # open file manager 'gokcehan/lf'
+  - { key: Slash, mods: Command, chars: "\x02\x5b\x3f" } # start tmux search mode
+  - { key: F, mods: Command|Shift, chars: "lf\r" } # open file manager 'gokcehan/lf'
+  - { key: F, mods: Command, chars: ":GoToFile\r" } # open nvim in fzf lua files mode
   - { key: G, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
   - { key: Y, mods: Command, chars: "\x02y" } # open git manager for yadm-repo 'jesseduffield/lazygit'
-#   - { key: J, mods: Command, chars: "\x02\x54" } # open t - tmux smart session manager
+  - { key: P, mods: Command, chars: "\x02Y" } # open git manager for yadm-priv-repo 'jesseduffield/lazygit'
+  - { key: J, mods: Command, chars: "\x02\x54" } # open t - tmux smart session manager
   - { key: K, mods: Command, chars: "\x02s" } # open interactive tmux session client
-#   - { key: LBracket, mods: Command, chars: "\x0f" } # navigate back (ctrl+o)
-#   - { key: LBracket, mods: Command|Shift, chars: "\x02p" } # switch to next tmux window
-#   - { key: O, mods: Command, chars: "\x02u" }
+  - { key: LBracket, mods: Command|Shift, chars: "\x02p" } # switch to next tmux window
 #   - { key: P, mods: Command|Shift, chars: ":GoToCommand\n" } # commands
 #   # - { key: Period, mods: Command, chars: "\x1b\x20\x2e\x0a" } (causes popup to be unfocused)
 #   - { key: R, mods: Command, chars: "\x1b\x5b\x41\x0a" }
-#   - { key: RBracket, mods: Command, chars: "\x09" }
-#   - { key: RBracket, mods: Command|Shift, chars: "\x02n" }
-#   - { key: S, mods: Command, chars: "\x1b\x3a\x77\x0a" } # save vim buffer
-#   - { key: S, mods: Command|Shift, chars: ":wa\n" } # save all
+  - { key: RBracket, mods: Command|Shift, chars: "\x02n" }
 #   - { key: Semicolon, mods: Command, chars: "\x02:" } # enter the tmux command prompt
-#   - { key: T, mods: Command, chars: "\x02c" } # create a new tmux window
+  - { key: T, mods: Command, chars: "\x02c" } # create a new tmux window
   - { key: W, mods: Command, chars: "\x02x" } # kill the current pane
   - { key: Z, mods: Command, chars: "\x02z" } # toggle zoom state of the current tmux pane
 
