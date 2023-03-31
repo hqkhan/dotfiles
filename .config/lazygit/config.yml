@@ -193,9 +193,9 @@ keybinding:
     amendToCommit: 'A'
     pickCommit: 'p' # pick commit (when mid-rebase)
     revertCommit: 't'
-    cherryPickCopy: 'c'
-    cherryPickCopyRange: 'C'
-    pasteCommits: 'v'
+    cherryPickCopy: 'y'
+    cherryPickCopyRange: 'Y'
+    pasteCommits: 'p'
     tagCommit: 'T'
     checkoutCommit: '<space>'
     resetCherryPick: '<c-R>'
