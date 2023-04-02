@@ -7,11 +7,10 @@ require('lsp.icons')
 require('lsp.handlers')
 
 -- Enable borders for hover/signature help
-vim.lsp.handlers['textDocument/hover'] =
-vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-vim.lsp.handlers['textDocument/signatureHelp'] =
-vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
-
+-- vim.lsp.handlers['textDocument/hover'] =
+--     vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+-- vim.lsp.handlers['textDocument/signatureHelp'] =
+--     vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 local __settings = {}
 
 -- Lua settings
@@ -79,36 +78,16 @@ __settings['lua_ls'] = {
   }
 }
 
--- use nightly rustfmt if exists
--- https://github.com/rust-lang/rust-analyzer/issues/3627
--- https://github.com/rust-lang/rust-analyzer/blob/master/docs/user/generated_config.adoc
--- local rust_analyzer, rust_analyzer_cmd = nil, { "rustup", "run", "stable", "rust-analyzer" }
--- local has_rt, rt = pcall(require, "rust-tools")
--- if has_rt then
---   rt.setup {
---     server = {
---       cmd = rust_analyzer_cmd,
---       capabilities = require('cmp_nvim_lsp').default_capabilities(),
---       on_attach = require('lsp.on_attach').on_attach,
---     },
---     tools = {
---       inlay_hints = {
---         auto = false,
---       },
---     },
---   }
--- else
---   rust_analyzer = {
---     cmd = rust_analyzer_cmd,
---   }
--- end
-
 __settings['rust_analyzer'] = {
   settings = {
     ["rust-analyzer"] = {
       rustfmt = {
         -- extraArgs = { "+nightly", },
       },
+      checkOnSave = {
+        command = "clippy",
+        extraArgs = { "--no-deps" },
+      }
     }
   }
 }
@@ -140,7 +119,7 @@ local function make_config()
 end
 
 local servers = {
-  -- 'lua_ls',
+  'lua_ls',
   'rust_analyzer',
   'gopls',
   'pyright',

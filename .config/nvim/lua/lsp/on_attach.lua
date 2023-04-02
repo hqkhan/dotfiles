@@ -72,10 +72,6 @@ local on_attach = function(client, bufnr)
   map('n', '<space>d', '<cmd>lua require("lsp.handlers").peek_definition()<CR>',
     { desc = "peek definition [LSP]" })
 
-  -- using fzf-lua instead
-  --map('n', '<leader>ls', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-  --map('n', '<leader>lS', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-
   map('n', '<leader>lt', "<cmd>lua require'lsp.diag'.toggle()<CR>",
     { desc = "toggle virtual text [LSP]" })
 

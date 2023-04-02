@@ -34,7 +34,7 @@ function M.preview_location(loc, _, _)
   vim.api.nvim_buf_set_option(buf, 'modifiable', false)
   vim.api.nvim_buf_set_option(buf, 'filetype', ft)
   vim.api.nvim_win_set_option(win, 'winhighlight', 'Normal:Normal,FloatBorder:FloatBorder')
-  vim.api.nvim_win_set_option(win, 'cursorline', true)
+  vim.api.nvim_win_set_option(win, 'cursorline', false)
   -- partial data, numbers make no sense
   vim.api.nvim_win_set_option(win, 'number', false)
   vim.api.nvim_win_set_cursor(win, {before+1,1})
