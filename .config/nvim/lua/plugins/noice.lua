@@ -23,6 +23,9 @@ function M.config()
         ["vim.lsp.util.stylize_markdown"] = true,
         ["cmp.entry.get_documentation"] = true,
       },
+      signature = {
+       enabled = false
+      }
     },
     routes = {
       {
@@ -48,6 +51,7 @@ function M.config()
       long_message_to_split = true,
       inc_rename = true,
       cmdline_output_to_split = false,
+      lsp_doc_border = true,
     },
     commands = {
       all = {
