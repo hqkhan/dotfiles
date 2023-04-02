@@ -16,5 +16,13 @@ return {
       require("null-ls")
       require("lsp")
     end
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufReadPre",
+    config = function()
+      local cfg = {}  -- add your config here
+      require "lsp_signature".setup(cfg)
+    end
   }
 }
