@@ -4,7 +4,7 @@ local M = {
 }
 
 M.tools = {
-  -- "lua-language-server",
+  "lua-language-server",
   -- "prettier",
 }
 

@@ -63,3 +63,4 @@ if command -v exa > /dev/null 2>&1; then
 fi
 
 alias :GoToFile="nvim +GoToFile"
+alias v="nvim +GoToFile"
