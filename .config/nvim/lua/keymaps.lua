@@ -157,3 +157,5 @@ map('n', '<leader>bd', '<Esc>:bd<CR>',
 
 map({ "n", "v" }, "<leader>p", '"0p', { desc = "paste AFTER  from yank (reg:0)" })
 map({ "n", "v" }, "<leader>P", '"0P', { desc = "paste BEFORE from yank (reg:0)" })
+
+map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
