@@ -5,11 +5,19 @@ return {
       -- return first matching highlight or nil
       local function hl_match(t)
         for _, h in ipairs(t) do
-          local ok, hl = pcall(vim.api.nvim_get_hl_by_name, h, true)
-          -- must have at least bg or fg, otherwise this returns
-          -- succesffully for cleared highlights (on colorscheme switch)
-          if ok and (hl.foreground or hl.background) then
-            return h
+          -- `vim.api.nvim_get_hl_by_name` is deprecated since v0.9.0
+          if vim.api.nvim_get_hl then
+            local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = h, link = false })
+            if ok and type(hl) == "table" and (hl.fg or hl.bg) then
+              return h
+            end
+          else
+            local ok, hl = pcall(vim.api.nvim_get_hl_by_name, h, true)
+            -- must have at least bg or fg, otherwise this returns
+            -- succesffully for cleared highlights (on colorscheme switch)
+            if ok and (hl.foreground or hl.background) then
+              return h
+            end
           end
         end
       end
