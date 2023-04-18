@@ -28,7 +28,7 @@ M.config = function()
     },
 
     completion = {
-      -- start completion immediately
+      -- start completion after 4 chars
       keyword_length = 4,
     },
 

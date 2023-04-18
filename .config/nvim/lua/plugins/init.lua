@@ -1,5 +1,10 @@
 return {
   {
+    "bluz71/vim-nightfly-guicolors",
+    lazy = false,
+    priority = 1000,
+  },
+  {
     "dstein64/vim-startuptime",
     cmd = "StartupTime",
   },
@@ -20,5 +25,21 @@ return {
       require("colorizer").setup()
     end,
     cmd = { "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer" },
-  }
+  },
+  {
+    "junegunn/fzf.vim",
+    enabled = false,
+    lazy = false,
+    dev = true,
+  },
+  {
+    "MunifTanjim/nui.nvim",
+    -- "VeryLazy" hides splash screen
+    event = "VeryLazy",
+  },
+  {
+    "rcarriga/nvim-notify",
+    -- "VeryLazy" hides splash screen
+    event = "VeryLazy",
+  },
 }

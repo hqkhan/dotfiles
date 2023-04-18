@@ -2,7 +2,7 @@
 gui:
   # stuff relating to the UI
   showIcons: true
-  scrollHeight: 2 # how many lines you scroll by
+  scrollHeight: 20 # how many lines you scroll by
   scrollPastBottom: true # enable scrolling past the bottom
   sidePanelWidth: 0.3333 # number from 0 to 1
   expandFocusedSidePanel: false

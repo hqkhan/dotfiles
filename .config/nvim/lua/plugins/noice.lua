@@ -5,6 +5,14 @@ local M = {
 
 function M.config()
   require("noice").setup({
+    views = {
+      cmdline_popup = {
+        position = {
+          row = "50%",
+          col = "50%",
+        },
+      }
+    },
     lsp = {
       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
       override = {
@@ -15,6 +23,10 @@ function M.config()
       signature = {
         enabled = false
       }
+    },
+    cmdline = {
+      enabled = true, -- enables the Noice cmdline UI
+      view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
     },
 
     -- you can enable a preset for easier configuration

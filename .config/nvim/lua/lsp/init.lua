@@ -8,9 +8,6 @@ require('lsp.handlers')
 
 local custom_settings = {
   ["lua_ls"] = {
-    -- uncomment to enable trace logging into:
-    -- '~/.local/share/nvim/mason/packages/lua-language-server/log'
-    -- cmd = { "lua-language-server", "--loglevel=trace" },
     settings = {
       Lua = {
         telemetry = { enable = false },
