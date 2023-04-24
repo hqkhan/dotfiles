@@ -26,6 +26,7 @@ Steps to get setup on new machine:
 - Git: [lazygit](https://github.com/jesseduffield/lazygit)
 - macOS package manager: [Homebrew](https://brew.sh)
 - Hotkeys: [Hammerspoon](https://www.hammerspoon.org/) & [skhd](https://github.com/koekeishiya/skhd/)
+- Resource Monitor: [Stats](https://github.com/exelban/stats)
 
 ## Browser setup (Firefox)
 
