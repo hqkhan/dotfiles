@@ -13,6 +13,7 @@
   "fugitive": { "branch": "master", "commit": "ef99f1d90cdb33a52931aed5868785b51fb9411d" },
   "fzf-lua": { "branch": "main", "commit": "061a4df40f5238782fdd7b380fe55650fadd9384" },
   "gitsigns.nvim": { "branch": "main", "commit": "372d5cb485f2062ac74abc5b33054abac21d8b58" },
+  "highlight-undo.nvim": { "branch": "main", "commit": "7c87a7803d347c1311a12401c6958d27d3739708" },
   "lazy.nvim": { "branch": "main", "commit": "57cce98dfdb2f2dd05a0567d89811e6d0505e13b" },
   "lf.nvim": { "branch": "master", "commit": "b88c1efa65939909da0b672e5fb755a208ade2e7" },
   "lsp_signature.nvim": { "branch": "master", "commit": "775c0cdf5be5adcc08f27c9058edb00b5b517520" },

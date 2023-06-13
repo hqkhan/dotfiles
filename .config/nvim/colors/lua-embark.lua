@@ -633,6 +633,11 @@ hl.fzf_lua = {
   FzfLuaScrollFloatFull = { bg = colors.dark_blue },
 }
 
+-- highlight-undo
+hl.highlight_undo = {
+  HighlightUndo         = { fg = colors.black, bg = colors.green },
+}
+
 -- nvim-cmp
 hl.nvim_cmp = {
   CmpItemMenu =              { link = 'Comment' },
