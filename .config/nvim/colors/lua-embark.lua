@@ -70,7 +70,7 @@ hl.common = {
   Search =            { fg = colors.black, bg = colors.dark_yellow },
   IncSearch =         { fg = colors.black, bg = colors.yellow },
   LineNr =            { fg = colors.comment_grey_temp },
-  CursorLineNr =      { fg = colors.blue, bg = colors.black, bold = true },
+  CursorLineNr =      { fg = colors.gutter_fg_grey, bg = colors.black, bold = true },
   MatchParen =        { fg = colors.purple, bg = colors.black, bold = true, underline = true },
   ModeMsg =           { fg = colors.comment_grey, bold = true },
   MoreMsg =           { fg = colors.comment_grey, bold = true },
