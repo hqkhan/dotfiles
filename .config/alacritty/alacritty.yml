@@ -100,8 +100,8 @@ key_bindings:
   - { key: Comma, mods: Command, chars: "\x02," } # rename the current tmux window
   - { key: E, mods: Command, chars: "\x02L" } # switch to the last tmux session
   - { key: U, mods: Alt|Shift, chars: "\xc2\xa8" } 
-#   - { key: E, mods: Command, chars: "\x02\"" } # split tmux window vertically
-#   - { key: E, mods: Command|Shift, chars: "\x02%" } # split tmux window horizontally
+  - { key: Apostrophe, mods: Command|Shift, chars: "\x02%" } # split tmux window vertically
+  - { key: Apostrophe, mods: Command, chars: "\x02\"" } # split tmux window horizontally
   - { key: Slash, mods: Command, chars: "\x02\x5b\x3f" } # start tmux search mode
   - { key: F, mods: Command|Shift, chars: "lf\r" } # open file manager 'gokcehan/lf'
   - { key: F, mods: Command, chars: ":GoToFile\r" } # open nvim in fzf lua files mode
