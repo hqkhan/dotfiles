@@ -42,7 +42,6 @@ alias lg="git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x
 
 # Useful aliases
 alias mv="mv -v"
-alias cp="cp -v"
 
 if command -v btm > /dev/null 2>&1; then
   alias htop="btm"
