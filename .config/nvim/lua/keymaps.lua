@@ -158,4 +158,12 @@ map('n', '<leader>bd', '<Esc>:bd<CR>',
 map({ "n", "v" }, "<leader>p", '"0p', { desc = "paste AFTER  from yank (reg:0)" })
 map({ "n", "v" }, "<leader>P", '"0P', { desc = "paste BEFORE from yank (reg:0)" })
 
-map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- Search and Replace
+-- 'c.' for word, 'c>' for WORD
+-- 'c.' in visual mode for selection
+map("n", "c.", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]],
+  { desc = "search and replace word under cursor" })
+map("n", "c>", [[:%s/\V<C-r><C-a>//g<Left><Left>]],
+  { desc = "search and replace WORD under cursor" })
+map("x", "c.",
+  [[:<C-u>%s/\V<C-r>=luaeval("require'utils'.get_visual_selection(true)")<CR>//g<Left><Left>]], {})
