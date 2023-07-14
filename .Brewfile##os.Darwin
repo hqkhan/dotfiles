@@ -1,0 +1,22 @@
+tap "homebrew/cask-fonts"
+
+brew "awscli"
+brew "curl"
+brew "wget"
+brew "fzf"
+brew "git"
+brew "htop"
+brew "btop"
+brew "neovim"
+brew "tmux"
+brew "unison"
+brew "less"
+brew "restic"
+
+brew "python3"
+cask "stats"
+cask "alacritty"
+cask "unnaturalscrollwheels"
+cask "hammerspoon"
+
+cask "font-jetbrains-mono"

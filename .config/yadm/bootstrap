@@ -1,0 +1,174 @@
+#!/bin/sh
+
+system_type=$(uname -s)
+
+declare -a rust_utils=(
+  "exa"
+  "bat"
+  "starship"
+  "cargo-update"
+  "cargo-cache"
+  "fd-find"
+  "git-delta"
+  "ripgrep"
+  "zoxide"
+  "sd"
+  "bottom"
+)
+
+install_brew() {
+  # Proudly borrowed from:
+  # https://github.com/duckfullstop/dotfiles/blob/f734eea399a7ccd1c25b57242997e79f230abc4d/.config/yadm/bootstrap
+
+  # install Homebrew if it's missing
+  if ! command -v brew >/dev/null 2>&1; then
+    echo "Installing Homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  fi
+
+  if [ -f "$HOME/.Brewfile" ]; then
+    echo "Updating Homebrew bundle"
+    brew bundle --global
+  fi
+}
+
+install_packages() {
+  # TODO: FIX some items for linux while some for darwin
+  # brew bundle --no-lock --file=/dev/stdin <<EOF
+  # brew "awscli"
+  # brew "curl"
+  # brew "wget"
+  # brew "fzf"
+  # brew "git"
+  # brew "htop"
+  # brew "btop"
+  # brew "neovim"
+  # brew "tmux"
+  # brew "unison"
+  # brew "less"
+  # brew "python3"
+  # cask "font-jetbrains-mono"
+  # cask "stats"
+  # cask "alacritty"
+  # cask "unnaturalscrollwheels"
+  # cask "hammerspoon"
+  # EOF
+
+  # cask "bitwarden"
+}
+
+install_tmux() {
+    echo "==================================="
+    echo "INSTALLING TMUX "
+    echo "==================================="
+    cd $HOME
+    sudo yum install libevent-devel
+    sudo yum install ncurses-devel
+    git clone https://github.com/tmux/tmux.git
+    cd tmux
+    sh autogen.sh
+    ./configure && make
+    sudo cp ./tmux /usr/local/bin
+
+    echo "==================================="
+    echo "INSTALLING TPM"
+    echo "==================================="
+    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+}
+
+install_font() {
+    # insatll jetBrainsMono Nerd Font
+    cd $HOME && git clone --filter=blob:none --sparse git@github.com:ryanoasis/nerd-fonts
+    cd nerd-fonts
+    git sparse-checkout add patched-fonts/JetBrainsMono install.sh
+    ./install.sh JetBrainsMono
+}
+
+install_fzf() {
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    yes | ~/.fzf/install
+}
+
+install_cargo() {
+    # curl https://sh.rustup.rs -sSf | sh
+    curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none
+    source "$HOME/.cargo/env"
+    rustup toolchain install nightly
+}
+
+install_nvim() {
+    echo "==================================="
+    echo "INSTALLING NVIM"
+    echo "==================================="
+    cd $HOME
+    git clone git@github.com:neovim/neovim.git
+    cd neovim/
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    sudo make install
+}
+
+install_cmake() {
+  cd $HOME
+  wget https://github.com/Kitware/CMake/releases/download/v3.25.2/cmake-3.25.2-linux-x86_64.sh
+  chmod u+x cmake-3.25.2-linux-x86_64.sh
+  ./cmake-3.25.2-linux-x86_64.sh
+}
+
+install_nvm() {
+  curl -o- --tlsv1.2 https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+}
+
+configure_rust() {
+  # Rust components
+  declare -a rustup_components=(
+    "rust-docs"
+    "clippy"
+    "llvm-tools"
+    "rust-analyzer"
+    "rustfmt"
+    "cargo"
+    "rust-std"
+  )
+
+  for var in ${rustup_components[@]}
+  do
+    rustup component add $var
+    rustup component add --toolchain nightly $var
+  done
+
+  for var in ${rust_utils[@]}
+  do
+    cargo install $var --locked
+  done
+}
+
+if [ "$system_type" = "Darwin" ]; then
+  rust_utils+=("unison-fsmonitor")
+
+  # increae max watched files for unison
+  sudo sysctl kern.maxfiles=1310720 kern.maxfilesperproc=65536
+
+  # disable automatic space rearranging
+  defaults write com.apple.dock "mru-spaces" -bool "false" && killall Dock
+  # Enable Dock autohide
+  defaults write com.apple.dock autohide -bool true
+  # No app icons in the Dock
+  defaults delete com.apple.dock persistent-apps
+  defaults delete com.apple.dock persistent-others
+  killall Dock
+  
+fi
+
+# install_cmake
+# install_tmux
+# install_nvim
+# install_fzf
+# install_font
+
+#
+# install_packages
+
+install_brew
+install_cargo
+configure_rust
+install_nvm
