@@ -155,10 +155,12 @@ return {
           }}
         },
         grep = {
+          debug             = false,
+          rg_glob           = true,
           rg_opts           = "--hidden --column --line-number --no-heading " ..
                               "--color=always --smart-case -g '!{.git,node_modules,.ccls-cache}/*'",
           actions = {
-            ["ctrl-q"]       = fzf_lua.actions.file_sel_to_qf,
+            ["ctrl-q"]      = fzf_lua.actions.file_sel_to_qf,
           }
         },
         lsp                 = { symbols = { path_shorten=1 } },
