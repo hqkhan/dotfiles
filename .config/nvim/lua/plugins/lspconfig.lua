@@ -1,5 +1,7 @@
 return {
-  { "j-hui/fidget.nvim" },
+  { "j-hui/fidget.nvim",
+   tag = "legacy"
+  },
   { "williamboman/mason-lspconfig.nvim" },
   {
     "neovim/nvim-lspconfig",
