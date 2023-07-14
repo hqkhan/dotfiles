@@ -103,7 +103,8 @@ key_bindings:
   - { key: Apostrophe, mods: Command|Shift, chars: "\x02%" } # split tmux window vertically
   - { key: Apostrophe, mods: Command, chars: "\x02\"" } # split tmux window horizontally
   - { key: Slash, mods: Command, chars: "\x02\x5b\x3f" } # start tmux search mode
-  - { key: F, mods: Command|Shift, chars: "lf\r" } # open file manager 'gokcehan/lf'
+  # - { key: F, mods: Command|Shift, chars: "lf\r" } # open file manager 'gokcehan/lf'
+  - { key: F, mods: Command|Shift, chars: "\x02v" } # search stdout from last executed output
   - { key: F, mods: Command, chars: ":GoToFile\r" } # open nvim in fzf lua files mode
   - { key: G, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
   - { key: Y, mods: Command, chars: "\x02y" } # open git manager for yadm-repo 'jesseduffield/lazygit'
