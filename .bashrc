@@ -103,5 +103,3 @@ LS_COLORS='rs=0:di=1;35:ln=4;94;1:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:c
 export LS_COLORS
 EXA_COLORS='ln=4;34'
 export EXA_COLORS
-
-export PATH=$PATH:/usr/local/go/bin
