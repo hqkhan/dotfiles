@@ -158,7 +158,7 @@ return {
           debug             = false,
           rg_glob           = true,
           rg_opts           = "--hidden --column --line-number --no-heading " ..
-                              "--color=always --smart-case -g '!{.git,node_modules,.ccls-cache}/*'",
+                              "--color=always --smart-case -g '!{.git,node_modules,.ccls-cache}/*' -e",
           actions = {
             ["ctrl-q"]      = fzf_lua.actions.file_sel_to_qf,
           }
