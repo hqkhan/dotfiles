@@ -46,7 +46,7 @@ map_fzf('n', "<Space><CR>", "buffers",          { desc = "Buffers",
 })
 
 -- Git
-map_fzf('n', "<leader>bcm", "git_bcommits",     { desc = "Git buffer commits" })
+map_fzf({'n', 'v'}, "<leader>bcm", "git_bcommits",     { desc = "Git buffer commits" })
 map_fzf('n', "<leader>cm", "git_commits",       { desc = "Git commits" })
 map_fzf('n', "<C-g>", "git_files",              { desc = "Git Files" })
 map_fzf('n', "<leader>co", "git_branches",      { desc = "Checkout git branches" })
@@ -170,7 +170,7 @@ map_fzf("n", "<leader>yb", "git_branches",
   vim.tbl_extend("force", yadm_git_opts, { desc = "yadm branches" }))
 map_fzf("n", "<leader>ycm", "git_commits",
   vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (project)" }))
-map_fzf("n", "<leader>ybcm", "git_bcommits",
+map_fzf({'n', 'v'}, "<leader>ybcm", "git_bcommits",
   vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (buffer)" }))
 
 map_fzf("n", "<leader>yS", "git_status",
