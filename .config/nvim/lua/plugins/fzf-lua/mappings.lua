@@ -146,11 +146,11 @@ map_fzf("n", "<c-t>", "workdirs", { desc = "cwd workdirs",
 })
 
 -- yadm repo
-local yadm_git_dir = "$HOME/dots/yadm-repo"
+local yadm_git_dir = os.getenv("YADM_REPO")
 local yadm_cmd = string.format("yadm -C $HOME --yadm-repo %s", yadm_git_dir)
 local yadm_git_opts = {
   show_cwd_header = false,
-  git_dir = "$HOME/dots/yadm-repo",
+  git_dir = yadm_git_dir,
 }
 local yadm_grep_opts = {
   prompt = "YadmGrep❯ ",
