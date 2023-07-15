@@ -34,8 +34,7 @@ alias what-shell="ps -p $$"
 # line count current directory
 alias lc='rg --files  | xargs -d "\n" wc -l | perl -lne "\$s += \$1 if /(\d+) total/; END{print \$s}"'
 
-alias yadm='$HOME/bin/yadm --yadm-repo $YADM_REPO'
-alias dot='$HOME/bin/yadm --yadm-repo $YADM_REPO'
+alias dot="git -c status.showUntrackedFiles=no --git-dir=${YADM_REPO} -C ${HOME}"
 
 # Git log
 # https://stackoverflow.com/a/34467298 <- other options

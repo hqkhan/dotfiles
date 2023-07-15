@@ -52,46 +52,44 @@ map_fzf('n', "<C-g>", "git_files",              { desc = "Git Files" })
 map_fzf('n', "<leader>co", "git_branches",      { desc = "Checkout git branches" })
 
 -- Grep
-map_fzf('n', "<leader>rg", "grep",              { desc = "Grep" })
-
-map_fzf("n", "<leader>cW", "grep_cword", { desc = "grep <word> (project)" })
-
+map_fzf('n', "<leader>rg", "grep_curbuf",       { desc = "Grep current buffer" })
+map_fzf("n", "<leader>cW", "grep_cword",        { desc = "grep <word> (project)" })
 map_fzf('n', '<leader>cw', "grep_curbuf", function()
-  return {
-    desc = 'Live grep current buffer',
+  return                                        { desc = 'Live grep current buffer',
     prompt = 'Buffer❯ ',
     winopts = small_top_big_bottom,
     search = vim.fn.expand("<cword>"),
   }
 end)
 
+map_fzf("v", "<leader>lg", "grep_visual", { desc = "grep visual selection" })
+
 map_fzf('n', "<leader>lG", "live_grep",
-    function() return { desc = "Live grep (project)",
+    function() return                           { desc = "Live grep (project)",
     winopts = small_top_big_bottom,
 }end)
 map_fzf('n', "<leader>lg", "lgrep_curbuf",
-    function() return { desc = "Live grep current buffer",
+    function() return                           { desc = "Live grep current buffer",
       winopts = small_top_big_bottom,
 }end)
 
-map_fzf('n', "<leader>bl", "blines", { desc = "buffer lines",
+map_fzf('n', "<leader>bl", "blines",            { desc = "buffer lines",
       winopts = small_top_big_bottom,
 })
 
-map_fzf('n', "<leader>LG", "live_grep_resume", { desc = "Live grep resume",
+map_fzf('n', "<leader>LG", "live_grep_resume",  { desc = "Live grep resume",
       winopts = small_top_big_bottom,
 })
 
-map_fzf('n', "<leader>fq", "quickfix", { desc = "Quickfix",
+map_fzf('n', "<leader>fq", "quickfix",          { desc = "Quickfix",
       winopts = small_top_big_bottom,
 })
 
-map_fzf('n', "<leader>tm", "tmux_buffers",           { desc = "tmux buffers" })
+map_fzf('n', "<leader>tm", "tmux_buffers",      { desc = "tmux buffers" })
 
-map_fzf("n", "<leader>fO", "oldfiles", { desc = "file history (all)", cwd = "~" })
+map_fzf("n", "<leader>fO", "oldfiles",          { desc = "file history (all)", cwd = "~" })
 map_fzf('n', '<leader>fo', "oldfiles", function()
-  return {
-    desc = 'file history (cwd)',
+  return                                        { desc = 'file history (cwd)',
     cwd = vim.loop.cwd(),
     show_cwd_header = true,
     cwd_only = true,
@@ -145,17 +143,23 @@ map_fzf("n", "<c-t>", "workdirs", { desc = "cwd workdirs",
   }
 })
 
+map_fzf("n", "<leader>li", "get_lines_within_indent", { desc = "Lgrep in current context",
+  winopts = small_top_big_bottom
+})
+
 -- yadm repo
-local yadm_git_dir = os.getenv("YADM_REPO")
-local yadm_cmd = string.format("yadm -C $HOME --yadm-repo %s", yadm_git_dir)
 local yadm_git_opts = {
-  show_cwd_header = false,
-  git_dir = yadm_git_dir,
+  cwd_header = false,
+  cwd = "$HOME",
+  git_dir = "$YADM_REPO",
+  git_worktree = "$HOME",
+  git_config = "status.showUntrackedFiles=no",
 }
 local yadm_grep_opts = {
   prompt = "YadmGrep❯ ",
+  cwd_header = false,
   cwd = "$HOME",
-  cmd = ("%s grep --line-number --column --color=always"):format(yadm_cmd),
+  cmd = "git --git-dir=${YADM_REPO} -C ${HOME} grep --line-number --column --color=always",
   rg_glob = false, -- this isn't `rg`
 }
 

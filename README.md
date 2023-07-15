@@ -8,8 +8,8 @@ Steps to get setup on new machine:
 ❯ git clone https://github.com/hqkhan/yadm-config.git $HOME/dots
 # deploys the files in this repository into "$HOME"
 ❯ ./dots/install.sh
-# Run yadm bootstrap script
-❯ yadm bootstrap
+# Run bootstrap script
+❯ ./dots/bootstrap
 ```
 
 # Config
@@ -36,3 +36,7 @@ Steps to get setup on new machine:
 - [Darkreader](https://darkreader.org/)
 - [TamperMonkey](https://www.tampermonkey.net/)
 - [SurfingKeys](https://github.com/brookhong/Surfingkeys)
+
+## Useful References
+- [Managing dotfiles with bare git
+  repo](https://www.ackama.com/what-we-think/the-best-way-to-store-your-dotfiles-a-bare-git-repository-explained/)

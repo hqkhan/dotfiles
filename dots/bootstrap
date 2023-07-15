@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 system_type=$(uname -s)
 
@@ -19,6 +19,7 @@ declare -a rust_utils=(
 install_brew() {
   # Proudly borrowed from:
   # https://github.com/duckfullstop/dotfiles/blob/f734eea399a7ccd1c25b57242997e79f230abc4d/.config/yadm/bootstrap
+  BREWFILE_DIR=$XDG_CONFIG_HOME/Brews
 
   # install Homebrew if it's missing
   if ! command -v brew >/dev/null 2>&1; then
@@ -26,34 +27,17 @@ install_brew() {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   fi
 
+  
   if [ -f "$HOME/.Brewfile" ]; then
     echo "Updating Homebrew bundle"
     brew bundle --global
+    brew bundle install --file=$BREWFILE_DIR/Brewfile_generic
   fi
-}
 
-install_packages() {
-  # TODO: FIX some items for linux while some for darwin
-  # brew bundle --no-lock --file=/dev/stdin <<EOF
-  # brew "awscli"
-  # brew "curl"
-  # brew "wget"
-  # brew "fzf"
-  # brew "git"
-  # brew "htop"
   # brew "btop"
-  # brew "neovim"
-  # brew "tmux"
-  # brew "unison"
-  # brew "less"
-  # brew "python3"
-  # cask "font-jetbrains-mono"
-  # cask "stats"
-  # cask "alacritty"
-  # cask "unnaturalscrollwheels"
-  # cask "hammerspoon"
-  # EOF
-
+  if [ "$system_type" = "Darwin" ]; then
+    brew bundle install --file=$BREWFILE_DIR/Brewfile_macos
+  fi
   # cask "bitwarden"
 }
 
@@ -115,7 +99,9 @@ install_cmake() {
 }
 
 install_nvm() {
-  curl -o- --tlsv1.2 https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+  if ! command -v nvm >/dev/null 2>&1; then
+    curl -o- --tlsv1.2 https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+  fi
 }
 
 configure_rust() {
@@ -165,10 +151,8 @@ fi
 # install_fzf
 # install_font
 
-#
-# install_packages
-
 install_brew
-install_cargo
-configure_rust
-install_nvm
+# install_packages
+# install_cargo
+# configure_rust
+# install_nvm

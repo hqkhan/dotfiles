@@ -1,0 +1,7 @@
+tap "homebrew/cask-fonts"
+brew "python3"
+cask "stats"
+cask "alacritty"
+cask "unnaturalscrollwheels"
+cask "hammerspoon"
+cask "font-jetbrains-mono"
