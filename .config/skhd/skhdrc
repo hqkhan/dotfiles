@@ -3,3 +3,4 @@ cmd - b : open -a /Applications/Firefox.app
 cmd - s : open -a /Applications/Slack.app
 cmd - o : open -a /Applications/Microsoft\ Outlook.app
 cmd - h : open -a /Applications/Amazon\ Chime.app
+cmd - i : open -a /Applications/Cisco/Cisco\ AnyConnect\ Secure\ Mobility\ Client.app
