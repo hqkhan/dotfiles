@@ -50,6 +50,7 @@ map_fzf({'n', 'v'}, "<leader>bcm", "git_bcommits",     { desc = "Git buffer comm
 map_fzf('n', "<leader>cm", "git_commits",       { desc = "Git commits" })
 map_fzf('n', "<C-g>", "git_files",              { desc = "Git Files" })
 map_fzf('n', "<leader>co", "git_branches",      { desc = "Checkout git branches" })
+map_fzf('v', "<leader>gbl", "git_bcommits",     { desc = "Git buffer commits" })
 
 -- Grep
 map_fzf('n', "<leader>rg", "grep_curbuf",       { desc = "Grep current buffer" })
@@ -175,6 +176,8 @@ map_fzf("n", "<leader>yb", "git_branches",
 map_fzf("n", "<leader>ycm", "git_commits",
   vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (project)" }))
 map_fzf({'n', 'v'}, "<leader>ybcm", "git_bcommits",
+  vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (buffer)" }))
+map_fzf('v', "<leader>ybl", "git_bcommits",
   vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (buffer)" }))
 
 map_fzf("n", "<leader>yS", "git_status",
