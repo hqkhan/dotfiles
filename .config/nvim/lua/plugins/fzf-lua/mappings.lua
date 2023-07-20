@@ -54,6 +54,7 @@ map_fzf('v', "<leader>gbl", "git_bcommits",     { desc = "Git buffer commits" })
 
 -- Grep
 map_fzf('n', "<leader>rg", "grep_curbuf",       { desc = "Grep current buffer" })
+map_fzf('n', "<leader>rG", "grep",              { desc = "Grep Project" })
 map_fzf("n", "<leader>cW", "grep_cword",        { desc = "grep <word> (project)" })
 map_fzf('n', '<leader>cw', "grep_curbuf", function()
   return                                        { desc = 'Live grep current buffer',
