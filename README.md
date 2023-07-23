@@ -35,7 +35,8 @@ Steps to get setup on new machine:
 - [Tree Style Tab](https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/) + [AutoTabDiscard](https://webextension.org/listing/tab-discard.html)
 - [Darkreader](https://darkreader.org/)
 - [TamperMonkey](https://www.tampermonkey.net/)
-- [SurfingKeys](https://github.com/brookhong/Surfingkeys)
+- [Vimium](https://github.com/philc/vimium)
+
 
 ## Useful References
 - [Managing dotfiles with bare git
