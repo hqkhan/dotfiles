@@ -13,18 +13,31 @@ Install:andUse("WindowHalfsAndThirds",
                    use_frame_correctness = true
                  },
                  hotkeys = 'default',
---                 loglevel = 'debug'
+                -- loglevel = 'debug'
                }
 )
 
-Install:andUse("TextClipboardHistory",
+--[[ Install:andUse("TextClipboardHistory",
                {
                  -- disable = true,
                  config = {
                    show_in_menubar = false,
                  },
                  hotkeys = {
-                   toggle_clipboard = { { "cmd", "shift" }, "v" } },
+                   toggle_clipboard = { { "cmd", "shift" }, "v" }
+                 },
+                 start = true,
+               }
+) ]]
+
+Install:andUse("ClipboardTool",
+               {
+                 config = {
+                   show_in_menubar = false,
+                 },
+                 hotkeys = {
+                   toggle_clipboard = { { "cmd", "shift" }, "v" }
+                 },
                  start = true,
                }
 )
@@ -34,7 +47,7 @@ Install:andUse("Caffeine", {
                  hotkeys = {
                    toggle = { hyper, "1" }
                  },
---                 fn = BTT_caffeine_widget,
+                -- fn = BTT_caffeine_widget,
 })
 Install:andUse("ReloadConfiguration", {
                  start = true,
