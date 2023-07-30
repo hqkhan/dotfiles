@@ -35,7 +35,7 @@ Steps to get setup on new machine:
 - [Tree Style Tab](https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/) + [AutoTabDiscard](https://webextension.org/listing/tab-discard.html)
 - [Darkreader](https://darkreader.org/)
 - [TamperMonkey](https://www.tampermonkey.net/)
-- [Vimium](https://github.com/philc/vimium)
+- [Vimium](https://github.com/philc/vimium) | [Config](https://gist.github.com/hqkhan/1c7b935a0a98f0feb95b6a2969d2f390)
 
 
 ## Useful References
