@@ -66,7 +66,9 @@ end)
 
 -- Normal binds
 local select_all = hs.hotkey.new({"ctrl"}, "a", nil, function() hs.eventtap.keyStroke({"cmd"}, "a") end)
-local delete = hs.hotkey.new({"cmd"}, "delete", nil, function() hs.eventtap.keyStroke({"option"}, "delete") end)
+-- local delete = hs.hotkey.new({"cmd"}, "delete", nil, function() hs.eventtap.keyStroke({"option"}, "delete") end)
+local word_left = hs.hotkey.new({"alt"}, "h", nil, function() hs.eventtap.keyStroke({"option"}, "left") end)
+local word_right = hs.hotkey.new({"alt"}, "l", nil, function() hs.eventtap.keyStroke({"option"}, "right") end)
 
 local up = hs.hotkey.new({"ctrl"}, "k", nil, function() hs.eventtap.keyStroke({}, "up") end)
 local down = hs.hotkey.new({"ctrl"}, "j", nil, function() hs.eventtap.keyStroke({}, "down") end)
@@ -82,24 +84,27 @@ OutlookCalInbox
     :subscribe(hs.window.filter.windowFocused, function()
         up:enable()
         down:enable()
+        word_left:enable()
+        word_right:enable()
     end)
     :subscribe(hs.window.filter.windowUnfocused, function()
         up:disable()
         down:disable()
+        word_left:disable()
+        word_right:disable()
     end)
 
 -- Slack
-local slack_k = hs.hotkey.new({"ctrl"}, "k", nil, function() hs.eventtap.keyStroke({"cmd"}, "k") end)
 local Slack_Hotkey = hs.window.filter.new("Slack")
 
 Slack_Hotkey
     :subscribe(hs.window.filter.windowFocused, function()
-        slack_k:enable()
-        delete:enable()
+        word_left:enable()
+        word_right:enable()
     end)
     :subscribe(hs.window.filter.windowUnfocused, function()
-        slack_k:disable()
-        delete:disable()
+        word_left:disable()
+        word_right:disable()
     end)
 
 -- Chrome
@@ -108,10 +113,12 @@ Firefox
     :subscribe(hs.window.filter.windowFocused, function()
         up:enable()
         down:enable()
-        delete:enable()
+        word_left:enable()
+        word_right:enable()
     end)
     :subscribe(hs.window.filter.windowUnfocused, function()
-        delete:disable()
         up:disable()
         down:disable()
+        word_left:disable()
+        word_right:disable()
     end)
