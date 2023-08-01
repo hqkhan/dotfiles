@@ -4,7 +4,6 @@ end
 
 local Job = require "plenary.job"
 local el_sub = require "el.subscribe"
-local noice = require("noice").api.statusline.mode
 
 local M = {}
 
@@ -121,12 +120,6 @@ M.file_icon = function(opts)
       end
       return ""
     end))
-end
-
-M.macro = function(opts)
-  if noice.has then
-    return noice.get
-  end
 end
 
 M.git_branch = function(opts)
