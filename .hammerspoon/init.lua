@@ -47,7 +47,6 @@ Install:andUse("Caffeine", {
                  hotkeys = {
                    toggle = { hyper, "1" }
                  },
-                -- fn = BTT_caffeine_widget,
 })
 Install:andUse("ReloadConfiguration", {
                  start = true,
@@ -66,7 +65,7 @@ end)
 
 -- Normal binds
 local select_all = hs.hotkey.new({"ctrl"}, "a", nil, function() hs.eventtap.keyStroke({"cmd"}, "a") end)
--- local delete = hs.hotkey.new({"cmd"}, "delete", nil, function() hs.eventtap.keyStroke({"option"}, "delete") end)
+local delete = hs.hotkey.new({"cmd"}, "delete", nil, function() hs.eventtap.keyStroke({"option"}, "delete") end)
 local word_left = hs.hotkey.new({"alt"}, "h", nil, function() hs.eventtap.keyStroke({"option"}, "left") end)
 local word_right = hs.hotkey.new({"alt"}, "l", nil, function() hs.eventtap.keyStroke({"option"}, "right") end)
 
