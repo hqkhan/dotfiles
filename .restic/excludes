@@ -1,0 +1,172 @@
+$HOME/.restic/repo
+$HOME/.ssh/id*
+$HOME/.aws
+$HOME/.config/bat/themes
+$HOME/.cargo
+$HOME/.local/bin
+$HOME/.local/include
+$HOME/.local/lib
+$HOME/.cdk
+$HOME/.gradle
+$HOME/.android
+$HOME/.rustup
+$HOME/.cache
+$HOME/.npm
+$HOME/.unison/backup
+$HOME/.local/share/fish/generated_completions
+$HOME/.local/share/fonts
+$HOME/git/**/target
+.pyenv
+.mypy_cache
+.cups
+.docker
+.ivy2
+.oracle_jre_usage
+.idea-build
+.nvm
+.runtimes
+.gnupg
+.Trash
+.DS_Store
+.vscode
+.ansible
+.gem
+.CFUserTextEncoding
+.DocumentRevisions-V100
+.MobileBackups
+.MobileBackups.trash
+.Spotlight-V100
+.TemporaryItems
+.Trash
+.Trashes
+.dbfseventsd
+.dropbox
+.dropbox.cache
+.fseventsd
+.hotfiles.btree
+.vol
+Backups.backupdb
+Cache
+Downloads
+DerivedData
+node_modules
+Logs
+iTunes/iTunes Media/Downloads
+iTunes/iTunes Media/Podcasts
+iTunes/Album Artwork
+iTunes/Previous iTunes Libraries
+Library/Application Support/CrashReporter
+Library/Application Support/Dropbox
+Library/Application Support/MobileSync/Backup
+Library/Caches
+Library/Developer
+Library/Google/GoogleSoftwareUpdate
+Library/Metadata/CoreSpotlight
+Library/Mirrors
+Library/PubSub/Database
+Library/PubSub/Downloads
+Library/PubSub/Feeds
+Library/Safari/Favicon Cache
+Library/Safari/Icons.db
+Library/Safari/Touch Icons Cache
+Library/Safari/WebpageIcons.db
+Library/Safari/HistoryIndex.sk
+MailData/AvailableFeeds
+MailData/BackingStoreUpdateJournal
+MailData/Envelope Index
+MailData/Envelope Index-journal
+MailData/Envelope Index-shm
+MailData/Envelope Index-wal
+/.DS_Store
+/.VolumeIcon.icns
+/.fseventsd
+/.vol
+/.file
+.cache
+.cargo
+.rustup
+.npm
+.unison/*.log
+.aws
+.local/bin
+/usr/local/Cellar
+/usr/local/Caskroom
+/usr/local/Homebrew
+.gem
+.cdk
+.docker
+.gradle
+.unison.*.tmp
+*WorkDocs*
+/Applications/*
+.localized
+.bash_history
+.cisco
+$HOME/.config/nvm
+$HOME/.config/nvim
+.ivy2
+$HOME/.local/share/yarn
+.nvm
+.oh-my-zsh
+.runtimes
+.SpaceVim*
+.tldrc
+$HOME/.vscode
+$HOME/Music
+$HOME/Movies
+$HOME/Pictures
+.DS_Store
+$HOME/Library/Application Support/Adobe
+$HOME/Library/Application Support/Adium*
+$HOME/Library/Application Support/Arq*
+$HOME/Library/Application Support/Adobe
+$HOME/Library/Application Support/Code
+$HOME/Library/Application Support/Caches
+$HOME/Library/Application Support/Cypress
+$HOME/Library/Application Support/discord
+$HOME/Library/Application Support/Docker*
+$HOME/Library/Application Support/Plexamp
+$HOME/Library/Application Support/*Signal*
+$HOME/Library/Application Support/Spotify
+$HOME/Library/Application Support/Google
+$HOME/Library/Application Support/JetBrains
+$HOME/Library/Application Support/Microsoft*
+$HOME/Library/Application Support/Firefox/Profiles/*-nightly
+$HOME/Library/Application Support/SoundSource
+$HOME/Library/Containers/com.apple.*
+$HOME/Library/Containers/*bitwarden*
+$HOME/Library/Containers/*Safari*
+$HOME/Library/Containers/*docker*
+$HOME/Library/Containers/*slack*
+$HOME/Library/Containers/*Telegram*
+$HOME/Library/Containers/*microsoft*
+$HOME/Library/Containers/*Microsoft*
+$HOME/Library/Containers/*quip*
+$HOME/Library/Fonts
+$HOME/Library/Mail
+$HOME/Library/News
+$HOME/Library/Messages
+$HOME/Library/Python
+$HOME/Library/Printers
+$HOME/Library/WebKit
+$HOME/Library/Trial
+$HOME/Library/Group Containers/*Office*
+$HOME/Library/Group Containers/*docker*
+$HOME/Library/Group Containers/*Telegram*
+$HOME/Library/Group Containers/*com.apple*
+$HOME/Library/LanguageModeling
+/Library/Application Support/Logic
+/Library/Application Support/Microsoft
+/Library/Application Support/Adobe
+/Library/Application Support/GarageBand
+*-wal
+*-shm
+$HOME/.config/tmux/plugins/
+$HOME/.config/zsh
+$HOME/config
+$HOME/dots/yadm-repo
+$HOME/dots/yadm-project
+$HOME/go
+$HOME/.local/share/nvim
+$HOME/.fzf
+$HOME/.tmux

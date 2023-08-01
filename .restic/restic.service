@@ -1,0 +1,9 @@
+[Unit]
+Description=Restic backup service
+
+[Service]
+Type=oneshot
+# AWS exceedes the unauth github limit, so have to remember to do this manually sometimes
+EnvironmentFile=/local/home/hqkhan/.restic/restic-backup.conf
+ExecStart=/home/linuxbrew/.linuxbrew/bin/restic backup --verbose --tag systemd.timer $BACKUP_EXCLUDES $BACKUP_INCLUDES
+ExecStartPost=/home/linuxbrew/.linuxbrew/bin/restic forget --verbose --tag systemd.timer --group-by "paths,tags" --keep-daily $RETENTION_DAYS --keep-weekly $RETENTION_WEEKS --keep-monthly $RETENTION_MONTHS --keep-yearly $RETENTION_YEARS --prune
