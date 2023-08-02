@@ -120,6 +120,9 @@ key_bindings:
   - { key: W, mods: Command, chars: "\x02x" } # kill the current pane
   - { key: Z, mods: Command, chars: "\x02z" } # toggle zoom state of the current tmux pane
 
+  - { key: A, mods: Alt, chars: "\x1ba" } # Send Alt key + a for fzf all selection instead of special character
+  - { key: D, mods: Alt, chars: "\x1bd" } # Send Alt key + d for fzf all selection instead of special character
+
 import:
   - ~/.config/alacritty/embark.yaml
 
