@@ -41,19 +41,20 @@ Install:andUse("ClipboardTool",
                  start = true,
                }
 )
-
 Install:andUse("Caffeine", {
                  start = true,
                  hotkeys = {
                    toggle = { hyper, "1" }
                  },
 })
+spoon.Caffeine:setState(true) 
+
 Install:andUse("ReloadConfiguration", {
                  start = true,
                  hotkeys = {
                    reloadConfiguration = { ctrl_cmd, "r" }
                  },
-               })
+})
 
 -- Dismiss outlook events
 local DismissHotkey = hs.hotkey.bind({ "cmd", "ctrl" }, "d", function()
