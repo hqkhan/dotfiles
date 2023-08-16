@@ -69,8 +69,7 @@ install_font() {
 }
 
 install_fzf() {
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    yes | ~/.fzf/install
+    yes | $(brew --prefix)/opt/fzf/install
 }
 
 install_cargo() {
