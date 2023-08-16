@@ -154,6 +154,7 @@ return {
           preview_pager = vim.fn.executable("delta") == 1 and "delta --width=$FZF_PREVIEW_COLUMNS",
           actions       = {
             ['default'] = git_commit_edit_func,
+            ['ctrl-y'] = fzf_lua.actions.git_yank_commit,
             ["ctrl-n"] = git_commit_diff_func
           }
         },

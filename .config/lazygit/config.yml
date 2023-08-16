@@ -147,7 +147,7 @@ keybinding:
     filteringMenu: '<c-s>'
     diffingMenu: 'W'
     diffingMenu-alt: '<c-e>' # deprecated
-    copyToClipboard: '<c-o>'
+    copyToClipboard: '<c-y>'
     submitEditorText: '<enter>'
     appendNewline: '<a-enter>'
     extrasMenu: '@'
@@ -199,7 +199,7 @@ keybinding:
     tagCommit: 'T'
     checkoutCommit: '<space>'
     resetCherryPick: '<c-R>'
-    copyCommitMessageToClipboard: '<c-y>'
+    copyCommitMessageToClipboard: '<c-o>'
   stash:
     popStash: 'g'
   commitFiles:
