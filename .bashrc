@@ -67,10 +67,6 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# User specific aliases and functions
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 export COLORTERM="truecolor"
 alias ss="source ~/.bashrc"
 
@@ -103,3 +99,7 @@ LS_COLORS='rs=0:di=1;35:ln=4;94;1:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:c
 export LS_COLORS
 EXA_COLORS='ln=4;34'
 export EXA_COLORS
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+LINUXBREW_PATH=/home/linuxbrew/.linuxbrew/bin
+export PATH=$LINUXBREW_PATH:$PATH
