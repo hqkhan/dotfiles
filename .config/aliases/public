@@ -43,11 +43,6 @@ alias lg="git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x
 # Useful aliases
 alias mv="mv -v"
 
-if command -v btm > /dev/null 2>&1; then
-  alias htop="btm"
-  alias top="btm"
-fi
-
 if command -v exa > /dev/null 2>&1; then
   alias ls="exa --classify"
   alias la="exa --all --all --sort=modified --classify"
