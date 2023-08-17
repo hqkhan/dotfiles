@@ -41,13 +41,13 @@ Install:andUse("ClipboardTool",
                  start = true,
                }
 )
-Install:andUse("Caffeine", {
+--[[ Install:andUse("Caffeine", {
                  start = true,
                  hotkeys = {
                    toggle = { hyper, "1" }
                  },
-})
-spoon.Caffeine:setState(true) 
+}) ]]
+-- spoon.Caffeine:setState(true) 
 
 Install:andUse("ReloadConfiguration", {
                  start = true,
