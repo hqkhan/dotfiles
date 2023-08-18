@@ -32,7 +32,7 @@ yabai -m config left_padding 0
 # NOTE: for OBS floating head
 # yabai -m config left_padding                 450
 yabai -m config right_padding 0
-yabai -m config window_gap 1
+yabai -m config window_gap 5
 
 # apps to not manage (ignore)
 yabai -m rule --add app="^System Settings$" manage=off
