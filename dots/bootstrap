@@ -14,6 +14,7 @@ declare -a rust_utils=(
   "zoxide"
   "sd"
   "bottom"
+  "topgrade"
 )
 
 install_brew() {
@@ -38,6 +39,7 @@ install_brew() {
   if [ "$system_type" = "Darwin" ]; then
     brew bundle install --file=$BREWFILE_DIR/Brewfile_macos
   fi
+
   # cask "bitwarden"
 }
 
@@ -125,6 +127,12 @@ configure_rust() {
   do
     cargo install $var --locked
   done
+
+  # Setup topgrade symlink 
+  ln -sf $HOME/.config/topgrade/topgrade_linux.toml $HOME/.config/topgrade/topgrade.toml
+  if [ "$system_type" = "Darwin" ]; then
+    ln -sf $HOME/.config/topgrade/topgrade_darwin.toml $HOME/.config/topgrade/topgrade.toml
+  else
 }
 
 if [ "$system_type" = "Darwin" ]; then
@@ -148,8 +156,6 @@ if [ "$system_type" = "Darwin" ]; then
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 80 "{enabled = 0; value = { parameters = (65535, 123, 8781824); type = standard;};}"
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 "{enabled = 0; value = { parameters = (65535, 124, 8650752); type = standard;};}"
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 82 "{enabled = 0; value = { parameters = (65535, 124, 8781824); type = standard;};}"
-
-  
 fi
 
 # install_cmake
@@ -159,7 +165,6 @@ fi
 # install_font
 
 install_brew
-# install_packages
 # install_cargo
 # configure_rust
 # install_nvm
