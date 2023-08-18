@@ -184,12 +184,58 @@ map_fzf('v', "<leader>ybl", "git_bcommits",
 map_fzf("n", "<leader>yS", "git_status",
   vim.tbl_extend("force", yadm_git_opts,
     { desc = "yadm status", cmd = "git status -s", prompt = "YadmStatus> " }))
-map_fzf("n", "<leader>es", "git_status",
-  vim.tbl_extend("force", yadm_git_opts,
-    { desc = "yadm status", cmd = "git status -s", prompt = "YadmStatus> " }))
-
 map_fzf("n", "<leader>ys", "git_status_tmuxZ",
   vim.tbl_extend("force", yadm_git_opts,
+    {
+      desc = "yadm status (fullscreen)",
+      prompt = "YadmStatus> ",
+      cmd = "git status -s",
+      winopts = {
+        fullscreen = true,
+        preview = {
+          vertical = "down:70%",
+          horizontal = "right:70%",
+        }
+      }
+    }))
+
+-- yadm priv repo
+local yadm_priv_git_opts = {
+  cwd_header = false,
+  cwd = "$HOME",
+  git_dir = "$YADM_PRIV_REPO",
+  git_worktree = "$HOME",
+  git_config = "status.showUntrackedFiles=no",
+}
+local yadm_priv_grep_opts = {
+  prompt = "YadmGrep❯ ",
+  cwd_header = false,
+  cwd = "$HOME",
+  cmd = "git --git-dir=${YADM_PRIV_REPO} -C ${HOME} grep --line-number --column --color=always",
+  rg_glob = false, -- this isn't `rg`
+}
+
+map_fzf("n", "<leader>ypf", "git_files",
+  vim.tbl_extend("force", yadm_priv_git_opts,
+    { desc = "yadm ls-files", prompt = "YadmFiles> " }))
+map_fzf("n", "<leader>ypg", "grep_project",
+  vim.tbl_extend("force", yadm_priv_grep_opts, { desc = "yadm grep" }))
+map_fzf("n", "<leader>yplg", "live_grep",
+  vim.tbl_extend("force", yadm_priv_grep_opts, { desc = "yadm live grep" }))
+map_fzf("n", "<leader>ypb", "git_branches",
+  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm branches" }))
+map_fzf("n", "<leader>ypcm", "git_commits",
+  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm commits (project)" }))
+map_fzf({'n', 'v'}, "<leader>ypbcm", "git_bcommits",
+  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm commits (buffer)" }))
+map_fzf('v', "<leader>ypbl", "git_bcommits",
+  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm commits (buffer)" }))
+
+map_fzf("n", "<leader>ypS", "git_status",
+  vim.tbl_extend("force", yadm_priv_git_opts,
+    { desc = "yadm status", cmd = "git status -s", prompt = "YadmStatus> " }))
+map_fzf("n", "<leader>yps", "git_status_tmuxZ",
+  vim.tbl_extend("force", yadm_priv_git_opts,
     {
       desc = "yadm status (fullscreen)",
       prompt = "YadmStatus> ",
