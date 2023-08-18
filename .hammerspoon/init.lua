@@ -17,19 +17,6 @@ Install:andUse("WindowHalfsAndThirds",
                }
 )
 
---[[ Install:andUse("TextClipboardHistory",
-               {
-                 -- disable = true,
-                 config = {
-                   show_in_menubar = false,
-                 },
-                 hotkeys = {
-                   toggle_clipboard = { { "cmd", "shift" }, "v" }
-                 },
-                 start = true,
-               }
-) ]]
-
 Install:andUse("ClipboardTool",
                {
                  config = {
@@ -66,7 +53,6 @@ end)
 
 -- Normal binds
 local select_all = hs.hotkey.new({"ctrl"}, "a", nil, function() hs.eventtap.keyStroke({"cmd"}, "a") end)
-local delete = hs.hotkey.new({"cmd"}, "delete", nil, function() hs.eventtap.keyStroke({"option"}, "delete") end)
 local word_left = hs.hotkey.new({"alt"}, "h", nil, function() hs.eventtap.keyStroke({"option"}, "left") end)
 local word_right = hs.hotkey.new({"alt"}, "l", nil, function() hs.eventtap.keyStroke({"option"}, "right") end)
 
@@ -86,14 +72,12 @@ OutlookCalInbox
         down:enable()
         word_left:enable()
         word_right:enable()
-        delete:enable()
     end)
     :subscribe(hs.window.filter.windowUnfocused, function()
         up:disable()
         down:disable()
         word_left:disable()
         word_right:disable()
-        delete:disable()
     end)
 
 -- Slack
@@ -103,12 +87,10 @@ Slack_Hotkey
     :subscribe(hs.window.filter.windowFocused, function()
         word_left:enable()
         word_right:enable()
-        delete:enable()
     end)
     :subscribe(hs.window.filter.windowUnfocused, function()
         word_left:disable()
         word_right:disable()
-        delete:disable()
     end)
 
 -- Chrome
@@ -119,12 +101,10 @@ Firefox
         down:enable()
         word_left:enable()
         word_right:enable()
-        delete:enable()
     end)
     :subscribe(hs.window.filter.windowUnfocused, function()
         up:disable()
         down:disable()
         word_left:disable()
         word_right:disable()
-        delete:disable()
     end)
