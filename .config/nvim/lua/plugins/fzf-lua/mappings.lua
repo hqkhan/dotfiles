@@ -149,46 +149,46 @@ map_fzf("n", "<leader>li", "get_lines_within_indent", { desc = "Lgrep in current
   winopts = small_top_big_bottom
 })
 
--- yadm repo
-local yadm_git_opts = {
+-- dotfiles repo
+local dotfiles_git_opts = {
   cwd_header = false,
   cwd = "$HOME",
-  git_dir = "$YADM_REPO",
+  git_dir = "$DOTFILES_REPO",
   git_worktree = "$HOME",
   git_config = "status.showUntrackedFiles=no",
 }
-local yadm_grep_opts = {
-  prompt = "YadmGrep❯ ",
+local dotfiles_grep_opts = {
+  prompt = "DotsGrep❯ ",
   cwd_header = false,
   cwd = "$HOME",
-  cmd = "git --git-dir=${YADM_REPO} -C ${HOME} grep --line-number --column --color=always",
+  cmd = "git --git-dir=${DOTFILES_REPO} --work-tree=${HOME} -C ${HOME} grep --line-number --column --color=always",
   rg_glob = false, -- this isn't `rg`
 }
 
 map_fzf("n", "<leader>yf", "git_files",
-  vim.tbl_extend("force", yadm_git_opts,
-    { desc = "yadm ls-files", prompt = "YadmFiles> " }))
+  vim.tbl_extend("force", dotfiles_git_opts,
+    { desc = "dots ls-files", prompt = "DotsFiles> " }))
 map_fzf("n", "<leader>yg", "grep_project",
-  vim.tbl_extend("force", yadm_grep_opts, { desc = "yadm grep" }))
+  vim.tbl_extend("force", dotfiles_grep_opts, { desc = "dots grep" }))
 map_fzf("n", "<leader>ylg", "live_grep",
-  vim.tbl_extend("force", yadm_grep_opts, { desc = "yadm live grep" }))
+  vim.tbl_extend("force", dotfiles_grep_opts, { desc = "dots live grep" }))
 map_fzf("n", "<leader>yb", "git_branches",
-  vim.tbl_extend("force", yadm_git_opts, { desc = "yadm branches" }))
+  vim.tbl_extend("force", dotfiles_git_opts, { desc = "dots branches" }))
 map_fzf("n", "<leader>ycm", "git_commits",
-  vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (project)" }))
+  vim.tbl_extend("force", dotfiles_git_opts, { desc = "dots commits (project)" }))
 map_fzf({'n', 'v'}, "<leader>ybcm", "git_bcommits",
-  vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (buffer)" }))
+  vim.tbl_extend("force", dotfiles_git_opts, { desc = "dots commits (buffer)" }))
 map_fzf('v', "<leader>ybl", "git_bcommits",
-  vim.tbl_extend("force", yadm_git_opts, { desc = "yadm commits (buffer)" }))
+  vim.tbl_extend("force", dotfiles_git_opts, { desc = "dots commits (buffer)" }))
 
 map_fzf("n", "<leader>yS", "git_status",
-  vim.tbl_extend("force", yadm_git_opts,
-    { desc = "yadm status", cmd = "git status -s", prompt = "YadmStatus> " }))
+  vim.tbl_extend("force", dotfiles_git_opts,
+    { desc = "dots status", cmd = "git status -s", prompt = "DotsStatus> " }))
 map_fzf("n", "<leader>ys", "git_status_tmuxZ",
-  vim.tbl_extend("force", yadm_git_opts,
+  vim.tbl_extend("force", dotfiles_git_opts,
     {
-      desc = "yadm status (fullscreen)",
-      prompt = "YadmStatus> ",
+      desc = "dots status (fullscreen)",
+      prompt = "DotsStatus> ",
       cmd = "git status -s",
       winopts = {
         fullscreen = true,
@@ -199,46 +199,46 @@ map_fzf("n", "<leader>ys", "git_status_tmuxZ",
       }
     }))
 
--- yadm priv repo
-local yadm_priv_git_opts = {
+-- dotfiles priv repo
+local dotfiles_priv_git_opts = {
   cwd_header = false,
   cwd = "$HOME",
-  git_dir = "$YADM_PRIV_REPO",
+  git_dir = "$DOTFILES_PRIV_REPO",
   git_worktree = "$HOME",
   git_config = "status.showUntrackedFiles=no",
 }
-local yadm_priv_grep_opts = {
-  prompt = "YadmGrep❯ ",
+local dotfiles_priv_grep_opts = {
+  prompt = "DotsPrivGrep❯ ",
   cwd_header = false,
   cwd = "$HOME",
-  cmd = "git --git-dir=${YADM_PRIV_REPO} -C ${HOME} grep --line-number --column --color=always",
+  cmd = "git --git-dir=${DOTFILES_PRIV_REPO} --work-tree=${HOME} -C ${HOME} grep --line-number --column --color=always",
   rg_glob = false, -- this isn't `rg`
 }
 
 map_fzf("n", "<leader>ypf", "git_files",
-  vim.tbl_extend("force", yadm_priv_git_opts,
-    { desc = "yadm ls-files", prompt = "YadmFiles> " }))
+  vim.tbl_extend("force", dotfiles_priv_git_opts,
+    { desc = "dots priv ls-files", prompt = "DotsPrivFiles> " }))
 map_fzf("n", "<leader>ypg", "grep_project",
-  vim.tbl_extend("force", yadm_priv_grep_opts, { desc = "yadm grep" }))
+  vim.tbl_extend("force", dotfiles_priv_grep_opts, { desc = "dots priv grep" }))
 map_fzf("n", "<leader>yplg", "live_grep",
-  vim.tbl_extend("force", yadm_priv_grep_opts, { desc = "yadm live grep" }))
+  vim.tbl_extend("force", dotfiles_priv_grep_opts, { desc = "dots priv live grep" }))
 map_fzf("n", "<leader>ypb", "git_branches",
-  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm branches" }))
+  vim.tbl_extend("force", dotfiles_priv_git_opts, { desc = "dots priv branches" }))
 map_fzf("n", "<leader>ypcm", "git_commits",
-  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm commits (project)" }))
+  vim.tbl_extend("force", dotfiles_priv_git_opts, { desc = "dots priv commits (project)" }))
 map_fzf({'n', 'v'}, "<leader>ypbcm", "git_bcommits",
-  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm commits (buffer)" }))
+  vim.tbl_extend("force", dotfiles_priv_git_opts, { desc = "dots priv commits (buffer)" }))
 map_fzf('v', "<leader>ypbl", "git_bcommits",
-  vim.tbl_extend("force", yadm_priv_git_opts, { desc = "yadm commits (buffer)" }))
+  vim.tbl_extend("force", dotfiles_priv_git_opts, { desc = "dots priv commits (buffer)" }))
 
 map_fzf("n", "<leader>ypS", "git_status",
-  vim.tbl_extend("force", yadm_priv_git_opts,
-    { desc = "yadm status", cmd = "git status -s", prompt = "YadmStatus> " }))
+  vim.tbl_extend("force", dotfiles_priv_git_opts,
+    { desc = "dots priv status", cmd = "git status -s", prompt = "DotsPrivStatus> " }))
 map_fzf("n", "<leader>yps", "git_status_tmuxZ",
-  vim.tbl_extend("force", yadm_priv_git_opts,
+  vim.tbl_extend("force", dotfiles_priv_git_opts,
     {
-      desc = "yadm status (fullscreen)",
-      prompt = "YadmStatus> ",
+      desc = "dots priv status (fullscreen)",
+      prompt = "DotsPrivStatus> ",
       cmd = "git status -s",
       winopts = {
         fullscreen = true,

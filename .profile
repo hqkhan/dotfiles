@@ -1,4 +1,4 @@
-PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/local/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/go/bin
+PATH=/home/linuxbrew/.linuxbrew/bin:$HOME/.cargo/bin:$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/local/bin:$HOME/.local/bin:/usr/local/go/bin
 MANPATH=/usr/share/man:/usr/local/share/man:/opt/homebrew/share/man
 export PATH MANPATH HOME TERM
 
@@ -46,10 +46,10 @@ export TMUX_TMPDIR="${XDG_RUNTIME_DIR}"
 # zsh will look for .zshrc here
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
-# yadm dotfile repo
-export YADM_REPO="$HOME/dots/yadm-repo"
-# yadm private dotfile repo
-export YADM_PRIV_REPO="$HOME/dots/yadm-repo-priv"
+# dotfile repo
+export DOTFILES_REPO="$HOME/.cfg"
+# private dotfile repo
+export DOTFILES_PRIV_REPO="$HOME/.cfg_priv"
 
 # starship prompt config
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml"

@@ -101,5 +101,3 @@ EXA_COLORS='ln=4;34'
 export EXA_COLORS
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-LINUXBREW_PATH=/home/linuxbrew/.linuxbrew/bin
-[ "${PATH#*$LINUXBREW_PATH:}" == "$PATH" ] && export PATH="$LINUXBREW_PATH:$PATH"

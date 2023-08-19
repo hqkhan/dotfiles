@@ -164,8 +164,6 @@ $HOME/Library/LanguageModeling
 $HOME/.config/tmux/plugins/
 $HOME/.config/zsh
 $HOME/config
-$HOME/dots/yadm-repo
-$HOME/dots/yadm-project
 $HOME/go
 $HOME/.local/share/nvim
 $HOME/.fzf

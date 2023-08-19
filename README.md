@@ -1,15 +1,25 @@
 # Config for neovim + basic terminal stuff
-[Yadm](https://yadm.io/docs/overview) repo holding all config. 
-[Second repo](https://github.com/hqkhan/config) holding misc config.
+[Git bare repo](https://www.ackama.com/what-we-think/the-best-way-to-store-your-dotfiles-a-bare-git-repository-explained/) repo holding dotfiles.
 
 Steps to get setup on new machine:
 ```
-# clones this repository into "$HOME/dots"
-❯ git clone https://github.com/hqkhan/yadm-config.git $HOME/dots
-# deploys the files in this repository into "$HOME"
-❯ ./dots/install.sh
-# Run bootstrap script
-❯ ./dots/bootstrap
+# Avoid any funky recursion
+echo ".cfg" >> .gitignore
+
+# clones bare this repository into "$HOME"
+git clone --bare git@github.com:hqkhan/dotfiles.git $HOME/.cfg
+
+# Create temporary alias
+alias dot='git -c status.showUntrackedFiles=no --git-dir=$HOME/.cfg/ --work-tree=$HOME -C ${HOME}'
+
+# Ignore all untracked files
+dot config --local status.showUntrackedFiles no
+
+# Resetting to HEAD
+dot reset --hard HEAD
+
+# Run bootstrap script to get all goodies
+./dots/bootstrap
 ```
 
 # Config
@@ -25,8 +35,9 @@ Steps to get setup on new machine:
 - Multiplexer: [tmux](https://github.com/tmux/tmux/wiki)
 - Editor: [Neovim](https://neovim.io)
 - Git: [lazygit](https://github.com/jesseduffield/lazygit)
-- macOS package manager: [Homebrew](https://brew.sh)
-- Hotkeys: [Hammerspoon](https://www.hammerspoon.org/) & [skhd](https://github.com/koekeishiya/skhd/)
+- Package Manager: [Homebrew](https://brew.sh)
+- Hotkeys: [skhd](https://github.com/koekeishiya/skhd/)
+- WM: [yabai](https://github.com/koekeishiya/yabai)
 - Resource Monitor: [Stats](https://github.com/exelban/stats)
 
 ## Browser setup (Firefox)
