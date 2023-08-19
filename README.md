@@ -18,6 +18,9 @@ dot config --local status.showUntrackedFiles no
 # Resetting to HEAD
 dot reset --hard HEAD
 
+# Create symlink for fugitive to work with bare repo
+ln -sf $HOME/.cfg $HOME/.git
+
 # Run bootstrap script to get all goodies
 ./dots/bootstrap
 ```

@@ -1,5 +1,9 @@
 local check_if_dot_file = function()
-  local dot_cmd = "Yit ls-files " .. vim.api.nvim_buf_get_name(0)
+  local home = os.getenv("HOME") .. "/"
+  -- Remove the $HOME prefix from the path
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  buf_path = string.gsub(buf_path, "^" .. home, "")
+  local dot_cmd = "Yit ls-files " .. buf_path
   local dot_file = vim.api.nvim_exec(dot_cmd, true)
   if #dot_file ~= 0 then
     return true

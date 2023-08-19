@@ -25,8 +25,8 @@ M.init = function()
 end
 
 M.config = function()
-  -- fugitive shortcuts for dotfiles repo
-  local dotfiles_repo = "$DOTFILES_REPO"
+  -- hack fugitive's worktree by using a symbolic link at $HOME
+  local dotfiles_repo = "$HOME/.git"
 
   -- auto-complete for our custom fugitive Yadm command
   -- https://github.com/tpope/vim-fugitive/issues/1981#issuecomment-1113825991
