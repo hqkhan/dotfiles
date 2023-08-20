@@ -1,7 +1,7 @@
 # cSpell:ignore brightblack unstaged unstage lazygit submodule repos pgup pgdown
 gui:
     # stuff relating to the UI
-    showIcons: true
+    nerdFontsVersion: "3"
     scrollHeight: 20 # how many lines you scroll by
     scrollPastBottom: true # enable scrolling past the bottom
     sidePanelWidth: 0.3333 # number from 0 to 1
