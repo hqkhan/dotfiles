@@ -135,7 +135,6 @@ local function setup()
             fg = { ["DarkYellowfg"] = "fg" },
             bold = true,
           }),
-
         }
 
         local get_darkblue_hl = function(color)
@@ -155,24 +154,24 @@ local function setup()
         end
 
         local signs = {
-            right_sepr = '',
-            left_sepr = '',
-            right_sepr_thin = '',
-            left_sepr_thin = '',
+          right_sepr = '',
+          left_sepr = '',
+          right_sepr_thin = '',
+          left_sepr_thin = '',
         }
 
         local modes = {
-          n      = { "Normal", "N", { "Operator" }},
+          n      = { "Normal", "N", { "Operator" } },
           niI    = { "Normal", "N", },
           niR    = { "Normal", "N", },
           niV    = { "Normal", "N", },
           no     = { "N·OpPd", "?", },
           v      = { "Visual", "V", { "Directory" } },
           V      = { "V·Line", "Vl", { "Directory" } },
-          [""] = { "V·Blck", "Vb", { "Directory" } },
+          [""]  = { "V·Blck", "Vb", { "Directory" } },
           s      = { "Select", "S", { "Search" } },
           S      = { "S·Line", "Sl", { "Search" } },
-          [""] = { "S·Block", "Sb", { "Search" } },
+          [""]  = { "S·Block", "Sb", { "Search" } },
           i      = { "Insert", "I", { "ErrorMsg" } },
           ic     = { "ICompl", "Ic", { "ErrorMsg" } },
           R      = { "Rplace", "R", { "WarningMsg", "IncSearch" } },
@@ -194,6 +193,14 @@ local function setup()
           -- Git
           -- { c.git_branch { fmt = " %s %s ", icon = "", hl = highlights.git_branch_fg } },
           -- { sections.highlight(highlights.git_branch_bg, ("%s"):format(signs.right_sepr)) },
+
+          -- Macro recording
+          {
+            c.macro_recording {
+              hls_record = highlights.red_fg,
+              icon_record = "󱜨",
+            }
+          },
 
           -- Buffer change counts
           {
@@ -217,19 +224,19 @@ local function setup()
               hl_warn = highlights.yellow_fg,
               hl_info = highlights.green_tmux_fg,
               hl_hint = highlights.magenta_fg,
-              icon_err = ' ', icon_warn = ' ', icon_info = ' ', icon_hint = ''
+              icon_err = ' ', icon_warn = ' ', icon_info = ' ', icon_hint = ''
             }
           },
           { sections.split, required = true },
 
           -- Middle
-          -- File path 
-          { sections.highlight(highlights.filename_sepr, ("%s"):format(signs.left_sepr))},
-          { sections.highlight(highlights.filename_bg_fg, (" "))},
+          -- File path
+          { sections.highlight(highlights.filename_sepr, ("%s"):format(signs.left_sepr)) },
+          { sections.highlight(highlights.filename_bg_fg, (" ")) },
           { c.file_icon { fmt = "%s ", hl_icon = true } },
           { sections.maximum_width(sections.highlight(highlights.filename_bg_fg, builtin.make_responsive_file(140, 90)), 0.40, { highlight = true }), required = true },
-          { sections.highlight(highlights.filename_bg_fg, (" "))},
-          { sections.highlight(highlights.filename_sepr, ("%s"):format(signs.right_sepr))},
+          { sections.highlight(highlights.filename_bg_fg, (" ")) },
+          { sections.highlight(highlights.filename_sepr, ("%s"):format(signs.right_sepr)) },
 
           -- Modified flag
           { " " },

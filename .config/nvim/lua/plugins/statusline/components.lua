@@ -358,4 +358,19 @@ M.diagnostics = function(opts)
   end
 end
 
+M.macro_recording = function(opts)
+  opts = opts or {}
+  return wrap_fnc(opts, function(_, _)
+    local icon  = opts.icon_record or ""
+    local hls  = opts.hls_record or ""
+    local recording_register = vim.fn.reg_recording()
+    if recording_register == "" then
+        return ""
+    else
+        local recording_str = ("%s Recording @%s "):format(icon, recording_register)
+        return set_hl(hls, recording_str)
+    end
+  end)
+end
+
 return M
