@@ -21,6 +21,10 @@ dot reset --hard HEAD
 # Create symlink for fugitive to work with bare repo
 ln -sf $HOME/.cfg $HOME/.git
 
+# Remove origin & re-add to fix lazygit's tracking
+dot remote remove origin
+dot remote add origin git@github.com:hqkhan/dotfiles.git
+
 # Run bootstrap script to get all goodies
 ./dots/bootstrap
 ```
