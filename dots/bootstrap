@@ -15,6 +15,8 @@ declare -a rust_utils=(
   "sd"
   "bottom"
   "topgrade"
+  "du-dust"
+  "tldr"
 )
 
 install_brew() {
@@ -72,6 +74,7 @@ install_font() {
 
 install_fzf() {
     yes | $(brew --prefix)/opt/fzf/install
+    wget https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh
 }
 
 install_cargo() {
@@ -161,10 +164,10 @@ fi
 # install_cmake
 # install_tmux
 # install_nvim
-# install_fzf
 # install_font
 
 install_brew
-# install_cargo
-# configure_rust
-# install_nvm
+install_fzf
+install_cargo
+configure_rust
+install_nvm
