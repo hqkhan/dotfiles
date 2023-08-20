@@ -213,3 +213,5 @@ keybinding:
         init: 'i'
         update: 'u'
         bulkMenu: 'b'
+os:
+  copyToClipboardCmd: printf "\033]52;c;$(printf {{text}} | base64)\a" > /dev/tty
