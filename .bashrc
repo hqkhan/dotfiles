@@ -101,3 +101,4 @@ EXA_COLORS='ln=4;34'
 export EXA_COLORS
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/fzf-git.sh ] && source ~/fzf-git.sh
