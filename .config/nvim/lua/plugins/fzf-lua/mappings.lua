@@ -100,15 +100,15 @@ map_fzf('n', '<leader>fo', "oldfiles", function()
 end)
 
 -- LSP
-map_fzf("n", "<leader>lf", "lsp_finder",              { desc = "location finder [LSP]" })
-map_fzf('n', "<leader>lS", "lsp_workspace_symbols",   { desc = "Workspace symbols" })
-map_fzf('n', "<leader>ls", "lsp_document_symbols",    { desc = "Document symbols" })
-map_fzf('n', "<leader>lr", "lsp_references",          { desc = "LSP references" })
-map_fzf('n', "<leader>ld", "lsp_definitions",         { desc = "LSP definitinos" })
-map_fzf('n', "<leader>lD", "lsp_declarations",        { desc = "LSP declaration" })
-map_fzf("n", "<leader>ly", "lsp_typedefs",            { desc = "type definitions [LSP]" })
+map_fzf("n", "<leader>lf", "lsp_finder",              { desc = "location finder [LSP]", winopts = small_top_big_bottom })
+map_fzf('n', "<leader>lS", "lsp_workspace_symbols",   { desc = "Workspace symbols", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>ls", "lsp_document_symbols",    { desc = "Document symbols", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>lr", "lsp_references",          { desc = "LSP references", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>ld", "lsp_definitions",         { desc = "LSP definitinos", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>lD", "lsp_declarations",        { desc = "LSP declaration", winopts = small_top_big_bottom})
+map_fzf("n", "<leader>ly", "lsp_typedefs",            { desc = "type definitions [LSP]", winopts = small_top_big_bottom})
 
-map_fzf('n', "<leader>HT", "help_tags",               { desc = "nvim help tags" })
+map_fzf('n', "<leader>HT", "help_tags",               { desc = "nvim help tags", winopts = small_top_big_bottom})
 
 -- Full screen git status
 map_fzf('n', '<leader>gs', "git_status_tmuxZ",
