@@ -2,7 +2,7 @@
 local signs = {
   {
     name = "DiagnosticSignHint",
-    text = ''
+    text = "󰌵"
   },
   {
     name = "DiagnosticSignInfo",

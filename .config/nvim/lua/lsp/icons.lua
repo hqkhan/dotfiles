@@ -1,30 +1,31 @@
 -- LSP icons
+-- LSP icons
 local icons = {
-  Text            = '',    -- 
-  Method          = '',
-  Function        = '',
-  Constructor     = '',    -- 
-  Field           = '',    --  
-  Variable        = "",    --   
-  Class           = '',    --   ﴯ  
-  Interface       = '',    --  ﰮ
-  Module          = '',
-  Property        = '',
-  Unit            = 'ﰩ',    --       塞
-  Value           = '',
-  Enum            = '',    -- ﬧ   練
-  EnumMember      = '',
-  Keyword         = '',    -- 
-  Snippet         = '',    --  
-  Color           = '',    --   
-  File            = '',
-  Folder          = '',
-  Reference       = '',    --  
-  Constant        = "",    -- ﱃ 洞     π
-  Struct          = "פּ",    -- 
-  Event           = '',
-  Operator        = '璉',   -- 
-  TypeParameter   = '',
+  Text          = "󰊄", -- 
+  Method        = "󰊕",
+  Function      = "",
+  Constructor   = "", -- 
+  Field         = "", -- 󰆧 
+  Variable      = "󰆧", -- 󰆧  󰈜
+  Class         = "󰌗", --   󰠱  
+  Interface     = "", --  󰜰
+  Module        = "󰅩",
+  Property      = "",
+  Unit          = "󰜫", -- 󰆧      󰑭
+  Value         = "󰎠",
+  Enum          = "󰘨", -- 󰘨   󰕘
+  EnumMember    = "",
+  Keyword       = "󰌆", -- 󰌋
+  Snippet       = "󰘍", --󰅱 󰈙
+  Color         = "󰏘", -- 󰌁 󰏘 
+  File          = "",
+  Folder        = "",
+  Reference     = "󰆑", -- 󰀾 󰈇
+  Constant      = "󰏿", -- 󰝅 󰔆    󰐀 󰏿 π
+  Struct        = "󰙅", -- 
+  Event         = "",
+  Operator      = "󰒕", -- 󰆕
+  TypeParameter = "",
 }
 
 for kind, symbol in pairs(icons) do
