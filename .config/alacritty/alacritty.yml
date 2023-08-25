@@ -22,7 +22,7 @@ font:
   size: 15.0
 
 window:
-  decorations: buttonless
+  decorations: none
 
 # NOTE: helpful hex codes
 # \x1b = escape (useful for vim-related keybindings)
