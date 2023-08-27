@@ -58,6 +58,7 @@ return {
     local fzf_colors = function(opts)
       local binary = opts and opts.fzf_bin
       local colors = {
+        -- "+" is for current line
         ["fg"] = { "fg", "Normal" },
         ["bg"] = { "bg", "Normal" },
         ["hl"] = { "fg", "Question" },
@@ -73,6 +74,10 @@ return {
         ["gutter"] = { "bg", "Normal" },
         ["border"] = { "fg", "FzfLuaTitle" },
       }
+      if vim.g.colors_name == "everforest" then
+        colors["hl+"] = {"fg", "ErrorMsg"}
+        colors["hl"] = {"fg", "ErrorMsg"}
+      end
       if binary == 'sk' and vim.fn.executable(binary) == 1 then
         colors["matched_bg"] = { "bg", "Normal" }
         colors["current_match_bg"] = { "bg", hl_match({ "NightflyVisual", "CursorLine" }) }

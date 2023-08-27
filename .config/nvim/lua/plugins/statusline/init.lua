@@ -37,13 +37,6 @@ local function setup()
         local hl_magenta = "WarningMsg"
         local hl_statusline = "StatusLine"
         local hl_bg = "Normal"
-        local hl_sl_magenta = "StatusLineFileName"
-        local hl_darkblue = "Darkblue_tmux_bg"
-        if vim.g.colors_name == "nightfly" then
-          hl_green = "NightflyTurquoise"
-          hl_yellow = "NightflyYellow"
-          hl_magenta = "NightflyViolet"
-        end
 
         local highlights = {
           bg_fg = c.extract_hl({
@@ -67,73 +60,23 @@ local function setup()
             bold = true,
           }),
           yellow_fg = c.extract_hl({
-            bg = { [hl_bg] = "bg" },
+            bg = { [hl_statusline] = "bg" },
             fg = { [hl_yellow] = "fg" },
             bold = true,
-          }),
-          purple_bg = c.extract_hl({
-            bg = { ["Purplebg"] = "bg" },
-            fg = { ["Blackfg"] = "fg" },
-            bold = true,
-          }),
-          purple_fg = c.extract_hl({
-            bg = { [hl_statusline] = "bg" },
-            fg = { ["Purplefg"] = "fg" },
-          }),
-          darkblue_tmux_fg = c.extract_hl({
-            bg = { [hl_statusline] = "bg" },
-            fg = { ["Darkblue_tmux_fg"] = "fg" },
           }),
           magenta_fg = c.extract_hl({
             bg = { [hl_statusline] = "bg" },
             fg = { [hl_magenta] = "fg" },
-            -- fg = { MatchParen   = 'fg' },
-            bold = true,
-          }),
-          sl_magenta_fg = c.extract_hl({
-            bg = { [hl_statusline] = "bg" },
-            fg = { [hl_sl_magenta] = "fg" },
-            -- fg = { MatchParen   = 'fg' },
-            bold = true,
-          }),
-          git_branch_fg = c.extract_hl({
-            bg = { ["Greenbg"] = "bg" },
-            fg = { ["Blackfg"] = "fg" },
-            bold = true,
-          }),
-          git_branch_bg = c.extract_hl({
-            bg = { [hl_statusline] = "bg" },
-            fg = { ["Greenfg"] = "fg" },
-            bold = true,
-          }),
-          rhs_misc_bg_fg = c.extract_hl({
-            bg = { [hl_darkblue] = "bg" },
-            fg = { [hl_yellow] = "fg" },
             bold = true,
           }),
           filename_bg_fg = c.extract_hl({
             bg = { ["Darkblue_tmux_bg"] = "bg" },
-            fg = { ["Magenta"] = "fg" },
+            fg = { [hl_red] = "fg" },
             bold = true,
           }),
           filename_sepr = c.extract_hl({
             bg = { [hl_statusline] = "bg" },
-            fg = { ["Darkblue_tmux_bg"] = "bg" },
-          }),
-          percentage_rhs = c.extract_hl({
-            bg = { [hl_darkblue] = "bg" },
-            fg = { ["cyan"] = "fg" },
-            bold = true,
-          }),
-          filetype = c.extract_hl({
-            bg = { ["Darkblue_tmux_bg"] = "bg" },
-            fg = { ["blue"] = "fg" },
-            bold = true,
-          }),
-          lsp_srv = c.extract_hl({
-            bg = { ["Darkblue_tmux_bg"] = "bg" },
-            fg = { ["DarkYellowfg"] = "fg" },
-            bold = true,
+            fg = { ["Darkblue_tmux_fg"] = "fg" },
           }),
         }
 

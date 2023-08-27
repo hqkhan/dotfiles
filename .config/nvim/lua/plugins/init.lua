@@ -51,4 +51,23 @@ return {
       })
     end
   },
+  {
+    "neanias/everforest-nvim",
+    version = false,
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
+    -- Optional; default configuration will be used if setup isn't called.
+    config = function()
+      require("everforest").setup({
+        on_highlights = function (hl, palette)
+         hl.StatusLine = { fg = palette.fg, bg = palette.bg0 }
+         hl.Darkblue_tmux_bg =  { bg = "#081633" }
+         hl.Darkblue_tmux_fg =  { fg = "#081633" }
+         hl.CursorLine = { bg = "#100E23" }
+         hl.CursorLineNr = { fg = palette.grey1, bg = "#081633" }
+         hl.MiniIndentscopeSymbol = { fg = palette.yellow }
+        end
+      })
+    end,
+  }
 }

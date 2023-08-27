@@ -25,6 +25,5 @@ vim.g.lua_embark_transparent = true
 if utils.is_root() then
   pcall(vim.cmd, [[colorscheme lua-embark]])
 else
-  pcall(vim.cmd, [[colorscheme lua-embark]])
-  -- pcall(vim.cmd, [[colorscheme nightfly]])
+  pcall(vim.cmd, [[colorscheme everforest]])
 end
