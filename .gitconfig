@@ -115,7 +115,8 @@
 
 [delta]
     dark = true
-    file-style = "#d4bfff" bold "#100E23"
+    ; file-style = "#d4bfff" bold "#100E23"
+    file-style = "#f85552" bold "#081633"
     hunk-header-style = omit
     line-numbers = true
     line-numbers-left-format = "{nm:>3}┊"
