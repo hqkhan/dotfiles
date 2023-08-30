@@ -39,5 +39,6 @@ yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Cisco" manage=off
 yabai -m rule --add app="^balenaEtcher$" manage=off
 yabai -m rule --add app="^Creative Cloud$" manage=off
+yabai -m rule --add app="Raycast" manage=off
 
 echo "yabai configuration loaded.."
