@@ -33,38 +33,6 @@ window:
 # Terminal hints can be used to find text or hyperlink in the visible part of
 # the terminal and pipe it to other applications.
 hints:
-  # Keys used for the hint labels.
-  #alphabet: "jfkdls;ahgurieowpq"
-
-  # List with all available hints
-  #
-  # Each hint must have any of `regex` or `hyperlinks` field and either an
-  # `action` or a `command` field. The fields `mouse`, `binding` and
-  # `post_processing` are optional.
-  #
-  # The `hyperlinks` option will cause OSC 8 escape sequence hyperlinks to be
-  # highlighted.
-  #
-  # The fields `command`, `binding.key`, `binding.mods`, `binding.mode` and
-  # `mouse.mods` accept the same values as they do in the `key_bindings` section.
-  #
-  # The `mouse.enabled` field controls if the hint should be underlined while
-  # the mouse with all `mouse.mods` keys held or the vi mode cursor is above it.
-  #
-  # If the `post_processing` field is set to `true`, heuristics will be used to
-  # shorten the match if there are characters likely not to be part of the hint
-  # (e.g. a trailing `.`). This is most useful for URIs and applies only to
-  # `regex` matches.
-  #
-  # Values for `action`:
-  #   - Copy
-  #       Copy the hint's text to the clipboard.
-  #   - Paste
-  #       Paste the hint's text to the terminal or search.
-  #   - Select
-  #       Select the hint's text.
-  #   - MoveViModeCursor
-  #       Move the vi mode cursor to the beginning of the hint.
   enabled:
   - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
             [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
@@ -78,11 +46,6 @@ hints:
       key: U
       mods: Command
 
-colors:
-  hints:
-    start:
-     foreground: '#1d1f21'
-     background: '#e9ff5e'
 
 shell:
   program: /bin/bash
@@ -183,9 +146,16 @@ schemes:
       cyan:    '#83c092'
       white:   '#d3c6aa'
   everforest_dark_medium: &everforest_dark_medium
+    hints:
+      start:
+        foreground: '#000000'
+        background: '#f85552'
     primary:
       background: '#2d353b'
       foreground: '#d3c6aa'
+    selection:
+      text: CellBackground
+      background: CellForeground
     normal:
       black:   '#475258'
       red:     '#e67e80'
