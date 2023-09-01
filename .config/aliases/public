@@ -35,6 +35,7 @@ alias what-shell="ps -p $$"
 alias lc='rg --files  | xargs -d "\n" wc -l | perl -lne "\$s += \$1 if /(\d+) total/; END{print \$s}"'
 
 alias dot="git -c status.showUntrackedFiles=no --git-dir=${DOTFILES_REPO} --work-tree=${HOME} -C ${HOME}"
+alias ldot="lazygit --git-dir=$DOTFILES_REPO --work-tree=$HOME"
 
 # Git log
 # https://stackoverflow.com/a/34467298 <- other options
