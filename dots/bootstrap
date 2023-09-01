@@ -13,7 +13,6 @@ declare -a rust_utils=(
   "ripgrep"
   "zoxide"
   "sd"
-  "bottom"
   "topgrade"
   "du-dust"
   "tldr"
