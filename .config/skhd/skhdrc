@@ -5,7 +5,6 @@ cmd - s : open -a /Applications/Slack.app
 cmd - h : open -a /Applications/Amazon\ Chime.app
 cmd - i : open -a /Applications/Cisco/Cisco\ AnyConnect\ Secure\ Mobility\ Client.app
 cmd - backspace: skhd -k "alt - backspace"
-ctrl - w: skhd -k "alt - backspace"
 
 # focus window
 alt - h : yabai -m window --focus west
