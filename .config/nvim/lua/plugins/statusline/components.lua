@@ -107,7 +107,6 @@ M.file_icon = function(opts)
       local fmt = opts.fmt or "%s"
       local ext = vim.fn.fnamemodify(buffer.name, ":p:e")
       local icon, hl = M._devicons.get_icon(buffer.name, ext:lower(), { default = true })
-      -- local icon = extensions.file_icon(_, bufnr)
       if icon then
         if opts.hl_icon then
           local hlgroup = M.extract_hl({

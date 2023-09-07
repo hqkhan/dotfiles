@@ -14,23 +14,7 @@ local function setup()
   local function setup_el()
     statusline.setup {
       regenerate_autocmds = { "WinEnter", "WinLeave" },
-      generator = function(window, buffer)
-        local is_inactive = vim.o.laststatus ~= 3 and
-            window.win_id ~= vim.api.nvim_get_current_win()
-
-        if not is_inactive then
-          for _, ft in ipairs({
-            "fzf",
-            "packer",
-            "fugitive",
-            "fugitiveblame",
-          }) do
-            if vim.bo[buffer.bufnr].ft == ft then
-              is_inactive = true
-            end
-          end
-        end
-
+      generator = function(_, _)
         local hl_red = "ErrorMsg"
         local hl_green = "diffAdded"
         local hl_yellow = "WarningMsg"
@@ -80,22 +64,6 @@ local function setup()
           }),
         }
 
-        local get_darkblue_hl = function(color)
-          local hl_select = hl_yellow
-          if color == "yellow" then
-            hl_select = hl_yellow
-          elseif color == "red" then
-            hl_select = hl_red
-          elseif color == "green" then
-            hl_select = hl_green
-          end
-          return c.extract_hl({
-            bg = { [hl_statusline] = "bg" },
-            fg = { [hl_select] = "fg" },
-            bold = true,
-          })
-        end
-
         local signs = {
           right_sepr = '',
           left_sepr = '',
@@ -103,40 +71,7 @@ local function setup()
           left_sepr_thin = '',
         }
 
-        local modes = {
-          n      = { "Normal", "N", { "Operator" } },
-          niI    = { "Normal", "N", },
-          niR    = { "Normal", "N", },
-          niV    = { "Normal", "N", },
-          no     = { "N·OpPd", "?", },
-          v      = { "Visual", "V", { "Directory" } },
-          V      = { "V·Line", "Vl", { "Directory" } },
-          [""]  = { "V·Blck", "Vb", { "Directory" } },
-          s      = { "Select", "S", { "Search" } },
-          S      = { "S·Line", "Sl", { "Search" } },
-          [""]  = { "S·Block", "Sb", { "Search" } },
-          i      = { "Insert", "I", { "ErrorMsg" } },
-          ic     = { "ICompl", "Ic", { "ErrorMsg" } },
-          R      = { "Rplace", "R", { "WarningMsg", "IncSearch" } },
-          Rv     = { "VRplce", "Rv", { "WarningMsg", "IncSearch" } },
-          c      = { "Cmmand", "C", { "diffAdded", "DiffAdd" } },
-          cv     = { "Vim Ex", "E", },
-          ce     = { "Ex (r)", "E", },
-          r      = { "Prompt", "P", },
-          rm     = { "More  ", "M", },
-          ["r?"] = { "Cnfirm", "Cn", },
-          ["!"]  = { "Shell ", "S", { "DiffAdd", "diffAdded" } },
-          nt     = { "Term  ", "T", { "Visual" } },
-          t      = { "Term  ", "T", { "DiffAdd", "diffAdded" } },
-        }
-
         local components = {
-          -- Left
-          -- { c.mode { modes = modes, fmt = " %s %s ", icon = "", hl_icon_only = false } },
-          -- Git
-          -- { c.git_branch { fmt = " %s %s ", icon = "", hl = highlights.git_branch_fg } },
-          -- { sections.highlight(highlights.git_branch_bg, ("%s"):format(signs.right_sepr)) },
-
           -- Macro recording
           {
             c.macro_recording {
@@ -152,9 +87,9 @@ local function setup()
               icon_insert = " ",
               icon_change = " ",
               icon_delete = " ",
-              hl_insert = get_darkblue_hl("green"),
-              hl_change = get_darkblue_hl("yellow"),
-              hl_delete = get_darkblue_hl("red"),
+              hl_insert = hl_green,
+              hl_change = hl_yellow,
+              hl_delete = highlights.red_fg,
             }
           },
 
@@ -166,7 +101,7 @@ local function setup()
               hl_err = highlights.red_fg,
               hl_warn = highlights.yellow_fg,
               hl_info = highlights.green_tmux_fg,
-              hl_hint = highlights.magenta_fg,
+              hl_hint = hl_green,
               icon_err = ' ', icon_warn = ' ', icon_info = ' ', icon_hint = ''
             }
           },
@@ -183,11 +118,10 @@ local function setup()
 
           -- Modified flag
           { " " },
-          { sections.highlight(highlights.green_fg, builtin.modified_flag) },
+          { sections.highlight(hl_green, builtin.modified_flag) },
           { sections.split, required = true },
 
           -- Right
-
           {
             sections.collapse_builtin {
               "[",
@@ -198,19 +132,10 @@ local function setup()
           },
         }
 
-        local add_item = function(result, item)
-          if is_inactive and not item.required then
-            return
-          end
-
-          table.insert(result, item)
-        end
-
         local result = {}
         for _, item in ipairs(components) do
-          add_item(result, item)
+          table.insert(result, item)
         end
-
         return result
       end,
     }

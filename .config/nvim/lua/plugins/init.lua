@@ -60,12 +60,14 @@ return {
     config = function()
       require("everforest").setup({
         on_highlights = function (hl, palette)
-         hl.StatusLine = { fg = palette.fg, bg = palette.bg0 }
+         hl.StatusLine = { link = "Normal" }
          hl.Darkblue_tmux_bg =  { bg = "#081633" }
          hl.Darkblue_tmux_fg =  { fg = "#081633" }
          hl.CursorLine = { bg = "#100E23" }
          hl.CursorLineNr = { fg = palette.grey1, bg = "#081633" }
          hl.MiniIndentscopeSymbol = { fg = palette.yellow }
+         hl.GitSignsAdd = { link = "GreenSign" }
+         hl.GitSignsChange = { link = "YellowSign" }
         end
       })
     end,
