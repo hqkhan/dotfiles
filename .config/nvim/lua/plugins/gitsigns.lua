@@ -14,13 +14,23 @@ M.config = function()
       changedelete = { text = "" },
       untracked = { text = "" },
     },
+    worktrees = {
+      {
+        toplevel = vim.env.HOME,
+        gitdir = vim.env.HOME .. '/.cfg'
+      },
+      {
+        toplevel = vim.env.HOME,
+        gitdir = vim.env.HOME .. '/.cfg_priv'
+      }
+    },
     signcolumn     = true, -- Toggle with `:Gitsigns toggle_signs`
     numhl          = false, -- Toggle with `:Gitsigns toggle_numhl`
     linehl         = false, -- Toggle with `:Gitsigns toggle_linehl`
     word_diff      = false, -- Toggle with `:Gitsigns toggle_word_diff`
     sign_priority  = 4, -- Lower priorirty means diag signs supercede
     preview_config = { border = "rounded" },
-    yadm           = { enable = true },
+    yadm           = { enable = false },
     on_attach      = function(bufnr)
       local gs = package.loaded.gitsigns
 
