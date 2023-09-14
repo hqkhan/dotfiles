@@ -3,7 +3,7 @@
 system_type=$(uname -s)
 
 declare -a rust_utils=(
-  "exa"
+  "eza"
   "bat"
   "starship"
   "cargo-update"
