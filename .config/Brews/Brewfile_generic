@@ -9,5 +9,6 @@ brew "tmux"
 brew "unison"
 brew "less"
 brew "restic"
+tap arl/arl
 brew "gitmux"
 brew "btop"
