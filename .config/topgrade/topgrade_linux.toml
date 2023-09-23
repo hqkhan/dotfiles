@@ -1,0 +1,9 @@
+[misc]
+disable = ["vim", "deno", "gnome_shell_extensions", "containers", "toolbx"]
+
+[pre_commands]
+"Auth" = "killall ssh-agent & mwinit -o -s && eval `ssh-agent` && ssh-add"
+
+[commands]
+"Toolbox" = "toolbox update"
+"Brazil Cache Clean" = "/home/hqkhan/.toolbox/bin/brazil-package-cache clean --days 30"
