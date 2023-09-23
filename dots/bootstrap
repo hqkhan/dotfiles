@@ -1,4 +1,11 @@
 #!/bin/bash
+set -eu
+trap 'echo "EXIT detected with exit status $?"' EXIT
+
+# helpers
+function echo_ok() { echo -e '\033[1;32m'"$1"'\033[0m'; }
+function echo_warn() { echo -e '\033[1;33m'"$1"'\033[0m'; }
+function echo_error() { echo -e '\033[1;31mERROR: '"$1"'\033[0m'; }
 
 system_type=$(uname -s)
 
@@ -15,51 +22,57 @@ declare -a rust_utils=(
   "sd"
   "topgrade"
   "du-dust"
-  "tldr"
 )
+
+sudo yum install openssl openssl-devel -y
 
 install_brew() {
   # Proudly borrowed from:
   # https://github.com/duckfullstop/dotfiles/blob/f734eea399a7ccd1c25b57242997e79f230abc4d/.config/yadm/bootstrap
+  XDG_CONFIG_HOME="$HOME/.config"
   BREWFILE_DIR=$XDG_CONFIG_HOME/Brews
 
   # install Homebrew if it's missing
   if ! command -v brew >/dev/null 2>&1; then
-    echo "Installing Homebrew"
+    echo_warn "Installing Homebrew"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   fi
 
-  
-  if [ -f "$HOME/.Brewfile" ]; then
-    echo "Updating Homebrew bundle"
-    brew bundle --global
-    brew bundle install --file=$BREWFILE_DIR/Brewfile_generic
-  fi
+  echo_warn "Installing Generic tools via brew"
 
-  # brew "btop"
+  brew tap arl/arl
+  brew install cmake \
+               gitmux \
+               jesseduffield/lazygit/lazygit \
+               awscli \
+               curl \
+               wget \
+               fzf \
+               git \
+               htop \
+               neovim \
+               tmux \
+               less \
+               restic \
+               btop \
+
   if [ "$system_type" = "Darwin" ]; then
-    brew bundle install --file=$BREWFILE_DIR/Brewfile_macos
-  fi
+    echo_warn "Installing MAC tools via brew"
+    brew tap "homebrew/cask-fonts"
 
-  # cask "bitwarden"
+    brew install koekeishiya/formulae/skhd \
+                 unison \
+                 python3
+
+    brew cask install stats alacritty unnaturalscrollwheels font-jetbrains-mono-nerd-font koekeishiya/formulae/yabai raycast
+
+    skhd --start-service
+  fi
 }
 
-install_tmux() {
-    echo "==================================="
-    echo "INSTALLING TMUX "
-    echo "==================================="
-    cd $HOME
-    sudo yum install libevent-devel
-    sudo yum install ncurses-devel
-    git clone https://github.com/tmux/tmux.git
-    cd tmux
-    sh autogen.sh
-    ./configure && make
-    sudo cp ./tmux /usr/local/bin
-
-    echo "==================================="
-    echo "INSTALLING TPM"
-    echo "==================================="
+install_tpm() {
+    echo_warn "INSTALLING TPM"
     git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 }
 
@@ -77,16 +90,13 @@ install_fzf() {
 }
 
 install_cargo() {
-    # curl https://sh.rustup.rs -sSf | sh
-    curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none
+    curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y
     source "$HOME/.cargo/env"
     rustup toolchain install nightly
 }
 
 install_nvim() {
-    echo "==================================="
-    echo "INSTALLING NVIM"
-    echo "==================================="
+    echo_warn "INSTALLING NVIM"
     cd $HOME
     git clone git@github.com:neovim/neovim.git
     cd neovim/
@@ -127,14 +137,14 @@ configure_rust() {
 
   for var in ${rust_utils[@]}
   do
-    cargo install $var --locked
+    cargo install $var
   done
 
   # Setup topgrade symlink 
   ln -sf $HOME/.config/topgrade/topgrade_linux.toml $HOME/.config/topgrade/topgrade.toml
   if [ "$system_type" = "Darwin" ]; then
     ln -sf $HOME/.config/topgrade/topgrade_darwin.toml $HOME/.config/topgrade/topgrade.toml
-  else
+  fi
 }
 
 if [ "$system_type" = "Darwin" ]; then
@@ -170,3 +180,4 @@ install_fzf
 install_cargo
 configure_rust
 install_nvm
+install_tpm
