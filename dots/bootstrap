@@ -22,6 +22,7 @@ declare -a rust_utils=(
   "sd"
   "topgrade"
   "du-dust"
+  "stylua"
 )
 
 sudo yum install openssl openssl-devel -y

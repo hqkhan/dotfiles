@@ -8,28 +8,26 @@ end
 
 local M = {}
 
-function M._echo_multiline(msg)
-  for _, s in ipairs(vim.fn.split(msg, "\n")) do
-    vim.cmd("echom '" .. s:gsub("'", "''").."'")
+local fast_event_aware_notify = function(msg, level, opts)
+  if vim.in_fast_event() then
+    vim.schedule(function()
+      vim.notify(msg, level, opts)
+    end)
+  else
+    vim.notify(msg, level, opts)
   end
 end
 
 function M.info(msg)
-  vim.cmd('echohl Directory')
-  M._echo_multiline(msg)
-  vim.cmd('echohl None')
+  fast_event_aware_notify(msg, vim.log.levels.INFO, {})
 end
 
 function M.warn(msg)
-  vim.cmd('echohl WarningMsg')
-  M._echo_multiline(msg)
-  vim.cmd('echohl None')
+  fast_event_aware_notify(msg, vim.log.levels.WARN, {})
 end
 
 function M.err(msg)
-  vim.cmd('echohl ErrorMsg')
-  M._echo_multiline(msg)
-  vim.cmd('echohl None')
+  fast_event_aware_notify(msg, vim.log.levels.ERROR, {})
 end
 
 function M.has_neovim_v08()
@@ -47,6 +45,10 @@ end
 
 function M.is_darwin()
   return vim.loop.os_uname().sysname == 'Darwin'
+end
+
+function M.is_NetBSD()
+  return vim.loop.os_uname().sysname == "NetBSD"
 end
 
 function M.shell_error()
