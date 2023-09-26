@@ -137,18 +137,6 @@ map_fzf("n", "<leader>fp", "files", {
   cwd = vim.fn.stdpath "data" .. "/lazy"
 })
 
-map_fzf("n", "<c-t>", "workdirs", { desc = "cwd workdirs",
-  winopts = {
-    height = 0.40,
-    width  = 0.60,
-    row    = 0.40,
-  }
-})
-
-map_fzf("n", "<leader>li", "get_lines_within_indent", { desc = "Lgrep in current context",
-  winopts = small_top_big_bottom
-})
-
 -- dotfiles repo
 local dotfiles_git_opts = {
   cwd_header = false,

@@ -318,7 +318,6 @@ M.reload_config = function()
     { "^autocmd$", fn = function() require("autocmd") end },
     { "^keymaps$", fn = function() require("keymaps") end },
     { "^utils$" },
-    { "^workdirs$" },
     { mod = "ts%-vimdoc" },
     { mod = "smartyank", fn = function() require("smartyank") end },
     { mod = "statusline", fn = function() require("plugins.statusline") end },
