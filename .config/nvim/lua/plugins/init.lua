@@ -68,6 +68,7 @@ return {
          hl.MiniIndentscopeSymbol = { fg = palette.yellow }
          hl.GitSignsAdd = { link = "GreenSign" }
          hl.GitSignsChange = { link = "YellowSign" }
+         hl.Visual = { link = "IncSearch" }
         end
       })
     end,
