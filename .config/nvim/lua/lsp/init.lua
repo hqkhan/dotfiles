@@ -21,6 +21,9 @@ local custom_settings = {
   ['rust_analyzer'] = {
     settings = {
       ["rust-analyzer"] = {
+        server = {
+          path = "~/.toolbox/bin/rust_analyzer"
+        },
         rustfmt = {
           -- extraArgs = { "+nightly", },
         },
