@@ -87,7 +87,7 @@ key_bindings:
   - { key: A, mods: Alt, chars: "\x1ba" } # Send Alt key + a for fzf all selection instead of special character
   - { key: D, mods: Alt, chars: "\x1bd" } # Send Alt key + d for fzf all selection instead of special character
 
-  - { key: B, mods: Command|Shift, chars: "\x02b" } # Bottom
+  - { key: M, mods: Command|Shift, chars: "\x02b" } # btop
 
 import:
   - ~/.config/alacritty/embark.yaml
