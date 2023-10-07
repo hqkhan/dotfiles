@@ -57,6 +57,7 @@ install_brew() {
                less \
                restic \
                btop \
+               npm \
 
   if [ "$system_type" = "Darwin" ]; then
     echo_warn "Installing MAC tools via brew"
