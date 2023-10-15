@@ -13,7 +13,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-vim.cmd([[command! -nargs=0 GoToFile :FzfLua files]])
+local cmd = os.getenv("FZF_DEFAULT_COMMAND") .. " -I"
+vim.cmd(([[command! -nargs=0 GoToFile :lua require'fzf-lua'.files({ cmd = "%s" })]]):format(cmd))
 
 local ok, lazy = pcall(require, "lazy")
 if not ok then
