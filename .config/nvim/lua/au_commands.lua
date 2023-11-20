@@ -1,11 +1,11 @@
+-- https://github.com/ibhagwan/nvim-lua/blob/main/lua/autocmd.lua
 local aucmd = vim.api.nvim_create_autocmd
-vim.api.nvim_create_augroup('bufcheck', {clear = true})
 
 local function augroup(name, fnc)
   fnc(vim.api.nvim_create_augroup(name, { clear = true }))
 end
 
-augroup('SmartTextYankPost', function(g)
+augroup("SmartTextYankPost", function(g)
   -- highlight yanked text and copy to system clipboard
   -- TextYankPost is also called on deletion, limit to
   -- yanks via v:operator
@@ -39,7 +39,7 @@ augroup('SmartTextYankPost', function(g)
 end)
 
 -- disable mini.indentscope for certain filetype|buftype
-augroup('MiniIndentscopeDisable', function(g)
+augroup("MiniIndentscopeDisable", function(g)
   aucmd("BufEnter", {
     group = g,
     pattern = '*',
@@ -49,7 +49,7 @@ augroup('MiniIndentscopeDisable', function(g)
   })
 end)
 
-augroup('NewlineNoAutoComments', function(g)
+augroup("NewlineNoAutoComments", function(g)
   aucmd("BufEnter", {
     group = g,
     pattern = '*',
@@ -57,14 +57,14 @@ augroup('NewlineNoAutoComments', function(g)
   })
 end)
 
-augroup('ActiveWinCursorLine', function(g)
+augroup("ActiveWinCursorLine", function(g)
   -- Highlight current line only on focused window
-  aucmd("WinEnter,BufEnter,InsertLeave", {
+  aucmd({ "WinEnter", "BufEnter", "InsertLeave" }, {
     group = g,
     pattern = '*',
     command = 'if ! &cursorline && ! &pvw | setlocal cursorline | endif'
   })
-  aucmd("WinLeave,BufLeave,InsertEnter", {
+  aucmd({ "WinLeave", "BufLeave", "InsertEnter" }, {
     group = g,
     pattern = '*',
     command = 'if &cursorline && ! &pvw | setlocal nocursorline | endif'
@@ -72,7 +72,7 @@ augroup('ActiveWinCursorLine', function(g)
 end)
 
 -- auto-delete fugitive buffers
-augroup('Fugitive', function(g)
+augroup("Fugitive", function(g)
   aucmd("BufReadPost,", {
     group = g,
     pattern = 'fugitive://*',
@@ -81,7 +81,7 @@ augroup('Fugitive', function(g)
 end)
 
 -- Display help|man in vertical splits and map 'q' to quit
-augroup('Help', function(g)
+augroup("Help", function(g)
   local function open_vert()
     -- do nothing for floating windows or if this is
     -- the fzf-lua minimized help window (height=1)
@@ -127,6 +127,48 @@ augroup('Help', function(g)
             vim.api.nvim_buf_delete(bufnr, {force=true})
           end
         end, 0)
+      end
+    end
+  })
+end)
+
+-- https://vim.fandom.com/wiki/Avoid_scrolling_when_switch_buffers
+augroup("DoNotAutoScroll", function(g)
+  local function is_float(winnr)
+    local wincfg = vim.api.nvim_win_get_config(winnr)
+    if wincfg and (wincfg.external or wincfg.relative and #wincfg.relative > 0) then
+      return true
+    end
+    return false
+  end
+
+  aucmd("BufLeave", {
+    group = g,
+    pattern = "*",
+    desc = "Avoid autoscroll when switching buffers",
+    callback = function()
+      -- at this stage, current buffer is the buffer we leave
+      -- but the current window already changed, verify neither
+      -- source nor destination are floating windows
+      local from_buf = vim.api.nvim_get_current_buf()
+      local from_win = vim.fn.bufwinid(from_buf)
+      local to_win = vim.api.nvim_get_current_win()
+      if not is_float(to_win) and not is_float(from_win) then
+        vim.b.__VIEWSTATE = vim.fn.winsaveview()
+      end
+    end
+  })
+  aucmd("BufEnter", {
+    group = g,
+    pattern = "*",
+    desc = "Avoid autoscroll when switching buffers",
+    callback = function()
+      if vim.b.__VIEWSTATE then
+        local to_win = vim.api.nvim_get_current_win()
+        if not is_float(to_win) then
+          vim.fn.winrestview(vim.b.__VIEWSTATE)
+        end
+        vim.b.__VIEWSTATE = nil
       end
     end
   })
