@@ -167,3 +167,5 @@ map("n", "c>", [[:%s/\V<C-r><C-a>//g<Left><Left>]],
   { desc = "search and replace WORD under cursor" })
 map("x", "c.",
   [[:<C-u>%s/\V<C-r>=luaeval("require'utils'.get_visual_selection(true)")<CR>//g<Left><Left>]], {})
+
+vim.keymap.set("x", "/", "<Esc>/\\%V")
