@@ -73,7 +73,7 @@ end)
 
 -- auto-delete fugitive buffers
 augroup("Fugitive", function(g)
-  aucmd("BufReadPost,", {
+  aucmd("BufReadPost", {
     group = g,
     pattern = 'fugitive://*',
     command = 'set bufhidden=delete'
