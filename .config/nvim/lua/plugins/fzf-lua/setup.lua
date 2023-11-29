@@ -1,36 +1,3 @@
-local check_if_dot_file = function()
-  local home = os.getenv("HOME") .. "/"
-  -- Remove the $HOME prefix from the path
-  local buf_path = vim.api.nvim_buf_get_name(0)
-  buf_path = string.gsub(buf_path, "^" .. home, "")
-  local dot_cmd = "Yit ls-files " .. buf_path
-  local dot_file = vim.api.nvim_exec(dot_cmd, true)
-  if #dot_file ~= 0 then
-    return true
-  end
-  return false
-end
-
-local git_commit_edit_func = function(selected)
-  local commit_hash = selected[1]:match("[^ ]+")
-  local git_cmd = "Gedit"
-  if check_if_dot_file() then
-    git_cmd = "Yedit"
-  end
-  local cmd = "vsp | " .. git_cmd .. " " .. commit_hash .. ":%"
-  vim.cmd(cmd)
-end
-
-local git_commit_diff_func = function(selected)
-  local commit_hash = selected[1]:match("[^ ]+")
-  local git_cmd = "Gvdiffsplit"
-  if check_if_dot_file() then
-    git_cmd = "Yvdiffsplit"
-  end
-  local cmd = git_cmd .. " " .. commit_hash .. ":%"
-  vim.cmd(cmd)
-end
-
 return {
   setup = function()
     local fzf_lua = require("fzf-lua")
@@ -158,11 +125,6 @@ return {
             preview = { vertical = "down:75%", horizontal = "right:75%", }
           },
           preview_pager = vim.fn.executable("delta") == 1 and "delta --width=$FZF_PREVIEW_COLUMNS",
-          actions       = {
-            ['default'] = git_commit_edit_func,
-            ['ctrl-y'] = fzf_lua.actions.git_yank_commit,
-            ["ctrl-n"] = git_commit_diff_func
-          }
         },
         branches = { winopts = {
           preview = { vertical = "down:75%", horizontal = "right:75%", }

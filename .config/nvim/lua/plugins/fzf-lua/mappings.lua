@@ -1,22 +1,22 @@
-------------------------------------
--------------Keymaps----------------
-------------------------------------
 local map_fzf = function(mode, key, f, options, buffer)
-
   local desc = nil
-  if type(options) == 'table' then
+  if type(options) == "table" then
     desc = options.desc
     options.desc = nil
-  elseif type(options) == 'function' then
+  elseif type(options) == "function" then
     desc = options().desc
   end
 
   local rhs = function()
     local fzf_lua = require("fzf-lua")
-    if fzf_lua[f] then
-      fzf_lua[f](options or {})
+    local custom = require("plugins.fzf-lua.cmds")
+    -- use deepcopy so options ref isn't saved in the mapping
+    -- as this can create weird issues, for example, `lgrep_curbuf`
+    -- saving the filename in between executions
+    if custom[f] then
+      custom[f](options and vim.deepcopy(options) or {})
     else
-      require("plugins.fzf-lua.cmds")[f](options or {})
+      fzf_lua[f](options and vim.deepcopy(options) or {})
     end
   end
 
