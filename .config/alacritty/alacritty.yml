@@ -73,8 +73,12 @@ key_bindings:
   - { key: G, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
   - { key: Y, mods: Command, chars: "\x02y" } # open git manager for yadm-repo 'jesseduffield/lazygit'
   - { key: P, mods: Command, chars: "\x02Y" } # open git manager for yadm-priv-repo 'jesseduffield/lazygit'
-  - { key: K, mods: Command|Shift, chars: "\x02k" } # Go to tmux pane above
-  - { key: J, mods: Command|Shift, chars: "\x02j" } # Go to tmux pane below
+  # - { key: K, mods: Command|Shift, chars: "\x02k" } # Go to tmux pane above
+  # - { key: J, mods: Command|Shift, chars: "\x02j" } # Go to tmux pane below
+  - { key: K, mods: Command|Shift, chars: "\x02\x1b[A" } # Go to tmux pane above # https://github.com/alacritty/alacritty/issues/3476
+  - { key: J, mods: Command|Shift, chars: "\x02\x1b[B" } # Go to tmux pane below
+  - { key: L, mods: Command|Shift, chars: "\x02\x1b[C" } # Go to tmux pane right
+  - { key: H, mods: Command|Shift, chars: "\x02\x1b[D" } # Go to tmux pane left
   - { key: J, mods: Command, chars: "\x02\x54" } # open t - tmux smart session manager
   - { key: K, mods: Command, chars: "\x02s" } # open interactive tmux session client
   - { key: LBracket, mods: Command|Shift, chars: "\x02p" } # switch to next tmux window
