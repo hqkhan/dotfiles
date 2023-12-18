@@ -45,10 +45,6 @@ return {
         colors["hl+"] = {"fg", "ErrorMsg"}
         colors["hl"] = {"fg", "ErrorMsg"}
       end
-      if binary == 'sk' and vim.fn.executable(binary) == 1 then
-        colors["matched_bg"] = { "bg", "Normal" }
-        colors["current_match_bg"] = { "bg", hl_match({ "NightflyVisual", "CursorLine" }) }
-      end
       return colors
     end
 
@@ -73,7 +69,7 @@ return {
           theme = '1337', -- bat preview theme (bat --list-themes)
         },
       },
-      keymap      = {
+      keymap = {
         -- These override the default tables completely
         -- no need to set to `false` to disable a bind
         -- delete or modify is sufficient
@@ -96,7 +92,7 @@ return {
           ["ctrl-u"] = "preview-page-up",
         },
       },
-      git         = {
+      git = {
         status   = {
           cmd           = "git status -su",
           winopts       = {
@@ -109,7 +105,7 @@ return {
           },
           preview_pager = vim.fn.executable("delta") == 1 and "delta --width=$COLUMNS",
         },
-        files    = {
+        files = {
           winopts = {
             preview = { vertical = "down:65%", horizontal = "right:75%", }
           },
@@ -130,7 +126,7 @@ return {
           preview = { vertical = "down:75%", horizontal = "right:75%", }
         } }
       },
-      grep        = {
+      grep = {
         debug   = false,
         rg_glob = true,
         rg_opts = "--hidden --column --line-number --no-heading " ..
@@ -139,7 +135,12 @@ return {
           ["ctrl-q"] = fzf_lua.actions.file_sel_to_qf,
         }
       },
-      lsp         = { symbols = { path_shorten = 1 } },
+      lsp = {
+        symbols = { path_shorten = 1 },
+        code_actions = {
+          previewer = vim.fn.executable("delta") == 1 and "codeaction_native" or nil
+        }
+      },
       diagnostics = { file_icons = false, icon_padding = ' ', path_shorten = 1 }
     }
   end
