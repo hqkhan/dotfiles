@@ -16,7 +16,7 @@ fi
 
 export EDITOR=$VIM
 export FCEDIT=$EDITOR
-export PAGER=less
+# export PAGER=less
 export LESS='-iMRS -x2'
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
