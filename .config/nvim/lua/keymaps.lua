@@ -129,14 +129,6 @@ for _, c in ipairs({
     { expr = true, silent = true, desc = c[2] })
 end
 
--- Search and Replace
--- 'c.' for word, 'c>' for WORD
--- 'c.' in visual mode for selection
-map('n', 'c.', [[:%s/\<<C-r><C-w>\>//g<Left><Left>]],
-  { desc = "search and replace word under cursor" })
-map('n', 'c>', [[:%s/\V<C-r><C-a>//g<Left><Left>]],
-  { desc = "search and replace WORD under cursor" })
-
 -- Turn off search matches with double-<Esc>
 map('n', '<Esc><Esc>', '<Esc>:nohlsearch<CR>', { silent = true })
 
