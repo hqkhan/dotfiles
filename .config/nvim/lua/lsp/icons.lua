@@ -1,5 +1,4 @@
 -- LSP icons
--- LSP icons
 local icons = {
   Text          = "󰊄", -- 
   Method        = "󰊕",
