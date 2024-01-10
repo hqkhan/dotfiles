@@ -36,7 +36,7 @@ local small_top_big_bottom = {
 map_fzf('n', "<leader>f?", "builtin",           { desc = "builtin commands" })
 map_fzf('n', "<C-f>", "files",                  { desc = "Files",
     prompt = 'Files❯ ',
-        winopts = small_top_big_bottom,
+    winopts = small_top_big_bottom,
 })
 
 map_fzf('n', "<Space><CR>", "buffers",          { desc = "Buffers",
@@ -55,7 +55,7 @@ map_fzf('v', "<leader>gbl", "git_bcommits",     { desc = "Git buffer commits" })
 -- Grep
 map_fzf('n', "<leader>rg", "grep_curbuf",       { desc = "Grep current buffer" })
 map_fzf('n', "<leader>rG", "grep",              { desc = "Grep Project" })
-map_fzf("n", "<leader>cW", "grep_cword",        { desc = "grep <word> (project)" })
+map_fzf("n", "<leader>cW", "grep_cword",        { desc = "grep <word> (project)", winopts = small_top_big_bottom })
 map_fzf('n', '<leader>cw', "grep_curbuf", function()
   return                                        { desc = 'Live grep current buffer',
     prompt = 'Buffer❯ ',
