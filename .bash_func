@@ -51,6 +51,11 @@ function threads() {
   fi
 }
 
+function mem()
+{                                                                                                      
+    ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i $@ | awk '{printf $1/1024 "MB"; $1=""; print }'
+}
+
 # helpers
 function echo_ok() { echo -e '\033[1;32m'"$1"'\033[0m'; }
 function echo_warn() { echo -e '\033[1;33m'"$1"'\033[0m'; }
