@@ -163,3 +163,8 @@ map("x", "c.",
 vim.keymap.set("x", "/", "<Esc>/\\%V")
 
 vim.keymap.set('x', '@', '":norm @" . getcharstr() . "<cr>"', { expr = true })
+
+-- Double <CR> at the end: First to execute command and second to go through "# lines filtered" message.
+-- Couldn't figure out how to execute it fully silently.
+vim.keymap.set('v', "<leader>s", '!awk \'{ print length(), $0 | "sort -n | cut -d\\\\  -f2-" }\'<CR><CR>',
+  { silent = true, desc = "Sort lines by length. Useful for imports" })
