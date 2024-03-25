@@ -174,20 +174,23 @@ augroup("DoNotAutoScroll", function(g)
   })
 end)
 
--- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPre", {
-  pattern = "*",
-  callback = function()
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "<buffer>",
-      once = true,
-      callback = function()
-        vim.cmd(
-          [[if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
-        )
-      end,
-    })
-  end,
+-- goto last location when opening a buffer
+augroup("BufLastLocation", function(g)
+  aucmd("BufReadPost", {
+    group = g,
+    callback = function(args)
+      local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+      local line_count = vim.api.nvim_buf_line_count(args.buf)
+      if mark[1] > 0 and mark[1] <= line_count then
+        vim.cmd 'normal! g`"zz'
+      end
+    end,
+  })
+end)
+
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { "*" },
 })
 
 vim.api.nvim_create_autocmd({ "BufRead" }, {
