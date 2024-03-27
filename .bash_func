@@ -53,7 +53,8 @@ function threads() {
 
 function mem()
 {                                                                                                      
-    ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i $@ | awk '{printf $1/1024 "MB"; $1=""; print }'
+  pid=$(ps -ef | sed 1d | fzf -m --keep-right --height=50% | awk '{print $2}')
+  ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i $pid | awk '{printf $1/1024 "MB"; $1=""; print }'
 }
 
 # helpers
