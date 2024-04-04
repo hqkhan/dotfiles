@@ -104,8 +104,10 @@ map_fzf("n", "<leader>lf", "lsp_finder",              { desc = "location finder 
 map_fzf('n', "<leader>lS", "lsp_workspace_symbols",   { desc = "Workspace symbols", winopts = small_top_big_bottom})
 map_fzf('n', "<leader>ls", "lsp_document_symbols",    { desc = "Document symbols", winopts = small_top_big_bottom})
 map_fzf('n', "<leader>lr", "lsp_references",          { desc = "LSP references", winopts = small_top_big_bottom})
-map_fzf('n', "<leader>ld", "lsp_definitions",         { desc = "LSP definitions", winopts = small_top_big_bottom})
-map_fzf('n', "<leader>lD", "lsp_declarations",        { desc = "LSP declaration", winopts = small_top_big_bottom})
+-- map_fzf('n', "<leader>ld", "lsp_definitions",         { desc = "LSP definitions", winopts = small_top_big_bottom})
+-- map_fzf('n', "<leader>lD", "lsp_declarations",        { desc = "LSP declaration", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>ld", "diagnostics_document",         { desc = "LSP definitions", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>lD", "diagnostics_workspace",        { desc = "LSP declaration", winopts = small_top_big_bottom})
 map_fzf("n", "<leader>la", "lsp_code_actions",        { desc = "code actions [LSP]", winopts = small_top_big_bottom})
 map_fzf("n", "<leader>ly", "lsp_typedefs",            { desc = "type definitions [LSP]", winopts = small_top_big_bottom})
 

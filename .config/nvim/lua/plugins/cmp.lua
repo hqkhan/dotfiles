@@ -23,8 +23,8 @@ M.config = function()
     },
 
     window = {
-      -- completion = { border = 'single' },
-      -- documentation = { border = 'single' },
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
     },
 
     completion = {
@@ -40,6 +40,9 @@ M.config = function()
       { name = 'path' },
       { name = 'buffer' },
     },
+
+    ---@diagnostic disable-next-line: missing-fields
+    view = { entries = { follow_cursor = true } },
 
     -- we use 'comleteopt=...,noselect' but we still want cmp to autoselect
     -- an item if recommended by the LSP server (try with gopls, rust_analyzer)
@@ -58,18 +61,8 @@ M.config = function()
       ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
 
-    sorting = {
-      comparators = {
-        cmp.config.compare.offset,
-        cmp.config.compare.exact,
-        cmp.config.compare.score,
-        cmp.config.compare.recently_used,
-        cmp.config.compare.kind,
-      },
-    },
-
     formatting = {
-      deprecated = false,
+      expandable_indicator = true,
       fields = { "kind", "abbr", "menu" },
       format = function(entry, vim_item)
         local source_names = {
@@ -91,10 +84,13 @@ M.config = function()
           vim_item.kind = vim.lsp.protocol.CompletionItemKind[kind_idx]
         end
 
+        -- set max width of the LSP item or we can't see the docs
+        local max_width = math.floor(vim.o.columns * 0.40)
+        vim_item.abbr = vim_item.abbr:sub(1, max_width)
+
         return vim_item
       end,
     },
-
     -- DO NOT ENABLE
     -- just for testing with nvim native completion menu
     experimental = {
