@@ -28,7 +28,7 @@ M.config = function()
     },
 
     completion = {
-      -- start completion after 4 chars
+      -- start completion after 2 chars
       keyword_length = 2,
     },
 
@@ -47,15 +47,15 @@ M.config = function()
     -- preselect = cmp.PreselectMode.None,
 
     mapping = {
-        ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-        ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<C-p>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-n>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ["<C-p>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-n>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.close(),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
 
     sorting = {
@@ -72,27 +72,26 @@ M.config = function()
       deprecated = false,
       fields = { "kind", "abbr", "menu" },
       format = function(entry, vim_item)
+        local source_names = {
+          path = "Path",
+          buffer = "Buffer",
+          cmdline = "Cmdline",
+          luasnip = "LuaSnip",
+          nvim_lua = "Lua",
+          nvim_lsp = "LSP",
+        }
 
-          local source_names = {
-            path = "Path",
-            buffer = "Buffer",
-            cmdline = "Cmdline",
-            luasnip = "LuaSnip",
-            nvim_lua = "Lua",
-            nvim_lsp = "LSP",
-          }
+        vim_item.menu = ("%-10s [%s]"):format(
+          vim_item.kind,
+          source_names[entry.source.name] or entry.source.name)
 
-          vim_item.menu = ("%-10s [%s]"):format(
-            vim_item.kind,
-            source_names[entry.source.name] or entry.source.name)
+        -- get the item kind icon from our LSP settings
+        local kind_idx = vim.lsp.protocol.CompletionItemKind[vim_item.kind]
+        if tonumber(kind_idx) > 0 then
+          vim_item.kind = vim.lsp.protocol.CompletionItemKind[kind_idx]
+        end
 
-          -- get the item kind icon from our LSP settings
-          local kind_idx = vim.lsp.protocol.CompletionItemKind[vim_item.kind]
-          if tonumber(kind_idx) > 0 then
-            vim_item.kind = vim.lsp.protocol.CompletionItemKind[kind_idx]
-          end
-
-          return vim_item
+        return vim_item
       end,
     },
 
@@ -120,8 +119,8 @@ M.config = function()
       if vim.api.nvim_get_mode().mode == 'c' then
         return true
       else
-        return not context.in_treesitter_capture("comment") 
-          and not context.in_syntax_group("Comment")
+        return not context.in_treesitter_capture("comment")
+            and not context.in_syntax_group("Comment")
       end
     end
   })
