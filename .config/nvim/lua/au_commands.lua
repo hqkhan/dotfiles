@@ -42,11 +42,24 @@ end)
 augroup("MiniIndentscopeDisable", function(g)
   aucmd("BufEnter", {
     group = g,
-    pattern = '*',
-    command = "if index(['fzf', 'help'], &ft) >= 0 "
-      .. "|| index(['nofile', 'terminal'], &bt) >= 0 "
-      .. "| let b:miniindentscope_disable=v:true | endif"
+    callback = function(_)
+      if vim.bo.filetype == "fzf"
+          or vim.bo.filetype == "help"
+          or vim.bo.buftype == "nofile"
+          or vim.bo.buftype == "terminal"
+      then
+        vim.b.miniindentscope_disable = true
+      end
+    end,
   })
+end)
+
+augroup("ToggleSearchHL", function(g)
+  aucmd("InsertEnter",
+    {
+      group = g,
+      command = ":nohl | redraw"
+    })
 end)
 
 augroup("NewlineNoAutoComments", function(g)
@@ -86,45 +99,46 @@ augroup("Help", function(g)
     -- do nothing for floating windows or if this is
     -- the fzf-lua minimized help window (height=1)
     local cfg = vim.api.nvim_win_get_config(0)
-    if cfg and (cfg.external or cfg.relative and #cfg.relative>0)
-      or vim.api.nvim_win_get_height(0) == 1 then
+    if cfg and (cfg.external or cfg.relative and #cfg.relative > 0)
+        or vim.api.nvim_win_get_height(0) == 1 then
       return
     end
     -- do not run if Diffview is open
     if vim.g.diffview_nvim_loaded and
-      require'diffview.lib'.get_current_view() then
+        require "diffview.lib".get_current_view() then
       return
     end
-    local width = math.floor(vim.o.columns*0.75)
+    local width = math.floor(vim.o.columns * 0.75)
     vim.cmd("wincmd L")
     vim.cmd("vertical resize " .. width)
-    vim.keymap.set('n', 'q', '<CMD>q<CR>', { buffer = true })
+    vim.keymap.set("n", "q", "<CMD>q<CR>", { buffer = true })
   end
+
   aucmd("FileType", {
     group = g,
-    pattern = 'help,man',
+    pattern = "help,man",
     callback = open_vert,
   })
   -- we also need this auto command or help
   -- still opens in a split on subsequent opens
   aucmd("BufEnter", {
     group = g,
-    pattern = '*.txt',
+    pattern = "*.txt",
     callback = function()
-      if vim.bo.buftype == 'help' then
+      if vim.bo.buftype == "help" then
         open_vert()
       end
     end
   })
   aucmd("BufHidden", {
     group = g,
-    pattern = 'man://*',
+    pattern = "man://*",
     callback = function()
-      if vim.bo.filetype == 'man' then
+      if vim.bo.filetype == "man" then
         local bufnr = vim.api.nvim_get_current_buf()
         vim.defer_fn(function()
           if vim.api.nvim_buf_is_valid(bufnr) then
-            vim.api.nvim_buf_delete(bufnr, {force=true})
+            vim.api.nvim_buf_delete(bufnr, { force = true })
           end
         end, 0)
       end
@@ -144,7 +158,6 @@ augroup("DoNotAutoScroll", function(g)
 
   aucmd("BufLeave", {
     group = g,
-    pattern = "*",
     desc = "Avoid autoscroll when switching buffers",
     callback = function()
       -- at this stage, current buffer is the buffer we leave
@@ -160,7 +173,6 @@ augroup("DoNotAutoScroll", function(g)
   })
   aucmd("BufEnter", {
     group = g,
-    pattern = "*",
     desc = "Avoid autoscroll when switching buffers",
     callback = function()
       if vim.b.__VIEWSTATE then
@@ -178,9 +190,12 @@ end)
 augroup("BufLastLocation", function(g)
   aucmd("BufReadPost", {
     group = g,
-    callback = function(args)
-      local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
-      local line_count = vim.api.nvim_buf_line_count(args.buf)
+    callback = function(e)
+      -- skip fugitive commit message buffers
+      local bufname = vim.api.nvim_buf_get_name(e.buf)
+      if bufname:match("COMMIT_EDITMSG$") then return end
+      local mark = vim.api.nvim_buf_get_mark(e.buf, '"')
+      local line_count = vim.api.nvim_buf_line_count(e.buf)
       if mark[1] > 0 and mark[1] <= line_count then
         vim.cmd 'normal! g`"zz'
       end
@@ -209,44 +224,14 @@ augroup("GQFormatter", function(g)
   aucmd({ "FileType", "LspAttach" },
     {
       group = g,
-      pattern = "*",
       callback = function(e)
-        -- priortize LSP formatting as `gq`
-        local lsp_has_formatting = false
-        local lsp_clients = vim.lsp.get_active_clients()
-        local lsp_keymap_set = function(m, c)
-          vim.keymap.set(m, "gq", function()
-            vim.lsp.buf.format({ async = true, bufnr = e.buf })
-          end, {
-            silent = true,
-            buffer = e.buf,
-            desc = string.format("format document [LSP:%s]", c.name)
-          })
+        -- execlude diffview and vim-fugitive
+        if vim.bo.filetype == "fugitive"
+            or e.file:match("^fugitive:")
+            or require("plugins.diffview")._is_open() then
+          return
         end
-        vim.tbl_map(function(c)
-          if c.supports_method("textDocument/rangeFormatting", { bufnr = e.buf }) then
-            lsp_keymap_set("x", c)
-            lsp_has_formatting = true
-          end
-          if c.supports_method("textDocument/formatting", { bufnr = e.buf }) then
-            lsp_keymap_set("n", c)
-            lsp_has_formatting = true
-          end
-        end, lsp_clients)
-        -- check conform.nvim for formatters:
-        --   (1) if we have no LSP formatter map as `gq`
-        --   (2) if LSP formatter exists, map as `gQ`
-        local ok, conform = pcall(require, "conform")
-        local formatters = ok and conform.list_formatters(e.buf) or {}
-        if #formatters > 0 then
-          vim.keymap.set("n", lsp_has_formatting and "gQ" or "gq", function()
-            require("conform").format({ async = true, buffer = e.buf, lsp_fallback = false })
-          end, {
-            silent = true,
-            buffer = e.buf,
-            desc = string.format("format document [%s]", formatters[1].name)
-          })
-        end
+        require("plugins.conform")._set_gq_keymap(e)
       end,
     })
 end)
