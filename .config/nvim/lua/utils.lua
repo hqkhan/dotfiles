@@ -6,7 +6,29 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
+local DEV_DIR = "$HOME/Sources/nvim"
+
 local M = {}
+
+M.__HAS_NVIM_08 = vim.fn.has("nvim-0.8") == 1
+M.__HAS_NVIM_010 = vim.fn.has("nvim-0.10") == 1
+M.IS_WINDOWS = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+
+-- muscle memory: switch Telescope<->fzf-lua binds
+-- while I'm actively developing fzf-lua for windows
+M.SWITCH_TELE = M.IS_WINDOWS
+
+M._if_win = function(a, b)
+  if M.IS_WINDOWS then
+    return a
+  else
+    return b
+  end
+end
+
+M._if_win_fs_norm = function(a, b)
+  return M._if_win(vim.fs.normalize(a), b or a)
+end
 
 local fast_event_aware_notify = function(msg, level, opts)
   if vim.in_fast_event() then
@@ -30,25 +52,20 @@ function M.err(msg)
   fast_event_aware_notify(msg, vim.log.levels.ERROR, {})
 end
 
-function M.has_neovim_v08()
-  return (vim.fn.has("nvim-0.8") == 1)
-end
-
-function M.is_dev(path)
-  return vim.loop.fs_stat(string.format("%s/%s",
-    vim.fn.expand(DEV_DIR), path))
-end
-
 function M.is_root()
-  return (vim.loop.getuid() == 0)
+  return not M.IS_WINDOWS and vim.loop.getuid() == 0
 end
 
 function M.is_darwin()
-  return vim.loop.os_uname().sysname == 'Darwin'
+  return vim.loop.os_uname().sysname == "Darwin"
 end
 
 function M.is_NetBSD()
   return vim.loop.os_uname().sysname == "NetBSD"
+end
+
+function M.is_dev(path)
+  return vim.loop.fs_stat(string.format("%s/%s", vim.fn.expand(DEV_DIR), path))
 end
 
 function M.shell_error()
@@ -56,10 +73,10 @@ function M.shell_error()
 end
 
 function M.have_compiler()
-  if vim.fn.executable('cc') == 1 or
-    vim.fn.executable('gcc') == 1 or
-    vim.fn.executable('clang') == 1 or
-    vim.fn.executable('cl') == 1 then
+  if vim.fn.executable("cc") == 1 or
+      vim.fn.executable("gcc") == 1 or
+      vim.fn.executable("clang") == 1 or
+      vim.fn.executable("cl") == 1 then
     return true
   end
   return false
@@ -94,51 +111,47 @@ function M.set_cwd(pwd)
 end
 
 function M.get_visual_selection(nl_literal)
-    -- this will exit visual mode
-    -- use 'gv' to reselect the text
-    local _, csrow, cscol, cerow, cecol
-    local mode = vim.fn.mode()
-    if mode == 'v' or mode == 'V' or mode == '' then
-      -- if we are in visual mode use the live position
-      _, csrow, cscol, _ = unpack(vim.fn.getpos("."))
-      _, cerow, cecol, _ = unpack(vim.fn.getpos("v"))
-      if mode == 'V' then
-        -- visual line doesn't provide columns
-        cscol, cecol = 0, 999
-      end
-      -- exit visual mode
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes("<Esc>",
-          true, false, true), 'n', true)
-    else
-      -- otherwise, use the last known visual position
-      _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
-      _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
+  -- this will exit visual mode
+  -- use 'gv' to reselect the text
+  local _, csrow, cscol, cerow, cecol
+  local mode = vim.fn.mode()
+  if mode == "v" or mode == "V" or mode == "" then
+    -- if we are in visual mode use the live position
+    _, csrow, cscol, _ = unpack(vim.fn.getpos("."))
+    _, cerow, cecol, _ = unpack(vim.fn.getpos("v"))
+    if mode == "V" then
+      -- visual line doesn't provide columns
+      cscol, cecol = 0, 999
     end
-    -- swap vars if needed
-    if cerow < csrow then csrow, cerow = cerow, csrow end
-    if cecol < cscol then cscol, cecol = cecol, cscol end
-    local lines = vim.fn.getline(csrow, cerow)
-    -- local n = cerow-csrow+1
-    local n = #lines
-    if n <= 0 then return '' end
-    lines[n] = string.sub(lines[n], 1, cecol)
-    lines[1] = string.sub(lines[1], cscol)
-    return table.concat(lines, nl_literal and "\\n" or "\n")
+  else
+    -- otherwise, use the last known visual position
+    _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
+    _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
+  end
+  -- swap vars if needed
+  if cerow < csrow then csrow, cerow = cerow, csrow end
+  if cecol < cscol then cscol, cecol = cecol, cscol end
+  local lines = vim.fn.getline(csrow, cerow)
+  -- local n = cerow-csrow+1
+  local n = #lines
+  if n <= 0 then return "" end
+  lines[n] = string.sub(lines[n], 1, cecol)
+  lines[1] = string.sub(lines[1], cscol)
+  return table.concat(lines, nl_literal and "\\n" or "\n")
 end
 
 function M.toggle_colorcolumn()
   local wininfo = vim.fn.getwininfo()
   for _, win in pairs(wininfo) do
-    local ft = vim.api.nvim_buf_get_option(win['bufnr'], 'filetype')
-    if ft == nil or ft == 'TelescopePrompt' then return end
-    local colorcolumn = ''
-    if win['width'] >= vim.g.colorcolumn then
-      colorcolumn = tostring(vim.g.colorcolumn)
+    local ft = vim.api.nvim_buf_get_option(win["bufnr"], "filetype")
+    if ft == nil or ft == "TelescopePrompt" then return end
+    local colorcolumn = ""
+    if win["width"] >= vim.g._colorcolumn then
+      colorcolumn = tostring(vim.g._colorcolumn)
     end
     -- TOOD: messes up tab highlighting, why?
     -- vim.api.nvim_win_set_option(win['winid'], 'colorcolumn', colorcolumn)
-    vim.api.nvim_win_call(win['winid'], function()
+    vim.api.nvim_win_call(win["winid"], function()
       vim.wo.colorcolumn = colorcolumn
     end)
   end
@@ -150,28 +163,28 @@ function M.find_qf(type)
   local wininfo = vim.fn.getwininfo()
   local win_tbl = {}
   for _, win in pairs(wininfo) do
-      local found = false
-      if type == 'l' and win['loclist'] == 1 then
-        found = true
-      end
-      -- loclist window has 'quickfix' set, eliminate those
-      if type == 'q' and win['quickfix'] == 1 and win['loclist'] == 0  then
-        found = true
-      end
-      if found then
-        table.insert(win_tbl, { winid = win['winid'], bufnr = win['bufnr'] })
-      end
+    local found = false
+    if type == "l" and win["loclist"] == 1 then
+      found = true
+    end
+    -- loclist window has 'quickfix' set, eliminate those
+    if type == "q" and win["quickfix"] == 1 and win["loclist"] == 0 then
+      found = true
+    end
+    if found then
+      table.insert(win_tbl, { winid = win["winid"], bufnr = win["bufnr"] })
+    end
   end
   return win_tbl
 end
 
 -- open quickfix if not empty
 function M.open_qf()
-  local qf_name = 'quickfix'
+  local qf_name = "quickfix"
   local qf_empty = function() return vim.tbl_isempty(vim.fn.getqflist()) end
   if not qf_empty() then
-    vim.cmd('copen')
-    vim.cmd('wincmd J')
+    vim.cmd("copen")
+    vim.cmd("wincmd J")
   else
     print(string.format("%s is empty.", qf_name))
   end
@@ -181,18 +194,18 @@ end
 -- loclist on all windows where not empty
 function M.open_loclist_all()
   local wininfo = vim.fn.getwininfo()
-  local qf_name = 'loclist'
+  local qf_name = "loclist"
   local qf_empty = function(winnr) return vim.tbl_isempty(vim.fn.getloclist(winnr)) end
   for _, win in pairs(wininfo) do
-      if win['quickfix'] == 0 then
-        if not qf_empty(win['winnr']) then
-          -- switch active window before ':lopen'
-          vim.api.nvim_set_current_win(win['winid'])
-          vim.cmd('lopen')
-        else
-          print(string.format("%s is empty.", qf_name))
-        end
+    if win["quickfix"] == 0 then
+      if not qf_empty(win["winnr"]) then
+        -- switch active window before ':lopen'
+        vim.api.nvim_set_current_win(win["winid"])
+        vim.cmd("lopen")
+      else
+        print(string.format("%s is empty.", qf_name))
       end
+    end
   end
 end
 
@@ -208,7 +221,7 @@ function M.toggle_qf(type)
     end
   else
     -- no windows are visible, attempt to open
-    if type == 'l' then
+    if type == "l" then
       M.open_loclist_all()
     else
       M.open_qf()
@@ -225,7 +238,7 @@ end
 M.resize = function(vertical, margin)
   local cur_win = vim.api.nvim_get_current_win()
   -- go (possibly) right
-  vim.cmd(string.format('wincmd %s', vertical and 'l' or 'j'))
+  vim.cmd(string.format("wincmd %s", vertical and "l" or "j"))
   local new_win = vim.api.nvim_get_current_win()
 
   -- determine direction cond on increase and existing right-hand buffer
@@ -238,9 +251,9 @@ M.resize = function(vertical, margin)
     sign = not sign
   end
 
-  sign = sign and '+' or '-'
-  local dir = vertical and 'vertical ' or ''
-  local cmd = dir .. 'resize ' .. sign .. math.abs(margin) .. '<CR>'
+  local sign_str = sign and "+" or "-"
+  local dir = vertical and "vertical " or ""
+  local cmd = dir .. "resize " .. sign_str .. math.abs(margin) .. "<CR>"
   vim.cmd(cmd)
 end
 
@@ -249,8 +262,8 @@ M.sudo_exec = function(cmd, print_output)
   local password = vim.fn.inputsecret("Password: ")
   vim.fn.inputrestore()
   if not password or #password == 0 then
-      M.warn("Invalid password, sudo aborted")
-      return false
+    M.warn("Invalid password, sudo aborted")
+    return false
   end
   local out = vim.fn.system(string.format("sudo -p '' -S %s", cmd), password)
   if vim.v.shell_error ~= 0 then
@@ -277,15 +290,18 @@ M.sudo_write = function(tmpfile, filepath)
   -- no need to check error as this fails the entire function
   vim.api.nvim_exec(string.format("write! %s", tmpfile), true)
   if M.sudo_exec(cmd) then
-    M.info(string.format('\r\n"%s" written', filepath))
-    vim.cmd("e!")
+    -- refreshes the buffer and prints the "written" message
+    vim.cmd.checktime()
+    -- exit command mode
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(
+      "<Esc>", true, false, true), "n", true)
   end
   vim.fn.delete(tmpfile)
 end
 
 M.osc52printf = function(...)
   local str = string.format(...)
-  local base64 = require'base64'.encode(str)
+  local base64 = vim.base64.encode(str)
   local osc52str = string.format("\x1b]52;c;%s\x07", base64)
   local bytes = vim.fn.chansend(vim.v.stderr, osc52str)
   assert(bytes > 0)
@@ -314,164 +330,192 @@ end
 
 M.reload_config = function()
   M.unload_modules({
-    { "^options$", fn = function() require("options") end },
-    { "^autocmd$", fn = function() require("autocmd") end },
-    { "^keymaps$", fn = function() require("keymaps") end },
+    { "^options$",       fn = function() require("options") end },
+    { "^autocmd$",       fn = function() require("autocmd") end },
+    { "^keymaps$",       fn = function() require("keymaps") end },
     { "^utils$" },
+    { "^workdirs$" },
     { mod = "ts%-vimdoc" },
     { mod = "smartyank", fn = function() require("smartyank") end },
-    { mod = "fzf%-lua", fn = function() require("plugins.fzf-lua.setup").setup() end },
+    { mod = "fzf%-lua",  fn = function() require("plugins.fzf-lua.setup").setup() end },
+    { mod = "heirline",  fn = function() require("plugins.heirline").config() end },
+    { mod = "dap%.",     fn = function() require("plugins.dap").config() end },
   })
   -- re-source all language specific settings, scans all runtime files under
   -- '/usr/share/nvim/runtime/(indent|syntax)' and 'after/ftplugin'
   local ft = vim.bo.filetype
   vim.tbl_filter(function(s)
     for _, e in ipairs({ "vim", "lua" }) do
-      if ft and #ft > 0 and s:match(("/%s.%s"):format(ft, e)) then
+      if ft and #ft > 0 and M._if_win_fs_norm(s):match(("/%s.%s"):format(ft, e)) then
         local file = vim.fn.expand(s:match("[^: ]*$"))
-        vim.cmd("source " .. file)
+        vim.cmd("source " .. M._if_win(vim.fn.shellescape(file), file))
         M.warn("RESOURCED " .. vim.fn.fnamemodify(file, ":."))
         return s
       end
     end
     return nil
   end, vim.fn.split(vim.fn.execute("scriptnames"), "\n"))
+  -- remove last search highlight
+  vim.cmd("nohl")
 end
 
--- https://github.com/LazyVim/LazyVim/blob/68ff818a5bb7549f90b05e412b76fe448f605ffb/lua/lazyvim/util/ui.lua
----@alias Sign {name:string, text:string, texthl:string, priority:number}
-
--- Returns a list of regular and extmark signs sorted by priority (low to high)
----@return Sign[]
----@param buf number
----@param lnum number
-function M.get_signs(buf, lnum)
-  -- Get regular signs
-  ---@type Sign[]
-  local signs = vim.tbl_map(function(sign)
-    ---@type Sign
-    local ret = vim.fn.sign_getdefined(sign.name)[1]
-    ret.priority = sign.priority
-    return ret
-  end, vim.fn.sign_getplaced(buf, { group = "*", lnum = lnum })[1].signs)
-
-  -- Get extmark signs
-  local extmarks = vim.api.nvim_buf_get_extmarks(
-    buf,
-    -1,
-    { lnum - 1, 0 },
-    { lnum - 1, -1 },
-    { details = true, type = "sign" }
-  )
-  for _, extmark in pairs(extmarks) do
-    signs[#signs + 1] = {
-      name = extmark[4].sign_hl_group or "",
-      text = extmark[4].sign_text,
-      texthl = extmark[4].sign_hl_group,
-      priority = extmark[4].priority,
-    }
+M.tmux_aware_navigate = function(direction, no_wrap)
+  local curwin = vim.api.nvim_get_current_win()
+  -- First attempt to send a wincmd
+  vim.cmd.wincmd(direction == "\\" and "w" or direction)
+  if not vim.env.TMUX or vim.api.nvim_get_current_win() ~= curwin then
+    -- Stop here if no TMUX or wincmd switched windows
+    return
   end
-
-  -- Sort by priority
-  table.sort(signs, function(a, b)
-    return (a.priority or 0) < (b.priority or 0)
-  end)
-
-  return signs
+  -- tmux exists and window wasn't switche
+  -- forward the command to tmux
+  local tmux_pane_flag = {
+    ["h"]  = "-L",
+    ["j"]  = "-D",
+    ["k"]  = "-U",
+    ["l"]  = "-R",
+    ["\\"] = "-l",
+  }
+  local tmux_pane_to = {
+    ["h"] = "left",
+    ["j"] = "bottom",
+    ["k"] = "top",
+    ["l"] = "right",
+  }
+  local args = { "tmux" }
+  if no_wrap then
+    table.insert(args, "if-shell")
+    table.insert(args, "-F")
+    table.insert(args, string.format("#{pane_at_%s}", tmux_pane_to[direction]))
+    table.insert(args, "")
+    table.insert(args, string.format("select-pane -t %s %s",
+      vim.env.TMUX_PANE, tmux_pane_flag[direction]))
+  else
+    table.insert(args, "select-pane")
+    table.insert(args, "-t")
+    table.insert(args, vim.env.TMUX_PANE)
+    table.insert(args, tmux_pane_flag[direction])
+  end
+  vim.fn.system(args)
 end
 
----@return Sign?
----@param buf number
----@param lnum number
-function M.get_mark(buf, lnum)
-  local marks = vim.fn.getmarklist(buf)
-  vim.list_extend(marks, vim.fn.getmarklist())
-  for _, mark in ipairs(marks) do
-    if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match("[a-zA-Z]") then
-      return { text = mark.mark:sub(2), texthl = "DiagnosticHint" }
-    end
+M.tmux_is_zoomed = function()
+  if not vim.env.TMUX then return end
+  local out = vim.fn.system({ "tmux", "display-message", "-p", "#{window_flags}" })
+  return type(out) == "string" and out:match("Z") and 1 or 0
+end
+
+M.tmux_toggle_Z = function()
+  if not vim.env.TMUX then return end
+  vim.fn.system({ "tmux", "resize-pane", "-Z" })
+  return true
+end
+
+M.tmux_zoom = function()
+  if M.tmux_is_zoomed() == 0 then
+    return M.tmux_toggle_Z()
   end
 end
 
----@param sign? Sign
----@param len? number
-function M.icon(sign, len)
-  sign = sign or {}
-  len = len or 2
-  local text = vim.fn.strcharpart(sign.text or "", 0, len) ---@type string
-  text = text .. string.rep(" ", len - vim.fn.strchars(text))
-  return sign.texthl and ("%#" .. sign.texthl .. "#" .. text .. "%*") or text
+M.tmux_unzoom = function()
+  if M.tmux_is_zoomed() == 1 then
+    return M.tmux_toggle_Z()
+  end
 end
 
-function M.foldtext()
-  local ok = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
-  local ret = ok and vim.treesitter.foldtext and vim.treesitter.foldtext()
-  if not ret or type(ret) == "string" then
-    ret = { { vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1], {} } }
-  end
-  table.insert(ret, { " " .. require("lazyvim.config").icons.misc.dots })
-
-  if not vim.treesitter.foldtext then
-    return table.concat(
-      vim.tbl_map(function(line)
-        return line[1]
-      end, ret),
-      " "
-    )
-  end
-  return ret
-end
-
-function M.statuscolumn()
-  local win = vim.g.statusline_winid
-  local buf = vim.api.nvim_win_get_buf(win)
-  local is_file = vim.bo[buf].buftype == ""
-  local show_signs = vim.wo[win].signcolumn ~= "no"
-
-  local components = { "", "", "" } -- left, middle, right
-
-  if show_signs then
-    ---@type Sign?,Sign?,Sign?
-    local left, right, fold
-    for _, s in ipairs(M.get_signs(buf, vim.v.lnum)) do
-      if s.name and s.name:find("GitSign") then
-        right = s
+M.dap_pick_exec = function()
+  local fzf = require("fzf-lua")
+  return coroutine.create(function(dap_co)
+    local dap_abort = function() coroutine.resume(dap_co, require("dap").ABORT) end
+    local dap_run = function(exec)
+      if type(exec) == "string" and vim.loop.fs_stat(exec) then
+        coroutine.resume(dap_co, exec)
       else
-        left = s
+        if exec ~= "" then
+          M.warn(string.format("'%s' is not executable, aborting.", exec))
+        end
+        dap_abort()
       end
     end
-    if vim.v.virtnum ~= 0 then
-      left = nil
-    end
-    vim.api.nvim_win_call(win, function()
-      if vim.fn.foldclosed(vim.v.lnum) >= 0 then
-        fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = "Folded" }
-      end
-    end)
-    -- Left: mark or non-git sign
-    components[2] = M.icon(M.get_mark(buf, vim.v.lnum) or left)
-    -- Right: fold icon or git sign (only if file)
-    components[1] = is_file and M.icon(fold or right) or ""
-  end
-
-  -- Numbers in Neovim are weird
-  -- They show when either number or relativenumber is true
-  local is_num = vim.wo[win].number
-  local is_relnum = vim.wo[win].relativenumber
-  if (is_num or is_relnum) and vim.v.virtnum == 0 then
-    if vim.v.relnum == 0 then
-      components[3] = is_num and "%l" or "%r" -- the current line
-    else
-      components[3] = is_relnum and "%r" or "%l" -- other lines
-    end
-    components[3] = "%=" .. components[3] .. " " -- right align
-  end
-
-  return table.concat(components, "")
+    fzf.files({
+      cwd = vim.loop.cwd(),
+      -- cwd_header = true,
+      -- cwd_prompt = false,
+      -- prompt = "DAP: Select Executable> ",
+      git_icons = false,
+      cmd = "fd --color=never --no-ignore --type x --hidden --follow --exclude .git",
+      header = (":: %s to execute prompt"):format(fzf.utils.ansi_codes["yellow"]("<Ctrl-e>")),
+      winopts = {
+        width = 0.65,
+        height = 0.45,
+        preview = { hidden = "hidden" },
+        title = { { " DAP: Select Executable to Debug ", "Cursor" } },
+        title_pos = "center",
+      },
+      actions = {
+        ["esc"] = dap_abort,
+        ["ctrl-c"] = dap_abort,
+        ["ctrl-g"] = false,
+        ["ctrl-e"] = function(_, opts) dap_run(opts.last_query) end,
+        ["default"] = function(sel)
+          if not sel[1] then
+            dap_abort()
+          else
+            dap_run(fzf.path.entry_to_file(sel[1]).path)
+          end
+        end,
+      },
+    })
+  end)
 end
 
-if vim.fn.has("nvim-0.9.0") == 1 then
-  vim.opt.statuscolumn = [[%!v:lua.require'utils'.statuscolumn()]]
+M.dap_pick_process = function(fzflua_opts, getproc_opts)
+  local fzf = require("fzf-lua")
+  return coroutine.create(function(dap_co)
+    local dap_abort = function() coroutine.resume(dap_co, require("dap").ABORT) end
+    local procs = require("dap.utils").get_processes(getproc_opts)
+    fzf.fzf_exec(
+      function(fzf_cb)
+        for _, p in pairs(procs) do
+          fzf_cb(string.format("[%d] %s", p.pid, p.name))
+        end
+      end,
+      vim.tbl_deep_extend("keep", fzflua_opts or {}, {
+        winopts = {
+          preview = { hidden = "hidden" },
+          title = { { " DAP: Select Process to Debug ", "Cursor" } },
+          title_pos = "center",
+        },
+        actions = {
+          ["esc"] = dap_abort,
+          ["ctrl-c"] = dap_abort,
+          ["default"] = function(sel)
+            if not sel[1] then
+              dap_abort()
+            else
+              local pid = tonumber(sel[1]:match("^%[(%d+)%]"))
+              coroutine.resume(dap_co, pid)
+            end
+          end,
+        },
+      }))
+  end)
+end
+
+function M.input(prompt)
+  local ok, res
+  if vim.ui then
+    ok, _ = pcall(vim.ui.input, { prompt = prompt },
+      function(input)
+        res = input
+      end)
+  else
+    ok, res = pcall(vim.fn.input, { prompt = prompt, cancelreturn = 3 })
+    if res == 3 then
+      ok, res = false, nil
+    end
+  end
+  return ok and res or nil
 end
 
 return M
