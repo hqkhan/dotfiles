@@ -40,7 +40,7 @@ function drmi() {
 function dbash() {
     container=$(docker ps | sed 1d | fzf $FZF_MISC_CMD_OPTS --no-sort --tac | awk '{ printf $(NF)}')
     container_name=($container)
-    echo "docker exec -it $container_name /bin/bash"
+    echo_ok "docker exec -it $container_name /bin/bash"
     docker exec -it $container_name /bin/bash
 }
 
