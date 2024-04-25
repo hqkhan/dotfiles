@@ -36,7 +36,6 @@ function M.git_bcommits(opts)
       vim.api.nvim_set_current_win(curwin)
     end
   end
-  print("HERE")
 
   opts.actions = {
     ["ctrl-v"] = diffthis(fzf_lua.actions.git_buf_vsplit),
