@@ -70,19 +70,19 @@ augroup("NewlineNoAutoComments", function(g)
   })
 end)
 
--- augroup("ActiveWinCursorLine", function(g)
---   -- Highlight current line only on focused window
---   aucmd({ "WinEnter", "BufEnter", "InsertLeave" }, {
---     group = g,
---     pattern = '*',
---     command = 'if ! &cursorline && ! &pvw | setlocal cursorline | endif'
---   })
---   aucmd({ "WinLeave", "BufLeave", "InsertEnter" }, {
---     group = g,
---     pattern = '*',
---     command = 'if &cursorline && ! &pvw | setlocal nocursorline | endif'
---   })
--- end)
+augroup("ActiveWinCursorLine", function(g)
+  -- Highlight current line only on focused window
+  aucmd({ "WinEnter", "BufEnter", "InsertLeave" }, {
+    group = g,
+    pattern = '*',
+    command = 'if ! &cursorline && ! &pvw | setlocal cursorline | endif'
+  })
+  aucmd({ "WinLeave", "BufLeave", "InsertEnter" }, {
+    group = g,
+    pattern = '*',
+    command = 'if &cursorline && ! &pvw | setlocal nocursorline | endif'
+  })
+end)
 
 -- auto-delete fugitive buffers
 augroup("Fugitive", function(g)
