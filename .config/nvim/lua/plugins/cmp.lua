@@ -50,15 +50,44 @@ M.config = function()
     -- preselect = cmp.PreselectMode.None,
 
     mapping = {
-      ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-      ["<C-p>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-n>"] = cmp.mapping.scroll_docs(4),
-      ["<C-Space>"] = cmp.mapping.complete(),
-      ["<C-e>"] = cmp.mapping.close(),
-      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i" }),
+      ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i" }),
+      ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+      ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+      ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+      ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+      -- ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+      -- ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+      ["<S-up>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+      ["<S-down>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i" }),
+      ["<C-b>"] = cmp.mapping(
+        cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select, count = 20 }),
+        { "i", "c" }
+      ),
+      ["<C-f>"] = cmp.mapping(
+        cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select, count = 20 }),
+        { "i", "c" }
+      ),
+      ["<C-e>"] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+      -- ['<CR>'] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Insert })
+      -- close the cmp interface if no item is selected, I find it more
+      -- intuitive when using LSP autoselect (instead of sending <CR>)
+      ["<CR>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          if cmp.get_selected_entry() then
+            cmp.confirm({ select = false, cmp.ConfirmBehavior.Insert })
+          else
+            cmp.close()
+          end
+        else
+          fallback()
+        end
+      end),
     },
 
     formatting = {
