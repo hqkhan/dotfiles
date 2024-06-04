@@ -47,7 +47,7 @@ function dbash() {
 function threads() {
   pid=$(ps -ef | sed 1d | fzf -m --keep-right --height=50% | awk '{print $2}')
   if [[ ! -z "$pid" ]]; then
-    ps -T -p $pid
+    ps H -o "pid,tid,tty,%cpu,time,psr,comm" $pid
   fi
 }
 
