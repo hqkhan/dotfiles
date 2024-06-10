@@ -25,6 +25,20 @@ vim.cmd[[set path=.,,,$PWD/**]]
 -- unnamedplus = use the + register (cmd-v paste in our term)
 -- o.clipboard         = 'unnamedplus'
 
+if vim.fn.has("nvim-0.10") == 1 and vim.env.SSH_TTY then
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    },
+  }
+end
+
 o.showmode          = false     -- show current mode (insert, etc) under the cmdline
 o.showcmd           = true      -- show current command under the cmd line
 o.cmdheight         = 0         -- cmdline height
@@ -236,4 +250,5 @@ vim.g.markdown_fenced_languages = {
 -- Map leader to ,
 vim.g.mapleader      = ','
 vim.g.maplocalleader = ','
+
 
