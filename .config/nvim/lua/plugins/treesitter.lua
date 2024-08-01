@@ -1,8 +1,9 @@
 return {
   {
     "nvim-treesitter/playground",
-    cmd = "TSPlaygroundToggle" },
-    cond = require("utils").have_compiler,
+    cmd = "TSPlaygroundToggle"
+  },
+  cond = require("utils").have_compiler,
   {
     "nvim-treesitter/nvim-treesitter",
     -- treesitter requires a C compiler
@@ -41,6 +42,7 @@ return {
           "solidity",
           -- for `nvim-treesitter/playground`
           "query",
+          "smithy",
         },
         highlight             = {
           enable = true,
