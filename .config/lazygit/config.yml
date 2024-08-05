@@ -73,6 +73,7 @@ os:
     editCommand: 'nvim' # see 'Configuring File Editing' section
     editCommandTemplate: '{{editor}} {{filename}}'
     openCommand: ''
+    copyToClipboardCmd: printf "\033]52;c;$(printf {{text}} | base64)\a" > /dev/tty
 refresher:
     refreshInterval: 10 # file/submodule refresh interval in seconds
     fetchInterval: 60 # re-fetch interval in seconds
@@ -213,5 +214,3 @@ keybinding:
         init: 'i'
         update: 'u'
         bulkMenu: 'b'
-os:
-  copyToClipboardCmd: printf "\033]52;c;$(printf {{text}} | base64)\a" > /dev/tty
