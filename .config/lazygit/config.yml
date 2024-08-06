@@ -196,7 +196,7 @@ keybinding:
         revertCommit: 't'
         cherryPickCopy: 'c'
         cherryPickCopyRange: 'C'
-        pasteCommits: 'v'
+        pasteCommits: '<c-v>'
         tagCommit: 'T'
         checkoutCommit: '<space>'
         resetCherryPick: '<c-R>'
