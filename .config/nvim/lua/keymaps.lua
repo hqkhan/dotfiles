@@ -139,9 +139,13 @@ map('n', '<leader>cd', '<Esc>:lua require"utils".set_cwd()<CR>',
 map('n', '<C-p>', '<Esc>:lua print(vim.api.nvim_buf_get_name(0))<CR>',
   { silent = true, desc = "print current buffer path" })
 
-map({'n', 'v'}, '<S-j>', '<PageDown>zz',
+-- map({'n', 'v'}, '<S-j>', '<PageDown>zz',
+--   { silent = true, desc = "Page down and keep center screen" })
+-- map({'n', 'v'}, '<S-k>', '<PageUp>zz',
+--   { silent = true, desc = "Page up and keep center screen" })
+map({'n', 'v'}, '<C-d>', '<PageDown>zz',
   { silent = true, desc = "Page down and keep center screen" })
-map({'n', 'v'}, '<S-k>', '<PageUp>zz',
+map({'n', 'v'}, '<C-u>', '<PageUp>zz',
   { silent = true, desc = "Page up and keep center screen" })
 
 map('n', '<leader>bd', '<Esc>:bd<CR>',
