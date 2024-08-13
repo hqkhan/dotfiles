@@ -28,6 +28,7 @@ return {
           "go",
           "javascript",
           "typescript",
+          "java",
           "json",
           "jsonc",
           "jsdoc",
