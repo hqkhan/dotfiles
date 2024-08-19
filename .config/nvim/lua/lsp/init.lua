@@ -52,6 +52,7 @@ local manually_installed_servers = {
   'gopls',
   'pyright',
   'clangd',
+  'jdtls',
 }
 
 local all_servers = (function()

@@ -1,14 +1,21 @@
 return {
-  { "j-hui/fidget.nvim",
+  {
+    "j-hui/fidget.nvim",
     config = function()
       require("fidget").setup()
     end
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "mfussenegger/nvim-jdtls",
+    },
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = not require("utils").is_NetBSD() and { "lua_ls" } or nil,
+        handlers = {
+            ['jdtls'] = function() end,
+        },
       })
     end
   },
@@ -60,7 +67,7 @@ return {
     "ray-x/lsp_signature.nvim",
     event = "BufReadPre",
     config = function()
-      local cfg = {}  -- add your config here
+      local cfg = {} -- add your config here
       require "lsp_signature".setup(cfg)
     end
   }

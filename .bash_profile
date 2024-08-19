@@ -9,3 +9,4 @@ else
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 . "$HOME/.cargo/env"
+export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@17/bin:$PATH"
