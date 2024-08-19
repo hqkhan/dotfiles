@@ -1,0 +1,387 @@
+import = ["/Users/hqkhan/.config/alacritty/embark.toml"]
+live_config_reload = true
+
+[colors.bright]
+black = "#475258"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[colors.hints.start]
+background = "#f85552"
+foreground = "#000000"
+
+[colors.normal]
+black = "#475258"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[colors.primary]
+background = "#2d353b"
+foreground = "#d3c6aa"
+
+[colors.selection]
+background = "CellForeground"
+text = "CellBackground"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 15.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Propo"
+style = "Medium"
+
+[[hints.enabled]]
+command = "open"
+hyperlinks = true
+post_processing = true
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+
+[hints.enabled.binding]
+key = "U"
+mods = "Command"
+
+[hints.enabled.mouse]
+enabled = true
+mods = "None"
+
+[[keyboard.bindings]]
+chars = "\u00021"
+key = "Key1"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00022"
+key = "Key2"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00023"
+key = "Key3"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00024"
+key = "Key4"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00025"
+key = "Key5"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00026"
+key = "Key6"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00027"
+key = "Key7"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00028"
+key = "Key8"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00029"
+key = "Key9"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002,"
+key = "Comma"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002L"
+key = "E"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002%"
+key = "Apostrophe"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\""
+key = "Apostrophe"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002/"
+key = "Slash"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002["
+key = "LBracket"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002v"
+key = "F"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = ":GoToFile\r"
+key = "F"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002g"
+key = "G"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002y"
+key = "Y"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002Y"
+key = "P"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002\u001B[A"
+key = "K"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\u001B[B"
+key = "J"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\u001B[C"
+key = "L"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\u001B[D"
+key = "H"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002T"
+key = "J"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002s"
+key = "K"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002p"
+key = "LBracket"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002n"
+key = "RBracket"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002c"
+key = "T"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002x"
+key = "W"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002z"
+key = "Z"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Ba"
+key = "A"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bd"
+key = "D"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u0002b"
+key = "M"
+mods = "Command|Shift"
+
+[schemes.everforest_dark_hard.bright]
+black = "#475258"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[schemes.everforest_dark_hard.normal]
+black = "#414b50"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[schemes.everforest_dark_hard.primary]
+background = "#272e33"
+foreground = "#d3c6aa"
+
+[schemes.everforest_dark_medium.bright]
+black = "#475258"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[schemes.everforest_dark_medium.hints.start]
+background = "#f85552"
+foreground = "#000000"
+
+[schemes.everforest_dark_medium.normal]
+black = "#475258"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[schemes.everforest_dark_medium.primary]
+background = "#2d353b"
+foreground = "#d3c6aa"
+
+[schemes.everforest_dark_medium.selection]
+background = "CellForeground"
+text = "CellBackground"
+
+[schemes.everforest_dark_soft.bright]
+black = "#4d5960"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[schemes.everforest_dark_soft.normal]
+black = "#4d5960"
+blue = "#7fbbb3"
+cyan = "#83c092"
+green = "#a7c080"
+magenta = "#d699b6"
+red = "#e67e80"
+white = "#d3c6aa"
+yellow = "#dbbc7f"
+
+[schemes.everforest_dark_soft.primary]
+background = "#333c43"
+foreground = "#d3c6aa"
+
+[schemes.everforest_light_hard.bright]
+black = "#5c6a72"
+blue = "#3a94c5"
+cyan = "#35a77c"
+green = "#8da101"
+magenta = "#df69ba"
+red = "#f85552"
+white = "#e8e5d5"
+yellow = "#dfa000"
+
+[schemes.everforest_light_hard.normal]
+black = "#5c6a72"
+blue = "#3a94c5"
+cyan = "#35a77c"
+green = "#8da101"
+magenta = "#df69ba"
+red = "#f85552"
+white = "#e8e5d5"
+yellow = "#dfa000"
+
+[schemes.everforest_light_hard.primary]
+background = "#fffbef"
+foreground = "#5c6a72"
+
+[schemes.everforest_light_medium.bright]
+black = "#5c6a72"
+blue = "#3a94c5"
+cyan = "#35a77c"
+green = "#8da101"
+magenta = "#df69ba"
+red = "#f85552"
+white = "#e0dcc7"
+yellow = "#dfa000"
+
+[schemes.everforest_light_medium.normal]
+black = "#5c6a72"
+blue = "#3a94c5"
+cyan = "#35a77c"
+green = "#8da101"
+magenta = "#df69ba"
+red = "#f85552"
+white = "#e0dcc7"
+yellow = "#dfa000"
+
+[schemes.everforest_light_medium.primary]
+background = "#fdf6e3"
+foreground = "#5c6a72"
+
+[schemes.everforest_light_soft.bright]
+black = "#5c6a72"
+blue = "#3a94c5"
+cyan = "#35a77c"
+green = "#8da101"
+magenta = "#df69ba"
+red = "#f85552"
+white = "#d8d3ba"
+yellow = "#dfa000"
+
+[schemes.everforest_light_soft.normal]
+black = "#5c6a72"
+blue = "#3a94c5"
+cyan = "#35a77c"
+green = "#8da101"
+magenta = "#df69ba"
+red = "#f85552"
+white = "#d8d3ba"
+yellow = "#dfa000"
+
+[schemes.everforest_light_soft.primary]
+background = "#f3ead3"
+foreground = "#5c6a72"
+
+[shell]
+args = ["--login"]
+program = "/bin/bash"
+
+[window]
+decorations = "none"
