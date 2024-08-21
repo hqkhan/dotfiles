@@ -143,9 +143,9 @@ map('n', '<C-p>', '<Esc>:lua print(vim.api.nvim_buf_get_name(0))<CR>',
 --   { silent = true, desc = "Page down and keep center screen" })
 -- map({'n', 'v'}, '<S-k>', '<PageUp>zz',
 --   { silent = true, desc = "Page up and keep center screen" })
-map({'n', 'v'}, '<C-d>', '<PageDown>zz',
+map({'n', 'v'}, '<C-d>', '<C-d>zz',
   { silent = true, desc = "Page down and keep center screen" })
-map({'n', 'v'}, '<C-u>', '<PageUp>zz',
+map({'n', 'v'}, '<C-u>', '<C-u>zz',
   { silent = true, desc = "Page up and keep center screen" })
 
 map('n', '<leader>bd', '<Esc>:bd<CR>',
