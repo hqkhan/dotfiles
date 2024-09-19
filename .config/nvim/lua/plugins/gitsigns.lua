@@ -30,7 +30,6 @@ M.config = function()
     word_diff      = false, -- Toggle with `:Gitsigns toggle_word_diff`
     sign_priority  = 4, -- Lower priorirty means diag signs supercede
     preview_config = { border = "rounded" },
-    yadm           = { enable = false },
     on_attach      = function(bufnr)
       local gs = package.loaded.gitsigns
 
