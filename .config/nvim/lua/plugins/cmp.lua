@@ -7,38 +7,54 @@ local M = {
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lua",
-    "saadparwaiz1/cmp_luasnip",
+    not vim.snippet and "saadparwaiz1/cmp_luasnip" or nil,
   },
 }
+local winopts = {
+  -- NOT REQUIRED
+  -- Set left|right border chars to invisible spaces for scollbar
+  -- border = { "", "", "", "\xc2\xa0", "", "", "", "\xc2\xa0" },
+  winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+}
+
 M.config = function()
   local cmp = require("cmp")
-  local luasnip = require("luasnip")
 
   cmp.setup {
     snippet = {
       -- must use a snippet engine
       expand = function(args)
-        luasnip.lsp_expand(args.body)
+        if vim.snippet then
+          vim.snippet.expand(args.body)
+        else
+          -- Only installed with neovim < 0.10
+          require("luasnip").lsp_expand(args.body)
+        end
       end,
     },
 
     window = {
+      completion = winopts,
+      documentation = winopts,
       -- completion = cmp.config.window.bordered(),
       -- documentation = cmp.config.window.bordered(),
     },
 
     completion = {
-      -- start completion after 2 chars
-      keyword_length = 2,
+      -- start completion immediately
+      keyword_length = 1,
     },
 
-
     sources = {
-      { name = 'nvim_lsp' },
-      { name = 'nvim_lua' },
-      { name = 'luasnip' },
-      { name = 'path' },
-      { name = 'buffer' },
+      { name = "nvim_lsp" },
+      { name = "nvim_lua" },
+      { name = "path" },
+      { name = "buffer" },
+      {
+        name = "lazydev",
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+      },
+      not vim.snippet and { name = "luasnip" } or nil,
     },
 
     ---@diagnostic disable-next-line: missing-fields
@@ -48,7 +64,6 @@ M.config = function()
     -- an item if recommended by the LSP server (try with gopls, rust_analyzer)
     -- uncomment to disable
     -- preselect = cmp.PreselectMode.None,
-
     mapping = {
       ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i" }),
       ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i" }),
@@ -101,6 +116,7 @@ M.config = function()
           luasnip = "LuaSnip",
           nvim_lua = "Lua",
           nvim_lsp = "LSP",
+          lazydev = "LazyDev",
         }
 
         vim_item.menu = ("%-10s [%s]"):format(
@@ -120,6 +136,7 @@ M.config = function()
         return vim_item
       end,
     },
+
     -- DO NOT ENABLE
     -- just for testing with nvim native completion menu
     experimental = {
@@ -129,33 +146,18 @@ M.config = function()
   }
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
+  cmp.setup.cmdline("/", {
     sources = {
-      { name = 'buffer' }
+      { name = "buffer" }
     }
   })
 
-  -- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disabling-completion-in-certain-contexts-such-as-comments
-  cmp.setup({
-    enabled = function()
-      -- disable completion in comments
-      local context = require 'cmp.config.context'
-      -- keep command mode completion enabled when cursor is in a comment
-      if vim.api.nvim_get_mode().mode == 'c' then
-        return true
-      else
-        return not context.in_treesitter_capture("comment")
-            and not context.in_syntax_group("Comment")
-      end
-    end
-  })
-
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
+  cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
-      { name = 'path' }
+      { name = "path" }
     }, {
-      { name = 'cmdline' }
+      { name = "cmdline" }
     })
   })
 end

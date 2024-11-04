@@ -2,22 +2,20 @@ return {
   {
     "j-hui/fidget.nvim",
     config = function()
-      require("fidget").setup()
+      require("fidget").setup({})
     end
   },
   {
+    "mfussenegger/nvim-jdtls",
+    ft = "java",
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = {
-      "mfussenegger/nvim-jdtls",
-    },
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = not require("utils").is_NetBSD() and { "lua_ls" } or nil,
-        handlers = {
-            ['jdtls'] = function() end,
-        },
       })
-    end
+    end,
   },
   {
     "neovim/nvim-lspconfig",
