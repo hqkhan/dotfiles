@@ -10,7 +10,7 @@ return {
         green_fg = utils.get_highlight("diffAdded").fg,
         yellow_fg = utils.get_highlight("WarningMsg").fg,
         magenta_fg = utils.get_highlight("WarningMsg").fg,
-        dark_tmux_fg = utils.get_highlight("Darkblue_tmux_fg").fg,
+        dark_tmux_fg = utils.get_highlight("Darkblue_tmux_bg").bg,
         dark_tmux_bg = utils.get_highlight("Darkblue_tmux_bg").bg,
         normal = utils.get_highlight("Normal").bg
       }
