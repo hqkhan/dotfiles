@@ -27,25 +27,6 @@ local on_attach = function(client, bufnr)
     client.config.flags.debounce_text_changes  = 100
   end
 
-
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', '<space>k', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<leader>s', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  -- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-  vim.keymap.set("n", "gS", vim.lsp.buf.document_symbol, keymap_opts)
-  vim.keymap.set("n", "gs", vim.lsp.buf.workspace_symbol, keymap_opts)
-
   map('n', '<space>k',  '<cmd>lua vim.lsp.buf.hover()<CR>',
     { desc = "hover information [LSP]" })
   map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>',
