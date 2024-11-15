@@ -118,11 +118,11 @@ if is_installed(lspconfig["jdtls"]) then
     on_attach = function()
       vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
       local map = function(mode, lhs, rhs, opts)
-        opts = vim.tbl_extend("keep", opts, { silent = true, buffer = true })
-        vim.keymap.set(mode, lhs, rhs, opts)
-      end,
-      -- Get basic mappings
-      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+            opts = vim.tbl_extend("keep", opts, { silent = true, buffer = true })
+            vim.keymap.set(mode, lhs, rhs, opts)
+          end,
+          -- Get basic mappings
+          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
       vim.keymap.set('n', '<space>k', vim.lsp.buf.hover, bufopts)
       vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
@@ -140,7 +140,7 @@ if is_installed(lspconfig["jdtls"]) then
       vim.keymap.set("n", "gS", vim.lsp.buf.document_symbol, keymap_opts)
       vim.keymap.set("n", "gs", vim.lsp.buf.workspace_symbol, keymap_opts)
 
-      map('n', '<space>k',  '<cmd>lua vim.lsp.buf.hover()<CR>',
+      map('n', '<space>k', '<cmd>lua vim.lsp.buf.hover()<CR>',
         { desc = "hover information [LSP]" })
       map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>',
         { desc = "goto definition [LSP]" })
@@ -159,7 +159,7 @@ if is_installed(lspconfig["jdtls"]) then
       -- use our own rename popup implementation
       map('n', '<leader>lR', '<cmd>lua require("lsp.rename").rename()<CR>',
         { desc = "rename [LSP]" })
-      map('n', '<space>K',  '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+      map('n', '<space>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>',
         { desc = "signature help [LSP]" })
       map('n', '<space>d', '<cmd>lua require("lsp.handlers").peek_definition()<CR>',
         { desc = "peek definition [LSP]" })
@@ -193,8 +193,17 @@ if is_installed(lspconfig["jdtls"]) then
           file:close()
         end
       end
+      local folders = vim.lsp.buf.list_workspace_folders()
       for _, line in ipairs(ws_folders_lsp) do
-        vim.lsp.buf.add_workspace_folder(line)
+        local is_not_in_workspace = true
+        for _, folder in ipairs(folders) do
+          if folder == line then
+            is_not_in_workspace = false
+          end
+        end
+        if is_not_in_workspace then
+          vim.lsp.buf.add_workspace_folder(line)
+        end
       end
     end,
     cmd = {
