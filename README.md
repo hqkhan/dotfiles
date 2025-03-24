@@ -37,6 +37,7 @@ dot remote add origin git@github.com:hqkhan/dotfiles.git
 
 - Terminal: [Alacritty](https://alacritty.org)
 - Font: [JetBrains Nerd Font](https://github.com/JetBrains/JetBrainsMono)
+- Font (trying out): [Maple Mono](https://github.com/subframe7536/maple-font)
 - Colors: [embark](https://github.com/embark-theme/vim)
 - Shell: bash
 - Multiplexer: [tmux](https://github.com/tmux/tmux/wiki)

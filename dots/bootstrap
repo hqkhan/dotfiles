@@ -68,6 +68,7 @@ install_brew() {
                  python3
 
     brew cask install stats alacritty unnaturalscrollwheels font-jetbrains-mono-nerd-font koekeishiya/formulae/yabai raycast
+    brew install --cask font-maple-mono-normal-nf
 
     skhd --start-service
   fi
