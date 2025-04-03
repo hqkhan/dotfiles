@@ -12,6 +12,23 @@ vim.lsp.handlers["textDocument/hover"] =
 vim.lsp.handlers["textDocument/signatureHelp"] =
     vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
+-- Custom root dir function that ignores "$HOME/.git" for lua files in $HOME
+-- which will then run the LSP in single file mdoe, otherwise will err with:
+--   LSP[lua_ls] Your workspace is set to `$HOME`.
+--   Lua language server refused to load this directory.
+--   Please check your configuration.
+--   [learn more here](https://luals.github.io/wiki/faq#why-is-the-server-scanning-the-wrong-folder)
+-- Reuse ".../nvim-lspconfig/lua/lspconfig/configs/lua_ls"
+local lua_root_dir = function(fname)
+  local lua_ls = require "lspconfig.configs.lua_ls".default_config
+  local root = lua_ls.root_dir(fname)
+  -- NOTE: although returning `nil` here does nullify the "rootUri" property lua_ls still
+  -- displays the error, I'm not sure if returning an empty string is the correct move as
+  -- it generates "rootUri = "file://" but it does seem to quiet lua_ls and make it work
+  -- as if it was started in single file mode
+  return root and root ~= vim.env.HOME and root or ""
+end
+
 local custom_settings = {
   ["lua_ls"] = {
     settings = {
@@ -87,18 +104,24 @@ local function is_installed(cfg)
   return cmd and cmd[1] and vim.fn.executable(cmd[1]) == 1
 end
 
-local function make_config()
+local function make_config(srv)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   -- enables snippet support
   capabilities.textDocument.completion.completionItem.snippetSupport = true
-  -- enables LSP autocomplete
-  local cmp_loaded, cmp_lsp = pcall(require, "cmp_nvim_lsp")
-  if cmp_loaded then
-    capabilities = cmp_lsp.default_capabilities()
+  -- enables LSP autocomplete, prioritize blink over cmp
+  local blink_loaded, blink = pcall(require, "blink.cmp")
+  if blink_loaded then
+    capabilities = blink.get_lsp_capabilities()
+  else
+    local cmp_loaded, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+    if cmp_loaded then
+      capabilities = cmp_lsp.default_capabilities()
+    end
   end
   return {
     on_attach = require("lsp.on_attach").on_attach,
     capabilities = capabilities,
+    root_dir = srv == "lua_ls" and lua_root_dir or nil,
   }
 end
 
