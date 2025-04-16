@@ -1,5 +1,5 @@
-[general]
-import = ["/Users/hqkhan/.config/alacritty/everforest_dark.toml"]
+# [general]
+# import = ["/Users/hqkhan/.config/alacritty/everforest_dark.toml"]
 
 live_config_reload = true
 
@@ -229,11 +229,9 @@ chars = "\u0002b"
 key = "M"
 mods = "Command|Shift"
 
-[terminal.shell]
-args = ["--login"]
-program = "/bin/bash"
+# [terminal.shell]
+# args = ["--login"]
+# program = "/bin/bash"
 
 [window]
 decorations = "none"
-
-[terminal]
