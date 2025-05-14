@@ -10,25 +10,8 @@ local DEV_DIR = "$HOME/Sources/nvim"
 
 local M = {}
 
-M.__HAS_NVIM_08 = vim.fn.has("nvim-0.8") == 1
-M.__HAS_NVIM_010 = vim.fn.has("nvim-0.10") == 1
-M.IS_WINDOWS = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
-
--- muscle memory: switch Telescope<->fzf-lua binds
--- while I'm actively developing fzf-lua for windows
-M.SWITCH_TELE = M.IS_WINDOWS
-
-M._if_win = function(a, b)
-  if M.IS_WINDOWS then
-    return a
-  else
-    return b
-  end
-end
-
-M._if_win_fs_norm = function(a, b)
-  return M._if_win(vim.fs.normalize(a), b or a)
-end
+M.__HAS_NVIM_011 = vim.fn.has("nvim-0.11") == 1
+M.__IS_WIN = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
 
 local fast_event_aware_notify = function(msg, level, opts)
   if vim.in_fast_event() then
@@ -53,19 +36,26 @@ function M.err(msg)
 end
 
 function M.is_root()
-  return not M.IS_WINDOWS and vim.loop.getuid() == 0
+  return not M.__IS_WIN and vim.uv.getuid() == 0
 end
 
 function M.is_darwin()
-  return vim.loop.os_uname().sysname == "Darwin"
+  return vim.uv.os_uname().sysname == "Darwin"
 end
 
 function M.is_NetBSD()
-  return vim.loop.os_uname().sysname == "NetBSD"
+  return vim.uv.os_uname().sysname == "NetBSD"
 end
 
+function M.is_iSH()
+  return vim.uv.os_uname().release:match("%-ish$") ~= nil
+end
+
+M.USE_SNACKS = M.__IS_WIN or M.is_iSH()
+M.USE_BLINK_CMP = vim.fn.executable("cargo") == 1 and not M.is_NetBSD()
+
 function M.is_dev(path)
-  return vim.loop.fs_stat(string.format("%s/%s", vim.fn.expand(DEV_DIR), path))
+  return vim.uv.fs_stat(string.format("%s/%s", vim.fn.expand(DEV_DIR), path)) ~= nil
 end
 
 function M.shell_error()
@@ -101,7 +91,7 @@ function M.set_cwd(pwd)
     local parent = vim.fn.expand("%:h")
     pwd = M.git_root(parent, true) or parent
   end
-  if vim.loop.fs_stat(pwd) then
+  if vim.uv.fs_stat(pwd) then
     vim.cmd("cd " .. pwd)
     M.info(("pwd set to %s"):format(vim.fn.shellescape(pwd)))
   else
@@ -138,23 +128,6 @@ function M.get_visual_selection(nl_literal)
   lines[n] = string.sub(lines[n], 1, cecol)
   lines[1] = string.sub(lines[1], cscol)
   return table.concat(lines, nl_literal and "\\n" or "\n")
-end
-
-function M.toggle_colorcolumn()
-  local wininfo = vim.fn.getwininfo()
-  for _, win in pairs(wininfo) do
-    local ft = vim.api.nvim_buf_get_option(win["bufnr"], "filetype")
-    if ft == nil or ft == "TelescopePrompt" then return end
-    local colorcolumn = ""
-    if win["width"] >= vim.g._colorcolumn then
-      colorcolumn = tostring(vim.g._colorcolumn)
-    end
-    -- TOOD: messes up tab highlighting, why?
-    -- vim.api.nvim_win_set_option(win['winid'], 'colorcolumn', colorcolumn)
-    vim.api.nvim_win_call(win["winid"], function()
-      vim.wo.colorcolumn = colorcolumn
-    end)
-  end
 end
 
 -- 'q': find the quickfix window
@@ -288,7 +261,7 @@ M.sudo_write = function(tmpfile, filepath)
     vim.fn.shellescape(tmpfile),
     vim.fn.shellescape(filepath))
   -- no need to check error as this fails the entire function
-  vim.api.nvim_exec(string.format("write! %s", tmpfile), true)
+  vim.api.nvim_exec2(string.format("write! %s", tmpfile), { output = true })
   if M.sudo_exec(cmd) then
     -- refreshes the buffer and prints the "written" message
     vim.cmd.checktime()
@@ -329,52 +302,80 @@ M.unload_modules = function(patterns)
 end
 
 M.reload_config = function()
+  require("fzf-lua").deregister_ui_select()
   M.unload_modules({
-    { "^options$",       fn = function() require("options") end },
+    {
+      "^options$",
+      fn = function()
+        -- Ignore events or gitsigns croaks on "OptionSet"
+        --   OptionSet Autocommands for "fileformat": attempt to yield across C-call
+        local save_ei = vim.o.eventignore
+        vim.o.eventignore = "all"
+        require("options")
+        vim.o.eventignore = save_ei
+      end
+    },
     { "^autocmd$",       fn = function() require("autocmd") end },
     { "^keymaps$",       fn = function() require("keymaps") end },
     { "^utils$" },
-    { "^workdirs$" },
+    { "^term$" },
     { mod = "ts%-vimdoc" },
     { mod = "smartyank", fn = function() require("smartyank") end },
     { mod = "fzf%-lua",  fn = function() require("plugins.fzf-lua.setup").setup() end },
     { mod = "heirline",  fn = function() require("plugins.heirline").config() end },
-    { mod = "dap%.",     fn = function() require("plugins.dap").config() end },
+    -- {
+    --   mod = "snacks",
+    --   fn = function()
+    --     require("plugins.snacks").init()
+    --     require("plugins.snacks").config()
+    --   end
+    -- },
   })
   -- re-source all language specific settings, scans all runtime files under
   -- '/usr/share/nvim/runtime/(indent|syntax)' and 'after/ftplugin'
   local ft = vim.bo.filetype
   vim.tbl_filter(function(s)
     for _, e in ipairs({ "vim", "lua" }) do
-      if ft and #ft > 0 and M._if_win_fs_norm(s):match(("/%s.%s"):format(ft, e)) then
+      if ft and #ft > 0 and vim.fs.normalize(s):match(("/%s.%s"):format(ft, e)) then
         local file = vim.fn.expand(s:match("[^: ]*$"))
-        vim.cmd("source " .. M._if_win(vim.fn.shellescape(file), file))
+        vim.cmd.source(file)
         M.warn("RESOURCED " .. vim.fn.fnamemodify(file, ":."))
         return s
       end
     end
-    return nil
+    return false
   end, vim.fn.split(vim.fn.execute("scriptnames"), "\n"))
   -- remove last search highlight
   vim.cmd("nohl")
 end
 
+M.win_is_float = function(winnr)
+  local wincfg = vim.api.nvim_win_get_config(winnr)
+  if wincfg and (wincfg.external or wincfg.relative and #wincfg.relative > 0) then
+    return true
+  end
+  return false
+end
+
 M.tmux_aware_navigate = function(direction, no_wrap)
   local curwin = vim.api.nvim_get_current_win()
-  -- First attempt to send a wincmd
-  vim.cmd.wincmd(direction == "\\" and "w" or direction)
-  if not vim.env.TMUX or vim.api.nvim_get_current_win() ~= curwin then
-    -- Stop here if no TMUX or wincmd switched windows
-    return
+  -- First attempt to send a wincmd, skip if window is floating
+  -- Do not skip "alt-h" due to fzf-lua's toggle_hidden default
+  if not M.win_is_float(curwin) or direction == "h" then
+    vim.cmd.wincmd(direction == "o" and "w" or direction)
+    if not vim.env.TMUX or vim.api.nvim_get_current_win() ~= curwin then
+      -- Stop here if no TMUX or wincmd switched windows
+      return
+    end
   end
   -- tmux exists and window wasn't switche
   -- forward the command to tmux
   local tmux_pane_flag = {
-    ["h"]  = "-L",
-    ["j"]  = "-D",
-    ["k"]  = "-U",
-    ["l"]  = "-R",
-    ["\\"] = "-l",
+    ["h"] = "-L",
+    ["j"] = "-D",
+    ["k"] = "-U",
+    ["l"] = "-R",
+    ["o"] = "-l",
   }
   local tmux_pane_to = {
     ["h"] = "left",
@@ -428,7 +429,9 @@ M.dap_pick_exec = function()
   return coroutine.create(function(dap_co)
     local dap_abort = function() coroutine.resume(dap_co, require("dap").ABORT) end
     local dap_run = function(exec)
-      if type(exec) == "string" and vim.loop.fs_stat(exec) then
+      if type(exec) == "string" and vim.uv.fs_stat(exec) then
+        -- Make full path
+        exec = vim.fn.fnamemodify(exec, ":p")
         coroutine.resume(dap_co, exec)
       else
         if exec ~= "" then
@@ -438,7 +441,7 @@ M.dap_pick_exec = function()
       end
     end
     fzf.files({
-      cwd = vim.loop.cwd(),
+      cwd = vim.uv.cwd(),
       -- cwd_header = true,
       -- cwd_prompt = false,
       -- prompt = "DAP: Select Executable> ",
@@ -479,6 +482,7 @@ M.dap_pick_process = function(fzflua_opts, getproc_opts)
         for _, p in pairs(procs) do
           fzf_cb(string.format("[%d] %s", p.pid, p.name))
         end
+        fzf_cb()
       end,
       vim.tbl_deep_extend("keep", fzflua_opts or {}, {
         winopts = {
@@ -516,6 +520,24 @@ function M.input(prompt)
     end
   end
   return ok and res or nil
+end
+
+function M.lsp_get_clients(opts)
+  ---@diagnostic disable-next-line: deprecated
+  if M.__HAS_NVIM_011 then
+    return vim.lsp.get_clients(opts)
+  end
+  ---@diagnostic disable-next-line: deprecated
+  local clients = opts.bufnr and vim.lsp.buf_get_clients(opts.bufnr)
+      or opts.id and { vim.lsp.get_client_by_id(opts.id) }
+      or vim.lsp.get_clients(opts)
+  return vim.tbl_map(function(client)
+    return setmetatable({
+      supports_method = function(_, ...) return client.supports_method(...) end,
+      request = function(_, ...) return client.request(...) end,
+      request_sync = function(_, ...) return client.request_sync(...) end,
+    }, { __index = client })
+  end, clients)
 end
 
 return M

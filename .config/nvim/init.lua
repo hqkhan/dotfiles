@@ -1,12 +1,11 @@
 local utils = require("utils")
 
-if not utils.__HAS_NVIM_08 then
-  utils.warn("nvim-lua requires neovim > 0.8")
-    vim.o.lpl = true
-      vim.o.termguicolors = true
-        pcall(vim.cmd, [[colorscheme lua-embark]])
-	  return
-  end
+if vim.fn.has("nvim-0.10") ~= 1 then
+  utils.warn("This config requires neovim 0.10 and above")
+  vim.o.loadplugins = false
+  vim.o.termguicolors = true
+  return
+end
 
 require("settings")
 require("au_commands")
