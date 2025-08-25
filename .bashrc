@@ -82,7 +82,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -f "$HOME/.config/aliases/public" ] && source "$HOME/.config/aliases/public"
 [ -f "$HOME/.config/aliases/private" ] && source "$HOME/.config/aliases/private"
 
-# Fzf
+# fzf 0.48.0 embedded the shell integration scripts
+source <(fzf --bash) 2>/dev/null || eval "$(fzf --bash)"
 source $ZDOTDIR/fzf_defaults.sh
 
 # Public funcs

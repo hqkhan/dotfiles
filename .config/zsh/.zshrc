@@ -69,7 +69,7 @@ fi
 
 # ^N for generic "live" ripgrep
 source $ZDOTDIR/fzf_defaults.sh
-source $ZDOTDIR/fzf_git_functions.sh
+[ -f "$ZDOTDIR/fzf_git_functions.sh" ] && source "$ZDOTDIR/fzf_git_functions.sh"
 source $ZDOTDIR/fzf_git_keybindings.zsh
 
 # Public funcs

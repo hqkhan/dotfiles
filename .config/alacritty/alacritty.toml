@@ -1,7 +1,3 @@
-# [general]
-# import = ["/Users/hqkhan/.config/alacritty/everforest_dark.toml"]
-
-live_config_reload = true
 
 [colors.bright]
 black = "#475258"
@@ -42,7 +38,7 @@ TERM = "xterm-256color"
 size = 15.0
 
 [font.normal]
-family = "JetBrainsMono Nerd Font Propo"
+family = "JetBrainsMono Nerd Font"
 style = "Medium"
 
 [[hints.enabled]]
@@ -235,3 +231,9 @@ mods = "Command|Shift"
 
 [window]
 decorations = "none"
+
+[general]
+# [general]
+# import = ["/Users/hqkhan/.config/alacritty/everforest_dark.toml"]
+
+live_config_reload = true
