@@ -111,6 +111,11 @@ key = "E"
 mods = "Command"
 
 [[keyboard.bindings]]
+chars = "\u0002I"
+key = "I"
+mods = "Command"
+
+[[keyboard.bindings]]
 chars = "\u0002%"
 key = "\""
 mods = "Command|Shift"
