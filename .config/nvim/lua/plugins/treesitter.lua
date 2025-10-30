@@ -1,122 +1,105 @@
 return {
   {
-    "nvim-treesitter/playground",
-    cmd = "TSPlaygroundToggle"
-  },
-  cond = require("utils").have_compiler,
-  {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     -- treesitter requires a C compiler
     cond = require("utils").have_compiler,
     event = "BufReadPost",
+    cmd = { "TSUpdate", "TSUpdateSync" },
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
     },
     build = function()
+      if not require("utils").have_compiler() then return end
       -- build step is run independent of the condition
       -- make sure we have treesitter before running ':TSUpdate'
-      if require("utils").have_compiler() then
-        vim.cmd("TSUpdate")
-      end
+      require "nvim-treesitter".install({
+        "bash",
+        "c",
+        "cpp",
+        "go",
+        "javascript",
+        "typescript",
+        "json",
+        "jsonc",
+        "jsdoc",
+        "lua",
+        "python",
+        "rust",
+        "html",
+        "yaml",
+        "css",
+        "toml",
+        "markdown",
+        "markdown_inline",
+        "solidity",
+        "vimdoc",
+        -- for `nvim-treesitter/playground` / `:InspectTree`
+        "query",
+        "regex",
+      })
+      vim.cmd("TSUpdate")
     end,
     config = function()
-      require "nvim-treesitter.configs".setup {
-        ensure_installed      = {
-          "bash",
-          "c",
-          "cpp",
-          "go",
-          "javascript",
-          "typescript",
-          "java",
-          "json",
-          "jsonc",
-          "jsdoc",
-          "lua",
-          "python",
-          "rust",
-          "html",
-          "css",
-          "toml",
-          "markdown",
-          "markdown_inline",
-          "solidity",
-          -- for `nvim-treesitter/playground`
-          "query",
-          "smithy",
-        },
-        highlight             = {
-          enable = true,
-          disable = {
-            -- Slow on big C|CPP files
-            -- "c", "cpp",
-            -- Makes MD|inline highlights ugly
-            "md", "markdown",
-            -- Messes up vimdoc alignments
-            -- https://github.com/nvim-treesitter/nvim-treesitter/pull/3555
-            "help",
-          }
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<CR>",
-            node_incremental = "<CR>",
-            node_decremental = "<S-Tab>",
-            scope_incremental = "<Tab>",
+      require "nvim-treesitter".setup {}
+      require("nvim-treesitter-textobjects").setup {
+        select = {
+          selection_modes = {
+            -- default is charwise 'v'
+            ["@parameter.inner"] = "v", -- charwise
+            ["@parameter.outer"] = "v", -- charwise
+            ["@function.inner"] = "V",  -- linewise
+            ["@function.outer"] = "V",  -- linewise
+            ["@class.inner"] = "V",     -- linewise
+            ["@class.outer"] = "V",     -- linewise
+            ["@scope"] = "v",           -- charwise
           },
         },
-        textobjects           = {
-          select = {
-            enable  = true,
-            keymaps = {
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = "@class.outer",
-            },
-            goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
-            },
-            goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
-            },
-            goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
-            },
-          },
-        },
-        playground            = {
-          enable = true,
-          disable = {},
-          -- Debounced time for highlighting nodes in the playground from source code
-          updatetime = 25,
-          persist_queries = false, -- Whether the query persists across vim sessions
-          keybindings = {
-            toggle_query_editor = "o",
-            toggle_hl_groups = "i",
-            toggle_injected_languages = "t",
-            toggle_anonymous_nodes = "a",
-            toggle_language_display = "I",
-            focus_language = "f",
-            unfocus_language = "F",
-            update = "R",
-            goto_node = "<cr>",
-            show_help = "?",
-          },
-        },
+        move = { set_jumps = true },
       }
+
+      local ts_sel = require "nvim-treesitter-textobjects.select"
+      vim.keymap.set({ "x", "o" }, "af", function()
+        ts_sel.select_textobject("@function.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "if", function()
+        ts_sel.select_textobject("@function.inner", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ap", function()
+        ts_sel.select_textobject("@parameter.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ac", function()
+        ts_sel.select_textobject("@comment.outer", "textobjects")
+      end)
+
+      local ts_move = require "nvim-treesitter-textobjects.move"
+      vim.keymap.set({ "n", "x", "o" }, "]f", function()
+        ts_move.goto_next("@function.outer", "textobjects")
+      end, { desc = "Next function boundary" })
+      vim.keymap.set({ "n", "x", "o" }, "[f", function()
+        ts_move.goto_previous("@function.outer", "textobjects")
+      end, { desc = "Previous function boundary" })
+      vim.keymap.set({ "n", "x", "o" }, "]F", function()
+        ts_move.goto_next_start("@function.outer", "textobjects")
+      end, { desc = "Next function start" })
+      vim.keymap.set({ "n", "x", "o" }, "[F", function()
+        ts_move.goto_previous_start("@function.outer", "textobjects")
+      end, { desc = "Previous function start" })
+      vim.keymap.set({ "n", "x", "o" }, "]p", function()
+        ts_move.goto_next_start("@parameter.inner", "textobjects")
+      end, { desc = "Next parameter" })
+      vim.keymap.set({ "n", "x", "o" }, "[p", function()
+        ts_move.goto_previous_start("@parameter.inner", "textobjects")
+      end, { desc = "Previous parameter" })
+
+      -- repeat `]f` moves with `;,`
+      local ts_repeat_move = require "nvim-treesitter-textobjects.repeatable_move"
+      vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+      vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+      vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+      vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+      vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+      vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
     end,
   }
 }
