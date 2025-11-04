@@ -67,9 +67,7 @@ end)
 map_fzf("v", "<leader>lg", "grep_visual", { desc = "grep visual selection" })
 
 map_fzf('n', "<leader>lG", "live_grep",
-    function() return                           { desc = "Live grep (project)",
-    winopts = small_top_big_bottom,
-}end)
+    { desc = "Live grep (project)", winopts = small_top_big_bottom, })
 map_fzf('n', "<leader>lg", "lgrep_curbuf",
     function() return                           { desc = "Live grep current buffer",
       winopts = small_top_big_bottom,
@@ -88,16 +86,6 @@ map_fzf('n', "<leader>fq", "quickfix",          { desc = "Quickfix",
 })
 
 map_fzf('n', "<leader>tm", "tmux_buffers",      { desc = "tmux buffers" })
-
-map_fzf("n", "<leader>fO", "oldfiles",          { desc = "file history (all)", cwd = "~" })
-map_fzf('n', '<leader>fo', "oldfiles", function()
-  return                                        { desc = 'file history (cwd)',
-    cwd = vim.loop.cwd(),
-    show_cwd_header = true,
-    cwd_only = true,
-    winopts = small_top_big_bottom,
-  }
-end)
 
 -- LSP
 map_fzf("n", "<leader>lf", "lsp_finder",              { desc = "location finder [LSP]", winopts = small_top_big_bottom })
