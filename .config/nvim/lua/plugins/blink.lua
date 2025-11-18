@@ -1,11 +1,14 @@
 local M = {
   "saghen/blink.cmp",
-  enabled = require("utils").USE_BLINK_CMP,
-  build = 'cargo build --release',
+  enabled = true,
+  build = "cargo build --release",
   event = { "InsertEnter", "CmdLineEnter" },
   opts = {
+    fuzzy = {
+      implementation = "prefer_rust_with_warning",
+    },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { "lsp", "path", "snippets", "buffer" },
       -- default = { "lazydev", "lsp", "path", "snippets", "buffer" },
       -- providers = {
       --   lazydev = {
@@ -23,10 +26,12 @@ local M = {
       ["<Up>"] = { "select_prev", "fallback" },
       ["<Down>"] = { "select_next", "fallback" },
       ["<C-e>"] = { "cancel", "show", "fallback" },
-      ["<C-k>"] = { "select_prev", "fallback" },
-      ["<C-j>"] = { "select_next", "fallback" },
+      ["<C-p>"] = { "select_prev", "fallback" },
+      ["<C-n>"] = { "select_next", "fallback" },
+      ["<C-f>"] = { function(cmp) cmp.select_next({ count = 5 }) end, "fallback" },
+      ["<C-b>"] = { function(cmp) cmp.select_prev({ count = 5 }) end, "fallback" },
       ["<C-y>"] = { "select_and_accept" },
-      ["<C-p>"] = { "show", "show_documentation", "hide_documentation" },
+      ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
       ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
       ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
       ["<S-up>"] = { "scroll_documentation_up", "fallback" },
