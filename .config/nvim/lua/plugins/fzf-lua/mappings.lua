@@ -77,7 +77,7 @@ map_fzf('n', "<leader>bl", "blines",            { desc = "buffer lines",
       winopts = small_top_big_bottom,
 })
 
-map_fzf('n', "<leader>LG", "live_grep_resume",  { desc = "Live grep resume",
+map_fzf('n', "<leader>LG", "live_grep",  { resume=true, desc = "Live grep resume",
       winopts = small_top_big_bottom,
 })
 
