@@ -85,8 +85,6 @@ map_fzf('n', "<leader>fq", "quickfix",          { desc = "Quickfix",
       winopts = small_top_big_bottom,
 })
 
-map_fzf('n', "<leader>tm", "tmux_buffers",      { desc = "tmux buffers" })
-
 -- LSP
 map_fzf("n", "<leader>lf", "lsp_finder",              { desc = "location finder [LSP]", winopts = small_top_big_bottom })
 map_fzf('n', "<leader>lS", "lsp_workspace_symbols",   { desc = "Workspace symbols", winopts = small_top_big_bottom})
