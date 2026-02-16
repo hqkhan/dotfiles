@@ -104,3 +104,5 @@ export EXA_COLORS
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/fzf-git.sh ] && source ~/fzf-git.sh
 export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@17/bin:$PATH"
+
+bind 'set enable-bracketed-paste on'
