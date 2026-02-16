@@ -166,8 +166,8 @@ o.shada             = [[!,'100,<0,s100,h]]
 o.sessionoptions    = 'blank,buffers,curdir,folds,help,tabpages,winsize'
 o.diffopt           = 'internal,filler,algorithm:histogram,indent-heuristic'
 
--- MacOS clipboard
-if require'utils'.is_darwin() then
+-- MacOS clipboard (only when NOT in SSH)
+if require'utils'.is_darwin() and not vim.env.SSH_TTY then
   vim.g.clipboard = {
     name = "macOS-clipboard",
     copy = {
