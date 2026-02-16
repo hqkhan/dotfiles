@@ -279,12 +279,12 @@ augroup("GQFormatter", function(g)
     })
 end)
 
--- augroup("LspAttach", function(g)
---   aucmd({ "LspAttach" },
---     {
---       group = g,
---       callback = function(_)
---         require("lsp.keymaps").setup()
---       end,
---     })
--- end)
+augroup("LspAttach", function(g)
+  aucmd({ "LspAttach" },
+    {
+      group = g,
+      callback = function(_)
+        require("lsp.keymaps").setup()
+      end,
+    })
+end)

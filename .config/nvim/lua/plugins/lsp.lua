@@ -11,15 +11,8 @@ return {
       { "j-hui/fidget.nvim" },
     },
     config = function()
-      -- Add the same capabilities to ALL server configurations.
-      -- Refer to :h vim.lsp.config() for more information.
-      vim.lsp.config("*", {
-        capabilities = vim.lsp.protocol.make_client_capabilities()
-      })
-
       require("lsp.diag")
       require("lsp.icons")
-      require("lsp.keymaps")
       require("fidget").setup({})
       require("mason").setup()
       require("mason-lspconfig").setup({
@@ -27,6 +20,13 @@ return {
             and not utils.is_iSH()
             and { "lua_ls" }
             or nil,
+        automatic_installation = { exclude = { "jdtls" } },
+        handlers = {
+          function(server_name)
+            if server_name == "jdtls" then return end
+            require("lspconfig")[server_name].setup({})
+          end,
+        },
       })
     end,
   },
