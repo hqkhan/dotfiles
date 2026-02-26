@@ -1,5 +1,9 @@
+format = """
+$directory\
+$git_branch
+$character"""
+
 [character]
-# success_symbol = "[](white)"
 success_symbol = "[](white)"
 error_symbol = "[](red)"
 vicmd_symbol = "[](green)"
@@ -9,39 +13,6 @@ style = "blue bold"
 format = '[$path]($style) '
 truncate_to_repo = false
 
-[package]
-disabled = true
-
-[username]
-disabled = true
-
-[hostname]
-disabled = true
-
-[aws]
-disabled = true
-
-[docker_context]
-disabled = true
-
 [git_branch]
 symbol = ' '
 style = "green bold"
-
-[cmd_duration]
-disabled = true
-
-# [git_commit]
-# disabled = true
-
-[git_state]
-disabled = true
-
-[git_metrics]
-disabled = true
-
-[git_status]
-disabled = true
-
-[rust]
-disabled = true
