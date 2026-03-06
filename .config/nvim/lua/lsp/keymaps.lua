@@ -6,6 +6,7 @@ local map = function(mode, lhs, rhs, opts)
 end
 
 local setup = function()
+  map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition [LSP]" })
   map("n", "<space>k", vim.lsp.buf.hover, { desc = "hover [LSP]" })
   map("n", "<leader>ll", function()
     vim.diagnostic.open_float({ buffer = 0, scope = "line", border = "rounded" })
