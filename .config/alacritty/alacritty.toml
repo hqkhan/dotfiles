@@ -111,8 +111,8 @@ key = "E"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002I"
-key = "I"
+chars = "\u0002]"
+key = "RBracket"
 mods = "Command"
 
 [[keyboard.bindings]]
