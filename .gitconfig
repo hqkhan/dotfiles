@@ -136,8 +136,13 @@
     plus-style = "#A1EFD3"
     whitespace-error-style = "#280050" reverse
     zero-style = "#656A7c"
+[includeIf "gitdir:~/workspace/"]
+	path = ~/.gitconfig-work
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[cr]
+	issue-prompt-enabled = false
