@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -euo pipefail
 trap 'echo "EXIT detected with exit status $?"' EXIT
 
 # helpers
@@ -25,24 +25,25 @@ declare -a rust_utils=(
   "stylua"
 )
 
-sudo yum install openssl openssl-devel -y
+if command -v yum >/dev/null 2>&1; then
+  sudo yum install -y openssl openssl-devel
+elif command -v apt-get >/dev/null 2>&1; then
+  sudo apt-get install -y openssl libssl-dev
+fi
 
 install_brew() {
-  # Proudly borrowed from:
-  # https://github.com/duckfullstop/dotfiles/blob/f734eea399a7ccd1c25b57242997e79f230abc4d/.config/yadm/bootstrap
-  XDG_CONFIG_HOME="$HOME/.config"
-  BREWFILE_DIR=$XDG_CONFIG_HOME/Brews
+  XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-  # install Homebrew if it's missing
   if ! command -v brew >/dev/null 2>&1; then
     echo_warn "Installing Homebrew"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   fi
 
-  echo_warn "Installing Generic tools via brew"
+  echo_warn "Installing tools via brew"
 
   brew tap arl/arl
+
   brew install cmake \
                gitmux \
                jesseduffield/lazygit/lazygit \
@@ -58,6 +59,7 @@ install_brew() {
                restic \
                btop \
                npm \
+               sesh
 
   if [ "$system_type" = "Darwin" ]; then
     echo_warn "Installing MAC tools via brew"
@@ -67,61 +69,86 @@ install_brew() {
                  unison \
                  python3
 
-    brew cask install stats alacritty unnaturalscrollwheels font-jetbrains-mono-nerd-font koekeishiya/formulae/yabai raycast
-    brew install --cask font-maple-mono-normal-nf
+    brew install --cask stats alacritty unnaturalscrollwheels font-jetbrains-mono-nerd-font koekeishiya/formulae/yabai raycast font-maple-mono-normal-nf
 
     skhd --start-service
   fi
 }
 
 install_tpm() {
-    echo_warn "INSTALLING TPM"
-    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+  if [ -d "$tpm_dir" ]; then
+    echo_ok "TPM already installed, pulling latest"
+    git -C "$tpm_dir" pull
+  else
+    echo_warn "Installing TPM"
+    git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+  fi
 }
 
 install_font() {
-    # insatll jetBrainsMono Nerd Font
-    cd $HOME && git clone --filter=blob:none --sparse git@github.com:ryanoasis/nerd-fonts
+  local font_dir="$HOME/nerd-fonts"
+  if [ -d "$font_dir" ]; then
+    echo_ok "nerd-fonts repo already exists, skipping"
+  else
+    cd "$HOME"
+    git clone --filter=blob:none --sparse git@github.com:ryanoasis/nerd-fonts
     cd nerd-fonts
     git sparse-checkout add patched-fonts/JetBrainsMono install.sh
     ./install.sh JetBrainsMono
+  fi
 }
 
 install_fzf() {
-    yes | $(brew --prefix)/opt/fzf/install
-    wget https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh
+  yes | "$(brew --prefix)/opt/fzf/install" || true
+  local fzf_git="$HOME/fzf-git.sh"
+  if [ ! -f "$fzf_git" ]; then
+    wget -O "$fzf_git" https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh
+  fi
 }
 
 install_cargo() {
+  if command -v cargo >/dev/null 2>&1; then
+    echo_ok "Cargo already installed, skipping"
+  else
     curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y
     source "$HOME/.cargo/env"
-    rustup toolchain install nightly
+  fi
+  rustup toolchain install nightly
 }
 
 install_nvim() {
-    echo_warn "INSTALLING NVIM"
-    cd $HOME
-    git clone git@github.com:neovim/neovim.git
-    cd neovim/
-    make CMAKE_BUILD_TYPE=RelWithDebInfo
-    sudo make install
+  echo_warn "Installing Neovim from source"
+  local nvim_dir="$HOME/neovim"
+  if [ -d "$nvim_dir" ]; then
+    git -C "$nvim_dir" pull
+  else
+    git clone git@github.com:neovim/neovim.git "$nvim_dir"
+  fi
+  cd "$nvim_dir"
+  make CMAKE_BUILD_TYPE=RelWithDebInfo
+  sudo make install
 }
 
 install_cmake() {
-  cd $HOME
-  wget https://github.com/Kitware/CMake/releases/download/v3.25.2/cmake-3.25.2-linux-x86_64.sh
-  chmod u+x cmake-3.25.2-linux-x86_64.sh
-  ./cmake-3.25.2-linux-x86_64.sh
+  cd "$HOME"
+  local cmake_script="cmake-3.25.2-linux-x86_64.sh"
+  if [ ! -f "$cmake_script" ]; then
+    wget "https://github.com/Kitware/CMake/releases/download/v3.25.2/$cmake_script"
+    chmod u+x "$cmake_script"
+  fi
+  ./"$cmake_script"
 }
 
 install_nvm() {
-  if ! command -v nvm >/dev/null 2>&1; then
+  if [ -d "$HOME/.nvm" ]; then
+    echo_ok "NVM already installed, skipping"
+  else
     curl -o- --tlsv1.2 https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
   fi
 }
 
 configure_rust() {
-  # Rust components
   declare -a rustup_components=(
     "rust-docs"
     "clippy"
@@ -132,50 +159,41 @@ configure_rust() {
     "rust-std"
   )
 
-  for var in ${rustup_components[@]}
-  do
-    rustup component add $var
-    rustup component add --toolchain nightly $var
+  for var in "${rustup_components[@]}"; do
+    rustup component add "$var"
+    rustup component add --toolchain nightly "$var"
   done
 
-  for var in ${rust_utils[@]}
-  do
-    cargo install $var
+  for var in "${rust_utils[@]}"; do
+    cargo install "$var"
   done
 
-  # Setup topgrade symlink 
-  ln -sf $HOME/.config/topgrade/topgrade_linux.toml $HOME/.config/topgrade/topgrade.toml
+  mkdir -p "$HOME/.config/topgrade"
+  ln -sf "$HOME/.config/topgrade/topgrade_linux.toml" "$HOME/.config/topgrade/topgrade.toml"
   if [ "$system_type" = "Darwin" ]; then
-    ln -sf $HOME/.config/topgrade/topgrade_darwin.toml $HOME/.config/topgrade/topgrade.toml
+    ln -sf "$HOME/.config/topgrade/topgrade_darwin.toml" "$HOME/.config/topgrade/topgrade.toml"
   fi
 }
 
 if [ "$system_type" = "Darwin" ]; then
   rust_utils+=("unison-fsmonitor")
 
-  # increae max watched files for unison
   sudo sysctl kern.maxfiles=1310720 kern.maxfilesperproc=65536
 
-  # disable automatic space rearranging
   defaults write com.apple.dock "mru-spaces" -bool "false" && killall Dock
-  # Enable Dock autohide
   defaults write com.apple.dock autohide -bool true
-  # No app icons in the Dock
-  defaults delete com.apple.dock persistent-apps
-  defaults delete com.apple.dock persistent-others
+  defaults delete com.apple.dock persistent-apps || true
+  defaults delete com.apple.dock persistent-others || true
 
-  # Stolen from https://github.com/DoomHammer/dotfiles/blob/master/.config/yadm/bootstrap
-  # Disable Ctrl+Arrow mapping for Mission Control as it's more useful for jumping words in a terminal
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 79 "{enabled = 0; value = { parameters = (65535, 123, 8650752); type = standard;};}"
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 80 "{enabled = 0; value = { parameters = (65535, 123, 8781824); type = standard;};}"
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 "{enabled = 0; value = { parameters = (65535, 124, 8650752); type = standard;};}"
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 82 "{enabled = 0; value = { parameters = (65535, 124, 8781824); type = standard;};}"
-  defaults write com.apple.dock no-bouncing -bool TRUE;
+  defaults write com.apple.dock no-bouncing -bool TRUE
   killall Dock
 fi
 
 # install_cmake
-# install_tmux
 # install_nvim
 # install_font
 
