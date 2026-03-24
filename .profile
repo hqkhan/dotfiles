@@ -1,4 +1,4 @@
-PATH=/home/linuxbrew/.linuxbrew/bin:$HOME/.cargo/bin:$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/local/bin:$HOME/.local/bin:/usr/local/go/bin
+PATH=/home/linuxbrew/.linuxbrew/bin:$HOME/.cargo/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/local/bin:$HOME/.local/bin:/usr/local/go/bin
 MANPATH=/usr/share/man:/usr/local/share/man:/opt/homebrew/share/man
 export PATH MANPATH HOME TERM
 
