@@ -1,15 +1,17 @@
-# cSpell:ignore brightblack unstaged unstage lazygit submodule repos pgup pgdown
+# Migrated from 0.55.1 config -> 0.60.0 compatible
 gui:
-  # stuff relating to the UI
   nerdFontsVersion: "3"
-  scrollHeight: 20 # how many lines you scroll by
-  scrollPastBottom: true # enable scrolling past the bottom
-  sidePanelWidth: 0.3333 # number from 0 to 1
-  expandFocusedSidePanel: false
-  mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
-  language: 'auto' # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl'
+  scrollHeight: 20
+  scrollPastBottom: true
+  showFileTree: false
+  showListFooter: false
+  showRandomTip: true
+  showCommandLog: true
+  showBottomLine: false
+  commandLogSize: 8
+  splitDiff: auto
   theme:
-    lightTheme: false # For terminals with a light background
+    lightTheme: false
     activeBorderColor:
       - red
       - bold
@@ -29,111 +31,81 @@ gui:
       - white
   commitLength:
     show: true
-  mouseEvents: true
-  skipDiscardChangeWarning: false
-  skipStashWarning: true
-  showFileTree: false # for rendering changes files in a tree format
-  showListFooter: false # for seeing the '5 of 20' message in list panels
-  showRandomTip: true
-  showCommandLog: false
-  showBottomLine: false
-  commandLogSize: 8
-  authorColors: # in case you're not happy with the randomly assigned colour
+  authorColors:
     'Hassaan Khan': '#ff0000'
     'hqkhan': '#ff0000'
 git:
-  paging:
-    useConfig: false
-    colorArg: always
-    pager: delta --dark --paging=never
+  pagers:
+    - useConfig: false
+      colorArg: always
+      pager: delta --dark --paging=never
   merging:
-    # only applicable to unix users
     manualCommit: false
-    # extra args passed to `git merge`, e.g. --no-ff
     args: ''
   skipHookPrefix: WIP
   autoFetch: true
   autoRefresh: true
   branchLogCmd: "git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s' --graph --date=short --date-order {{branchName}}"
-  overrideGpg: false # prevents lazygit from spawning a separate process when using GPG
+  overrideGpg: false
   disableForcePushing: true
   parseEmoji: true
   log:
-    # one of date-order, author-date-order, topo-order.
-    # topo-order makes it easier to read the git log graph, but commits may not
-    # appear chronologically. See https://git-scm.com/docs/git-log#_commit_ordering
     order: 'topo-order'
-    # one of always, never, when-maximised
-    # this determines whether the git graph is rendered in the commits panel
     showGraph: 'always'
-    # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
     showWholeGraph: false
   allBranchesLogCmds:
-    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
+    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium
 os:
-  editCommand: 'nvim' # see 'Configuring File Editing' section
-  editCommandTemplate: '{{editor}} {{filename}}'
-  openCommand: ''
+  editPreset: 'nvim'
   copyToClipboardCmd: printf "\033]52;c;$(printf {{text}} | base64)\a" > /dev/tty
 refresher:
-  refreshInterval: 10 # file/submodule refresh interval in seconds
-  fetchInterval: 60 # re-fetch interval in seconds
+  refreshInterval: 10
+  fetchInterval: 60
 update:
-  method: prompt # can be: prompt | background | never
-  days: 14 # how often an update is checked for
-reporting: 'on' # one of: 'on' | 'off' | 'undetermined'
+  method: prompt
+  days: 14
 confirmOnQuit: false
-# determines whether hitting 'esc' will quit the application when there is nothing to cancel/close
 quitOnTopLevelReturn: true
 disableStartupPopups: false
-# to exit immediately if run outside of the Git repository
-notARepository: 'quit' # one of: 'prompt' | 'create' | 'skip'
-promptToReturnFromSubprocess: false # display confirmation when subprocess terminates
-# customCommands:
-#   - key: "z"
-#     command: "~/.config/bin/gc"
-#     context: "files"
-#     loadingText: "Commitizen prompt"
-#     subprocess: true
+notARepository: 'quit'
+promptToReturnFromSubprocess: false
 keybinding:
   universal:
     quit: 'q'
-    quit-alt1: '<c-c>' # alternative/alias of quit
-    return: '<esc>' # return to previous menu, will quit if there's nowhere to return
+    quit-alt1: '<c-c>'
+    return: '<esc>'
     quitWithoutChangingDirectory: 'Q'
-    togglePanel: '<tab>' # goto the next panel
-    prevItem: '<up>' # go one line up
-    nextItem: '<down>' # go one line down
-    prevItem-alt: 'k' # go one line up
-    nextItem-alt: 'j' # go one line down
-    prevPage: ',' # go to next page in list
-    nextPage: '.' # go to previous page in list
-    gotoTop: '<' # go to top of list
-    gotoBottom: '>' # go to bottom of list
-    prevBlock: '<left>' # goto the previous block / panel
-    nextBlock: '<right>' # goto the next block / panel
-    prevBlock-alt: 'h' # goto the previous block / panel
-    nextBlock-alt: 'l' # goto the next block / panel
-    jumpToBlock: ["1", "2", "3", "4", "5"] # goto the Nth block / panel
+    togglePanel: '<tab>'
+    prevItem: '<up>'
+    nextItem: '<down>'
+    prevItem-alt: 'k'
+    nextItem-alt: 'j'
+    prevPage: ','
+    nextPage: '.'
+    gotoTop: '<'
+    gotoBottom: '>'
+    prevBlock: '<left>'
+    nextBlock: '<right>'
+    prevBlock-alt: 'h'
+    nextBlock-alt: 'l'
+    jumpToBlock: ["1", "2", "3", "4", "5"]
     nextMatch: 'n'
     prevMatch: 'N'
-    optionMenu: 'x' # show help menu
-    optionMenu-alt1: '?' # show help menu
+    optionMenu-alt1: '?'
     select: '<space>'
     goInto: '<enter>'
     openRecentRepos: '<c-r>'
     confirm: '<enter>'
-    confirm-alt1: 'y'
     remove: 'd'
     new: 'n'
     edit: 'e'
     openFile: 'o'
-    scrollUpMain: '<pgup>' # main panel scroll up
-    scrollDownMain: '<pgdown>' # main panel scroll down
-    scrollUpMain-alt1: 'K' # main panel scroll up
-    scrollDownMain-alt1: 'J' # main panel scroll down
-    scrollUpMain-alt2: '<c-u>' # main panel scroll up
-    scrollDownMain-alt2: '<c-d>' # main panel scroll down
+    scrollUpMain: '<pgup>'
+    scrollDownMain: '<pgdown>'
+    scrollUpMain-alt1: 'K'
+    scrollDownMain-alt1: 'J'
+    scrollUpMain-alt2: '<c-u>'
+    scrollDownMain-alt2: '<c-d>'
     executeShellCommand: ':'
     createRebaseOptionsMenu: 'm'
     pushFiles: 'P'
@@ -145,28 +117,25 @@ keybinding:
     nextScreenMode: '+'
     prevScreenMode: '_'
     undo: 'z'
-    redo: '<c-z>'
+    redo: 'Z'
     filteringMenu: '<c-s>'
     diffingMenu: 'W'
-    diffingMenu-alt: '<c-e>' # deprecated
-    copyToClipboard: '<c-y>'
-    submitEditorText: '<enter>'
-    appendNewline: '<a-enter>'
+    diffingMenu-alt: '<c-e>'
+    copyToClipboard: '<c-o>'
     extrasMenu: '@'
     toggleWhitespaceInDiffView: '<c-w>'
   status:
     checkForUpdate: 'u'
     recentRepos: '<enter>'
   files:
-    # commitChanges: 'c'
-    commitChangesWithoutHook: 'w' # commit changes without pre-commit hook
+    commitChangesWithoutHook: 'w'
     amendLastCommit: 'A'
     commitChangesWithEditor: 'C'
     ignoreFile: 'i'
     refreshFiles: 'r'
     stashAllChanges: 's'
     viewStashOptions: 'S'
-    toggleStagedAll: 'a' # stage/unstage all
+    toggleStagedAll: 'a'
     viewResetOptions: 'D'
     fetch: 'f'
     toggleTreeView: '`'
@@ -178,9 +147,9 @@ keybinding:
     rebaseBranch: 'r'
     mergeIntoCurrentBranch: 'M'
     viewGitFlowOptions: 'i'
-    fastForward: 'f' # fast-forward this branch from its upstream
+    fastForward: 'f'
     pushTag: 'P'
-    setUpstream: 'u' # set as upstream of checked-out branch
+    setUpstream: 'u'
     fetchRemote: 'f'
   commits:
     squashDown: 's'
@@ -188,27 +157,24 @@ keybinding:
     renameCommitWithEditor: 'R'
     viewResetOptions: 'g'
     markCommitAsFixup: 'f'
-    createFixupCommit: 'F' # create fixup commit for this commit
+    createFixupCommit: 'F'
     squashAboveCommits: 'S'
-    moveDownCommit: '<c-j>' # move commit down one
-    moveUpCommit: '<c-k>' # move commit up one
+    moveDownCommit: '<c-j>'
+    moveUpCommit: '<c-k>'
     amendToCommit: 'A'
-    pickCommit: 'p' # pick commit (when mid-rebase)
+    pickCommit: 'p'
     revertCommit: 't'
-    cherryPickCopy: 'c'
-    cherryPickCopyRange: 'C'
-    pasteCommits: '<c-v>'
+    cherryPickCopy: 'C'
+    pasteCommits: 'V'
     tagCommit: 'T'
     checkoutCommit: '<space>'
     resetCherryPick: '<c-R>'
-    copyCommitMessageToClipboard: '<c-o>'
+    copyCommitAttributeToClipboard: 'y'
   stash:
     popStash: 'g'
   commitFiles:
     checkoutCommitFile: 'c'
   main:
-    toggleDragSelect: 'v'
-    toggleDragSelect-alt: 'V'
     toggleSelectHunk: 'a'
     pickBothHunks: 'b'
   submodules:
