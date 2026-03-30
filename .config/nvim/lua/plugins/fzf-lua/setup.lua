@@ -49,7 +49,6 @@ return {
     end
 
     fzf_lua.setup {
-      fzf_bin     = fzf_bin,
       fzf_colors  = fzf_colors,
       winopts     = {
         -- Only valid when using a float window

@@ -5,10 +5,10 @@ return {
     require("conform").setup({
       formatters_by_ft = {
         lua = { "stylua" },
-        html = { { "prettier", "prettierd" } },
-        yaml = { { "prettier", "prettierd" } },
-        jsonc = { { "prettier", "prettierd" } },
-        javascript = { { "prettier", "prettierd" } },
+        html = { "prettier", "prettierd", stop_after_first = true },
+        yaml = { "prettier", "prettierd", stop_after_first = true },
+        jsonc = { "prettier", "prettierd", stop_after_first = true },
+        javascript = { "prettier", "prettierd", stop_after_first = true },
         python = { "black" },
       },
     })

@@ -116,8 +116,7 @@ map('v', '<', '<gv', {})
 map('v', '>', '>gv', {})
 
 -- Keep matches center screen when cycling with n|N
-map('n', 'n', 'nzzzv', { desc = "Fwd  search '/' or '?'" })
-map('n', 'N', 'Nzzzv', { desc = "Back search '/' or '?'" })
+-- NOTE: n/N remapped by hlslens (plugins/hls-lens.lua) with zzzv included
 
 -- any jump over 5 modifies the jumplist
 -- so we can use <C-o> <C-i> to jump back and forth

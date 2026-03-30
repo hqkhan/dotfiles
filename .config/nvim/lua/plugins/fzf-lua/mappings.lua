@@ -92,8 +92,8 @@ map_fzf('n', "<leader>ls", "lsp_document_symbols",    { desc = "Document symbols
 map_fzf('n', "<leader>lr", "lsp_references",          { desc = "LSP references", winopts = small_top_big_bottom})
 -- map_fzf('n', "<leader>ld", "lsp_definitions",         { desc = "LSP definitions", winopts = small_top_big_bottom})
 -- map_fzf('n', "<leader>lD", "lsp_declarations",        { desc = "LSP declaration", winopts = small_top_big_bottom})
-map_fzf('n', "<leader>ld", "diagnostics_document",         { desc = "LSP definitions", winopts = small_top_big_bottom})
-map_fzf('n', "<leader>lD", "diagnostics_workspace",        { desc = "LSP declaration", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>ld", "diagnostics_document",         { desc = "document diagnostics [LSP]", winopts = small_top_big_bottom})
+map_fzf('n', "<leader>lD", "diagnostics_workspace",        { desc = "workspace diagnostics [LSP]", winopts = small_top_big_bottom})
 map_fzf("n", "<leader>la", "lsp_code_actions",        { desc = "code actions [LSP]", winopts = small_top_big_bottom})
 map_fzf("n", "<leader>ly", "lsp_typedefs",            { desc = "type definitions [LSP]", winopts = small_top_big_bottom})
 
@@ -115,9 +115,6 @@ map_fzf('n', '<leader>gs', "git_status_tmuxZ",
           },
 })
 map_fzf('n', '<leader>gS', "git_status", vim.tbl_extend("force", {show_cwd_header = false},            { desc = "git status" }))
-map_fzf("n", "<leader>fq", "quickfix", { desc = "quickfix list",
-    winopts = small_top_big_bottom,
-})
 
 map_fzf("n", "<leader>fp", "files", {
   desc = "plugin files (packer)",

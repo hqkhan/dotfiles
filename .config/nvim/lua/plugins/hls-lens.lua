@@ -3,7 +3,7 @@ local M = {
   event = "BufReadPost",
 }
 
-M.init = function()
+M.config = function()
     require('hlslens').setup({
       override_lens = function(render, posList, nearest, idx, relIdx)
           local sfw = vim.v.searchforward == 1
