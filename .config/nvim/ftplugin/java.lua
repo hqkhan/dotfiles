@@ -67,7 +67,7 @@ local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
 local path_to_mason_packages = home .."/.local/share/nvim/mason/packages"
 local path_to_jdtls = path_to_mason_packages .. "/jdtls"
-local os_type = vim.fn.has("macunix") and "mac" or "linux"
+local os_type = vim.fn.has("macunix") == 1 and "mac" or "linux"
 local path_to_config = path_to_jdtls .. "/config_" .. os_type
 local path_to_lombok = path_to_jdtls .. "/lombok.jar"
 local path_to_plugins = path_to_jdtls .. "/plugins/"
@@ -76,9 +76,7 @@ local path_to_jar = path_to_plugins .. find_file(path_to_plugins, "org.eclipse.e
 
 local config = {
     cmd = {
-        -- assumes the java binary is in your PATH and at least java17;
-        -- if not, specify the full path to the binary
-        "java",
+        "/home/linuxbrew/.linuxbrew/opt/openjdk@17/bin/java",
         "-Declipse.application=org.eclipse.jdt.ls.core.id1",
         "-Dosgi.bundles.defaultStartLevel=4",
         "-Declipse.product=org.eclipse.jdt.ls.core.product",
