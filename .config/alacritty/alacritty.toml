@@ -1,3 +1,10 @@
+[cursor.style]
+shape = "Block"
+blinking = "Off"
+
+[colors.cursor]
+cursor = "#c0c0c0"
+text = "#000000"
 
 [colors.bright]
 black = "#475258"
