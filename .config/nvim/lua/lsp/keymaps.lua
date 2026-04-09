@@ -8,6 +8,7 @@ end
 local setup = function()
   map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition [LSP]" })
   map("n", "<space>k", vim.lsp.buf.hover, { desc = "hover [LSP]" })
+  map("n", "<leader>lr", vim.lsp.buf.rename, { desc = "rename symbol [LSP]" })
   map("n", "<leader>ll", function()
     vim.diagnostic.open_float({ buffer = 0, scope = "line", border = "rounded" })
   end, { desc = "show line diagnostic [LSP]" })
