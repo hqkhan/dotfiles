@@ -213,6 +213,11 @@ key = "T"
 mods = "Command"
 
 [[keyboard.bindings]]
+chars = "\u0002."
+key = "Period"
+mods = "Command"
+
+[[keyboard.bindings]]
 chars = "\u0002x"
 key = "W"
 mods = "Command"

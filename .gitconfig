@@ -146,3 +146,4 @@
 	required = true
 [cr]
 	issue-prompt-enabled = false
+	assume-no-issues = true
