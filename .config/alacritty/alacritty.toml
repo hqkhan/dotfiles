@@ -218,6 +218,11 @@ key = "Period"
 mods = "Command"
 
 [[keyboard.bindings]]
+chars = "\u0002>"
+key = ">"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
 chars = "\u0002x"
 key = "W"
 mods = "Command"
