@@ -65,8 +65,13 @@ augroup("ColorScheme", function(g)
         vim.g.fzf_colors = vim.tbl_deep_extend("keep",
           { ["bg+"] = { "bg", "Visual" } }, vim.g.fzf_colors)
       end
-      vim.api.nvim_set_hl(0, "FzfLuaCursorLine", { default = false, link = "Visual" })
-      vim.api.nvim_set_hl(0, "FzfLuaFzfCursorLine", { default = false, link = "Visual" })
+      -- everforest's `Visual` is a loud salmon that swallows the fuzzy match
+      -- highlight, use a black selection bar there instead
+      local fzf_cursorline = vim.g.colors_name == "everforest"
+          and { default = false, bg = "#000000" }
+          or { default = false, link = "Visual" }
+      vim.api.nvim_set_hl(0, "FzfLuaCursorLine", fzf_cursorline)
+      vim.api.nvim_set_hl(0, "FzfLuaFzfCursorLine", fzf_cursorline)
       -- treesitter context
       vim.api.nvim_set_hl(0, "TreesitterContext", { default = false, link = "Visual" })
       vim.api.nvim_set_hl(0, "TreesitterContextBottom", { default = false, underline = true })

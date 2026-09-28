@@ -51,6 +51,16 @@ return {
     fzf_lua.setup {
       fzf_colors  = fzf_colors,
       winopts     = {
+        treesitter = {
+          -- fzf-lua forces `hl`/`hl+` to "-1:reverse" on treesitter-highlighted
+          -- pickers, so `ctrl-g` fuzzy matches become a block of the token's own
+          -- fg color and turn unreadable. Color them green instead, which keeps
+          -- them distinct from `rg`'s own red grep match coloring.
+          fzf_colors = {
+            ["hl"]  = { "fg", { "DiagnosticOk", "Added", "String" }, "bold" },
+            ["hl+"] = { "fg", { "DiagnosticOk", "Added", "String" }, "bold" },
+          },
+        },
         -- Only valid when using a float window
         -- (i.e. when 'split' is not defined)
         height  = 0.98, -- window height
